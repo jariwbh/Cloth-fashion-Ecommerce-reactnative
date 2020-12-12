@@ -9,9 +9,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
-
-
 class MainScreen extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -21,21 +20,6 @@ class MainScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{ flexDirection: 'row', marginTop: hp('2%') }}>
-                    <TouchableOpacity style={styles.menu} onPress={() => { }}>
-                        <MaterialIcons name="sort" size={24} color="#000000" style={{ position: 'absolute', }} />
-                    </TouchableOpacity>
-                    <Text style={{ marginTop: hp('5.5 %'), fontSize: hp('2.5%'), paddingLeft: hp('1.5%') }}> NewLifeStyle </Text>
-                    <TouchableOpacity onPress={() => { }}>
-                        <SimpleLineIcons name="bag" size={27} color="#000000" style={{ marginTop: hp('5.5 %'), paddingLeft: hp('10%') }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }}>
-                        <SimpleLineIcons name="bell" size={27} color="#000000" style={{ marginTop: hp('5.5 %'), paddingLeft: hp('1.5%') }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }}>
-                        <SimpleLineIcons name="settings" size={27} color="#000000" style={{ marginTop: hp('5.5 %'), paddingLeft: hp('1.5%') }} />
-                    </TouchableOpacity>
-                </View>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={styles.serchbar}>
                         <TextInput
@@ -177,7 +161,7 @@ const styles = StyleSheet.create({
         paddingLeft: hp('4%'),
         marginLeft: hp('2%'),
         marginTop: hp('4 %'),
-        backgroundColor: '#fff',
+        backgroundColor: '#AAAAAA',
         alignItems: 'center',
         justifyContent: 'center'
     },

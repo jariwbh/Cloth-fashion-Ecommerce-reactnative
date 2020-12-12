@@ -1,20 +1,13 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-// import { createSwitchNavigator } from "@react-navigation/compat";
 import LoginScreen from '../screens/LoginScreen/LoginScreen'
 import RegisterScreen from '../screens/RegistarScreen/RegisterScreen'
 import HomeScreen from '../screens/HomeScreen/HomeScreen'
-import MainScreen from '../screens/MainScreen/MainScreen'
-import ProductListScreen from '../screens/ProductListScreen/ProductListScreen'
 import FilterScreen from '../screens/FilterScreen/FilterScreen'
 import NewLifeStyleScreen from '../screens/NewLifeStyleScreen/NewLifeStyleScreen'
 import AddToCartScreen from '../screens/AddToCartScreen/AddToCartScreen'
 import TabNavigations from './TabNavigations';
-
-
-
-
 
 const Stack = createStackNavigator();
 
