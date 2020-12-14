@@ -31,54 +31,51 @@ class MainScreen extends Component {
                         />
                         <FontAwesome name="search" size={24} color="#737373" style={{ padding: hp('2%') }} />
                     </View>
-                    <TouchableOpacity onPress={() => { }}>
-                        <View style={styles.iconView}>
-                            <SimpleLineIcons name="equalizer" size={30} color="#fff" />
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('1%'), paddingBottom: hp('3%') }}>
-                    <ScrollView
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                    >
-                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('ProductListScreen') }}>
-                            <View>
-
-                                <Image source={require('../../../assets/images/Kids.png')} style={{ height: 100, width: 100 }} />
-                                <Text style={{ marginLeft: wp('8%') }}>Kids</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View>
-                                <Image source={require('../../../assets/images/Men.png')} style={{ height: 100, width: 100 }} />
-                                <Text style={{ marginLeft: wp('8%') }}>Men</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View>
-                                <Image source={require('../../../assets/images/Women.png')} style={{ height: 100, width: 100 }} />
-                                <Text style={{ marginLeft: wp('8%') }}>Women</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View>
-                                <Image source={require('../../../assets/images/Women.png')} style={{ height: 100, width: 100 }} />
-                                <Text style={{ marginLeft: wp('8%') }}>Offers</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View>
-                                <Image source={require('../../../assets/images/Women.png')} style={{ height: 100, width: 100 }} />
-                                <Text style={{ marginLeft: wp('8%') }}>New</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </ScrollView>
                 </View>
                 <ScrollView>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('1%'), paddingBottom: hp('0.5%') }}>
+                        <ScrollView
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                        >
+                            <View>
+                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('ProductListScreen') }}>
+
+                                    <Image source={require('../../../assets/images/Kids.png')} style={{ height: 100, width: 100 }} />
+                                    <Text style={{ marginLeft: wp('8%') }}>Kids</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <TouchableOpacity onPress={() => { }}>
+                                    <Image source={require('../../../assets/images/Men.png')} style={{ height: 100, width: 100 }} />
+                                    <Text style={{ marginLeft: wp('8%') }}>Men</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <TouchableOpacity onPress={() => { }}>
+                                    <Image source={require('../../../assets/images/Women.png')} style={{ height: 100, width: 100 }} />
+                                    <Text style={{ marginLeft: wp('7%') }}>Women</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <TouchableOpacity onPress={() => { }}>
+                                    <Image source={require('../../../assets/images/Women.png')} style={{ height: 100, width: 100 }} />
+                                    <Text style={{ marginLeft: wp('7%') }}>Offers</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <TouchableOpacity onPress={() => { }}>
+                                    <Image source={require('../../../assets/images/Women.png')} style={{ height: 100, width: 100 }} />
+                                    <Text style={{ marginLeft: wp('7%') }}>New</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
+                    </View>
+
                     <View style={{ marginTop: hp('-10%'), alignItems: 'center', marginLeft: wp('23%') }}>
                         <Image source={require('../../../assets/images/Banner.png')} />
                     </View>
+
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('-12%'), alignItems: 'center' }} >
                         <View>
                             <Text style={{ fontSize: hp('2.5%'), padding: wp('2%') }}> New Arrivals</Text>
@@ -89,58 +86,70 @@ class MainScreen extends Component {
                         >
                             <TouchableOpacity onPress={() => { }}>
                                 <View style={styles.newview}>
-                                    <Text style={{ fontSize: hp('2.5%'), }}>Dress </Text>
+                                    <Text style={{ fontSize: hp('2.3%'), }}>Dress </Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => { }}>
                                 <View style={styles.newtext}>
-                                    <Text style={{ fontSize: hp('2.5%'), }}>Dress </Text>
+                                    <Text style={{ fontSize: hp('2.3%'), }}>Dress </Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => { }}>
                                 <View style={styles.newtext}>
-                                    <Text style={{ fontSize: hp('2.5%'), }}>Dress </Text>
+                                    <Text style={{ fontSize: hp('2.3%'), }}>Dress </Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => { }}>
                                 <View style={styles.newtext}>
-                                    <Text style={{ fontSize: hp('2.5%'), }}>Dress </Text>
+                                    <Text style={{ fontSize: hp('2.3%'), }}>Dress </Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => { }}>
                                 <View style={styles.newtext}>
-                                    <Text style={{ fontSize: hp('2.5%'), }}>Dress </Text>
+                                    <Text style={{ fontSize: hp('2.3%'), }}>Dress </Text>
                                 </View>
                             </TouchableOpacity>
                         </ScrollView>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('3%') }}>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View>
+                    <View style={{ flexDirection: 'row', marginTop: hp('3%'), justifyContent: 'space-evenly', marginBottom: hp('10%') }}>
+                        <View style={{ flexDirection: 'column', flex: 1, marginLeft: wp('3%') }}>
+                            <TouchableOpacity onPress={() => { }} >
+
                                 <Image source={require('../../../assets/images/MaskGroup6.png')} />
-                                <FontAwesome name="heart" size={24} color="#737373" style={{ position: 'absolute', marginLeft: wp('2%'), marginTop: wp('1%') }} />
+                            </TouchableOpacity>
+                            <View style={{ flexDirection: 'row', }}>
                                 <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
-                                <Text style={{ fontSize: hp('1.5%'), color: "#737373" }}>Comfort slim Block Print Shirt</Text>
-                                <Text>$125</Text>
+                                <TouchableOpacity>
+                                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('6%'), }} />
+                                </TouchableOpacity>
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View>
+                            <Text style={{ fontSize: hp('2%'), color: "#737373", }}>Comfort slim Block Print Shirt</Text>
+
+                            <Text>$125</Text>
+
+
+                        </View>
+                        <View style={{ flex: 1, }} >
+                            <TouchableOpacity onPress={() => { }}>
+
                                 <Image source={require('../../../assets/images/MaskGroup7.png')} />
-                                <FontAwesome name="heart" size={24} color="#737373" style={{ position: 'absolute', marginLeft: wp('2%'), marginTop: wp('1%') }} />
-                                <Text style={{ fontSize: hp('2.5%') }}>VAN HEUSEN</Text>
-                                <Text style={{ fontSize: hp('1.5%'), color: "#737373" }}>Sheath Dress with Belt</Text>
+                                <View style={{ flexDirection: 'row', }}>
+                                    <Text style={{ fontSize: hp('2.5%') }}>VAN HEUSEN</Text>
+                                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('2%'), }} />
+                                </View>
+                                <Text style={{ fontSize: hp('2%'), color: "#737373" }}>Sheath Dress with Belt</Text>
                                 <Text>$140</Text>
-                            </View>
-                        </TouchableOpacity>
+
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('3%'), marginBottom: hp('10%') }}>
+                    {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('3%'), marginBottom: hp('10%') }}>
                         <TouchableOpacity onPress={() => { }}>
                             <View>
                                 <Image source={require('../../../assets/images/Stylishrecommendation.png')} />
                             </View>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                 </ScrollView>
             </View>
 
@@ -152,7 +161,8 @@ export default MainScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: '#FFFFFF'
     },
     menu: {
         width: wp('12.5%'),
@@ -160,7 +170,7 @@ const styles = StyleSheet.create({
         borderRadius: hp('15%'),
         paddingLeft: hp('4%'),
         marginLeft: hp('2%'),
-        marginTop: hp('4 %'),
+        marginTop: hp('3 %'),
         backgroundColor: '#AAAAAA',
         alignItems: 'center',
         justifyContent: 'center'
@@ -169,11 +179,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderRadius: hp('2%'),
         backgroundColor: "#fff",
-        width: wp('75%'),
+        width: wp('90%'),
         height: hp('7%'),
         marginLeft: hp('3%'),
-        marginTop: hp('3%'),
-        alignItems: 'center'
+        marginTop: hp('1%'),
+        alignItems: 'center',
+        borderColor: '#000000',
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        shadowOffset: {
+            height: 0,
+            width: 0,
+        },
+        elevation: 2,
     },
     TextInput: {
         fontSize: hp('2.5%'),
@@ -194,8 +212,8 @@ const styles = StyleSheet.create({
     newview: {
         backgroundColor: "#FF95AD",
         borderRadius: wp('2%'),
-        width: wp('22%'),
-        height: hp('7%'),
+        width: wp('20%'),
+        height: hp('4%'),
         marginLeft: hp('2%'),
         alignItems: "center",
         justifyContent: 'center',
@@ -203,8 +221,8 @@ const styles = StyleSheet.create({
     newtext: {
         backgroundColor: "#ffff",
         borderRadius: wp('2%'),
-        width: wp('22%'),
-        height: hp('7%'),
+        width: wp('20%'),
+        height: hp('4%'),
         marginLeft: hp('2%'),
         alignItems: "center",
         justifyContent: 'center',

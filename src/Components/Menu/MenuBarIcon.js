@@ -4,7 +4,7 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 export default function MenuBarIcon() {
     return (
-        <View style={{ flexDirection: "row", padding: 20 }}>
+        <View style={{ flexDirection: "row", padding: 20, backgroundColor: '#FFFFFF' }}>
             <TouchableOpacity onPress={() => { }}>
                 <SimpleLineIcons name="bag" size={27} color="#707070" style={{ padding: 10 }} />
             </TouchableOpacity>
