@@ -28,7 +28,16 @@ function MainStackScreen() {
                     <MenuIcon />, headerRight: () =>
                         <MenuBarIcon />
             }} component={MainScreen} />
-            <MainStack.Screen name="ProductListScreen" component={ProductListScreen} />
+            <MainStack.Screen name="ProductListScreen" options={{
+                title: 'NewLifestyle', headerStyle: {
+                    backgroundColor: '#F2F2F2',
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                }, headerLeft: () =>
+                    <MenuIcon />, headerRight: () =>
+                        <MenuBarIcon />
+            }} component={ProductListScreen} />
         </MainStack.Navigator>
     );
 }
