@@ -6,8 +6,6 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 class ProductListScreen extends Component {
     constructor(props) {
@@ -19,21 +17,6 @@ class ProductListScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{ flexDirection: 'row', marginTop: hp('2%') }}>
-                    <TouchableOpacity style={styles.menu} onPress={() => { }}>
-                        <MaterialIcons name="sort" size={24} color="#000000" style={{ position: 'absolute', }} />
-                    </TouchableOpacity>
-                    <Text style={{ marginTop: hp('5.5 %'), fontSize: hp('2.5%'), paddingLeft: hp('1.5%') }}> NewLifeStyle </Text>
-                    <TouchableOpacity onPress={() => { }}>
-                        <SimpleLineIcons name="bag" size={27} color="#000000" style={{ marginTop: hp('5.5 %'), paddingLeft: hp('10%') }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }}>
-                        <SimpleLineIcons name="bell" size={27} color="#000000" style={{ marginTop: hp('5.5 %'), paddingLeft: hp('1.5%') }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }}>
-                        <SimpleLineIcons name="settings" size={27} color="#000000" style={{ marginTop: hp('5.5 %'), paddingLeft: hp('1.5%') }} />
-                    </TouchableOpacity>
-                </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingBottom: hp('3%'), marginTop: hp('3%') }} >
                     <View >
                         <Text style={{ fontSize: 20, marginLeft: hp('2%'), padding: wp('3%') }}> New Arrivals</Text>
