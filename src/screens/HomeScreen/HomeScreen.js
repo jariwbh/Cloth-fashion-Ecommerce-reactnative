@@ -47,7 +47,7 @@ class HomeScreen extends Component {
                             </TouchableOpacity>
                         </View>
                         <View>
-                            <TouchableOpacity style={styles.go} onPress={() => { this.props.navigation.navigate('MainScreen') }}>
+                            <TouchableOpacity style={styles.go} onPress={() => { this.props.navigation.navigate('TabNavigations') }}>
                                 <Text style={styles.textgo} >Go</Text>
                                 <FontAwesome name="chevron-right" size={24} color="#FFF" style={{ margin: wp('1%') }} />
                             </TouchableOpacity>
