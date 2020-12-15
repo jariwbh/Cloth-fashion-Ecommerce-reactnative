@@ -7,7 +7,6 @@ import {
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 
-
 class ProductListScreen extends Component {
     constructor(props) {
         super(props);
