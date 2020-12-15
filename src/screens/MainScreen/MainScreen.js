@@ -6,8 +6,6 @@ import {
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 class MainScreen extends Component {
 
@@ -76,7 +74,7 @@ class MainScreen extends Component {
                         <Image source={require('../../../assets/images/Banner.png')} />
                     </View>
 
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('-12%'), alignItems: 'center' }} >
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('-12%'), alignItems: 'center', }} >
                         <View>
                             <Text style={{ fontSize: hp('2.5%'), padding: wp('2%') }}> New Arrivals</Text>
                         </View>
@@ -111,8 +109,8 @@ class MainScreen extends Component {
                             </TouchableOpacity>
                         </ScrollView>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: hp('3%'), justifyContent: 'space-evenly', marginBottom: hp('10%') }}>
-                        <View style={{ flexDirection: 'column', flex: 1, marginLeft: wp('3%') }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginBottom: hp('10%'), marginTop: hp('3%'), flex: 0.5 }}>
+                        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: wp('4%') }}>
                             <TouchableOpacity onPress={() => { }} >
 
                                 <Image source={require('../../../assets/images/MaskGroup6.png')} />
@@ -129,27 +127,22 @@ class MainScreen extends Component {
 
 
                         </View>
-                        <View style={{ flex: 1, }} >
-                            <TouchableOpacity onPress={() => { }}>
+                        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: wp('3%') }}>
+                            <TouchableOpacity onPress={() => { }} >
 
                                 <Image source={require('../../../assets/images/MaskGroup7.png')} />
-                                <View style={{ flexDirection: 'row', }}>
-                                    <Text style={{ fontSize: hp('2.5%') }}>VAN HEUSEN</Text>
-                                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('2%'), }} />
-                                </View>
-                                <Text style={{ fontSize: hp('2%'), color: "#737373" }}>Sheath Dress with Belt</Text>
-                                <Text>$140</Text>
-
                             </TouchableOpacity>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
+                                <TouchableOpacity>
+                                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('6%'), }} />
+                                </TouchableOpacity>
+                            </View>
+                            <Text style={{ fontSize: hp('2%'), color: "#737373", }}>Comfort slim Block Print Shirt</Text>
+
+                            <Text>$125</Text>
                         </View>
                     </View>
-                    {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('3%'), marginBottom: hp('10%') }}>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View>
-                                <Image source={require('../../../assets/images/Stylishrecommendation.png')} />
-                            </View>
-                        </TouchableOpacity>
-                    </View> */}
                 </ScrollView>
             </View>
 

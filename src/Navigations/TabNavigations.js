@@ -14,6 +14,7 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import MenuBarIcon from '../components/Menu/MenuBarIcon';
 import MenuIcon from '../components/Menu/MenuIcon';
 
+
 const MainStack = createStackNavigator();
 function MainStackScreen() {
     return (

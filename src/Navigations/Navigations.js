@@ -8,6 +8,7 @@ import FilterScreen from '../screens/FilterScreen/FilterScreen'
 import NewLifeStyleScreen from '../screens/NewLifeStyleScreen/NewLifeStyleScreen'
 import AddToCartScreen from '../screens/AddToCartScreen/AddToCartScreen'
 import TabNavigations from './TabNavigations';
+import UpdateProfile from '../screens/MyProfileScreen/UpdateProfile';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ export default NavigationsApp = () => {
                 <Stack.Screen name="FilterScreen" component={FilterScreen} />
                 <Stack.Screen name="NewLifeStyleScreen" component={NewLifeStyleScreen} />
                 <Stack.Screen name="AddToCartScreen" component={AddToCartScreen} />
+                <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
             </Stack.Navigator>
 
         </NavigationContainer>
