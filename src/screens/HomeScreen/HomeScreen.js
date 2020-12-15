@@ -28,7 +28,7 @@ class HomeScreen extends Component {
     }
 
     renderCategory = ({ item }) => (
-        <TouchableOpacity onPress={() => { }} >
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('TabNavigations')} >
             <View style={{ marginTop: hp('-2%'), alignItems: 'center' }}>
                 <Image source={{ uri: item.property.icon_logo }} style={{ height: 100, width: 100 }} />
                 <Text style={{ marginTop: "-15%", alignItems: 'center' }}>{item.property.title}</Text>
@@ -51,7 +51,6 @@ class HomeScreen extends Component {
                             </View>
                         </View>
                         <FlatList
-
                             data={categoryList}
                             numColumns={3}
                             renderItem={this.renderCategory}

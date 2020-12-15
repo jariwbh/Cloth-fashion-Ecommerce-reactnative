@@ -8,18 +8,37 @@ import {
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { CouponsService } from '../../Services/CouponsService/CouponsService';
 import HTML from 'react-native-render-html';
+import { CategoryService } from '../../Services/CategoryService/CategoryService';
+import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
 
 class MainScreen extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            coupon: null
+            coupon: null,
+            categoryList: null,
+            productList: null
         };
     }
 
     componentDidMount() {
-        this.getCoupons()
+        this.getCategory();
+        this.getCoupons();
+        this.getInventoryItemService();
+    }
+
+    getCategory() {
+        CategoryService().then(response => {
+            this.setState({ categoryList: response })
+        })
+    }
+
+    getInventoryItemService() {
+        InventoryItemService().then(response => {
+            const slice = response.slice(0, 6)
+            this.setState({ productList: slice })
+        })
     }
 
     getCoupons() {
@@ -28,8 +47,29 @@ class MainScreen extends Component {
         })
     }
 
+    renderCategory = ({ item }) => (
+        <View>
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ProductListScreen') }} style={{ alignItems: 'center' }}>
+                <Image source={{ uri: item.property.icon_logo }} style={{ height: 100, width: 100 }} />
+                <Text style={{ marginTop: hp('-1%') }}>{item.property.title}</Text>
+            </TouchableOpacity>
+        </View>
+    )
+
+    renderInventoryItem = ({ item }) => (
+        <View style={{ flex: 1, marginLeft: wp('3%'), marginBottom: hp('1%') }}>
+            <TouchableOpacity onPress={() => { }} >
+                <Image source={{ uri: item.item_logo }}
+                    style={{ margin: hp('1.5%'), height: hp('25%'), width: wp('40%'), borderRadius: 10 }} />
+            </TouchableOpacity>
+            <View style={{ marginLeft: wp('2%') }}>
+                <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize' }}>{item.itemname}</Text>
+            </View>
+        </View>
+    )
+
     render() {
-        const { coupon } = this.state;
+        const { coupon, categoryList, productList } = this.state;
         return (
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row' }}>
@@ -44,43 +84,19 @@ class MainScreen extends Component {
                         <FontAwesome name="search" size={24} color="#737373" style={{ padding: hp('2%') }} />
                     </View>
                 </View>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('1%'), paddingBottom: hp('0.5%') }}>
                         <ScrollView
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
                         >
-                            <View>
-                                <TouchableOpacity onPress={() => { this.props.navigation.navigate('ProductListScreen') }} style={{ alignItems: 'center' }}>
-
-                                    <Image source={require('../../../assets/images/Kids.png')} style={{ height: 100, width: 100 }} />
-                                    <Text style={{ marginTop: hp('-1%') }}>Kids</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View>
-                                <TouchableOpacity onPress={() => { }} style={{ alignItems: 'center' }}>
-                                    <Image source={require('../../../assets/images/Men.png')} style={{ height: 100, width: 100 }} />
-                                    <Text style={{ marginTop: hp('-1%') }}>Men</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View>
-                                <TouchableOpacity onPress={() => { }} style={{ alignItems: 'center' }}>
-                                    <Image source={require('../../../assets/images/Women.png')} style={{ height: 100, width: 100 }} />
-                                    <Text style={{ marginTop: hp('-1%') }}>Women</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View>
-                                <TouchableOpacity onPress={() => { }} style={{ alignItems: 'center' }}>
-                                    <Image source={require('../../../assets/images/Women.png')} style={{ height: 100, width: 100 }} />
-                                    <Text style={{ marginTop: hp('-1%') }}>Offers</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View>
-                                <TouchableOpacity onPress={() => { }} style={{ alignItems: 'center' }}>
-                                    <Image source={require('../../../assets/images/Women.png')} style={{ height: 100, width: 100 }} />
-                                    <Text style={{ marginTop: hp('-1%') }}>New</Text>
-                                </TouchableOpacity>
-                            </View>
+                            <FlatList
+                                style={{ flexDirection: 'column' }}
+                                numColumns={5}
+                                data={categoryList}
+                                renderItem={this.renderCategory}
+                                keyExtractor={item => `${item._id}`}
+                            />
                         </ScrollView>
                     </View>
                     <View>
@@ -94,11 +110,11 @@ class MainScreen extends Component {
                     </View>
                     <View>
                         {coupon ?
-                            <Text style={{ fontSize: hp('3%'), marginTop: hp('-5%'), paddingLeft: hp('2%') }}> New Arrivals</Text>
-                            : <Text style={{ fontSize: hp('3%'), marginTop: hp('1%') }}> New Arrivals</Text>
+                            <Text style={{ fontSize: hp('3%'), marginTop: hp('-5%'), paddingLeft: hp('2%') }}> Tops New Fashion Cloths</Text>
+                            : <Text style={{ fontSize: hp('3%'), marginTop: hp('1%') }}> Tops New Fashion Cloths</Text>
                         }
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('-4.5%'), alignItems: 'center', paddingLeft: hp('25%') }} >
+                    {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('-4.5%'), alignItems: 'center', paddingLeft: hp('25%') }} >
                         <ScrollView
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
@@ -129,37 +145,14 @@ class MainScreen extends Component {
                                 </View>
                             </TouchableOpacity>
                         </ScrollView>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginBottom: hp('10%'), marginTop: hp('3%'), flex: 0.5 }}>
-                        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: wp('4%') }}>
-                            <TouchableOpacity onPress={() => { }} >
-
-                                <Image source={require('../../../assets/images/MaskGroup6.png')} />
-                            </TouchableOpacity>
-                            <View style={{ flexDirection: 'row', }}>
-                                <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
-                                <TouchableOpacity>
-                                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('6%'), }} />
-                                </TouchableOpacity>
-                            </View>
-                            <Text style={{ fontSize: hp('2%'), color: "#737373", }}>Comfort slim Block Print Shirt</Text>
-                            <Text>$125</Text>
-                        </View>
-                        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: wp('3%') }}>
-                            <TouchableOpacity onPress={() => { }} >
-
-                                <Image source={require('../../../assets/images/MaskGroup7.png')} />
-                            </TouchableOpacity>
-                            <View style={{ flexDirection: 'row', }}>
-                                <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
-                                <TouchableOpacity>
-                                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('6%'), }} />
-                                </TouchableOpacity>
-                            </View>
-                            <Text style={{ fontSize: hp('2%'), color: "#737373", }}>Comfort slim Block Print Shirt</Text>
-
-                            <Text>$125</Text>
-                        </View>
+                    </View> */}
+                    <View style={{ flexDirection: 'row', marginBottom: hp('10%'), flex: 0.5 }}>
+                        <FlatList
+                            numColumns={2}
+                            data={productList}
+                            renderItem={this.renderInventoryItem}
+                            keyExtractor={item => `${item._id}`}
+                        />
                     </View>
                 </ScrollView>
             </View>

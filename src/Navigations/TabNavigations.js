@@ -14,7 +14,6 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import MenuBarIcon from '../components/Menu/MenuBarIcon';
 import MenuIcon from '../components/Menu/MenuIcon';
 
-
 const MainStack = createStackNavigator();
 function MainStackScreen() {
     return (
@@ -30,8 +29,8 @@ function MainStackScreen() {
                         <MenuBarIcon />
             }} component={MainScreen} />
             <MainStack.Screen name="ProductListScreen" options={{
-                title: 'NewLifestyle', headerStyle: {
-                    backgroundColor: '#F2F2F2',
+                title: 'New Arrivals', headerStyle: {
+                    backgroundColor: '#FFFFFF',
                     elevation: 0,
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
