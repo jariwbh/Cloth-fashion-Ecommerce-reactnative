@@ -1,14 +1,13 @@
 import appConfig from '../../Helpers/appConfig'
 
-const CategoryService = () => {
+const CouponsService = () => {
     const body =
     {
         "search": [{
-            "searchfield": "formid",
-            "searchvalue": "5e058897b0c5fb2b6c15cc69",
-            "criteria": "eq",
-            "datatype": "ObjectId"
-        }], "sort": { "createdAt": 1 }
+            "searchfield": "status",
+            "searchvalue": "active",
+            "criteria": "eq"
+        }]
     }
 
     const requestOptions = {
@@ -16,10 +15,11 @@ const CategoryService = () => {
         headers: appConfig.headers,
         body: JSON.stringify(body)
     };
-    return fetch(appConfig.baseUrl + 'formdatas/filter', requestOptions)
+
+    return fetch(appConfig.baseUrl + 'coupons/filter', requestOptions)
         .then(response => response.json()).catch(error => {
             console.error('There was an error!', error);
         });
 }
 
-export { CategoryService };
+export { CouponsService };

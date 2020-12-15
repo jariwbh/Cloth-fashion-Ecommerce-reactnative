@@ -5,7 +5,8 @@ import {
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { CategoryService } from '../../services/CategoryService/CategoryService';
+import { CategoryService } from '../../Services/CategoryService/CategoryService';
+
 
 class HomeScreen extends Component {
     constructor(props) {
@@ -17,7 +18,8 @@ class HomeScreen extends Component {
 
     getCategory() {
         CategoryService().then(response => {
-            this.setState({ categoryList: response })
+            const slice = response.slice(0, 3)
+            this.setState({ categoryList: slice })
         })
     }
 
