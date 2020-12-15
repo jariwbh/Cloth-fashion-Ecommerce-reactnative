@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         width: wp('85%'),
         height: hp('8.3%'),
-        marginLeft: hp('3%'),
+        marginLeft: hp('4%'),
         marginBottom: hp('2%'),
         alignItems: 'center'
 
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginTop: hp('1%'),
-        marginLeft: wp('8%')
+        marginLeft: wp('10.5%')
 
     },
     loginText: {

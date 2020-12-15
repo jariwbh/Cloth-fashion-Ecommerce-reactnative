@@ -11,8 +11,9 @@ import AppScreen from '../screens/AppScreen/AppScreen';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import MenuBarIcon from '../Components/Menu/MenuBarIcon';
-import MenuIcon from '../Components/Menu/MenuIcon';
+import MenuBarIcon from '../components/Menu/MenuBarIcon';
+import MenuIcon from '../components/Menu/MenuIcon';
+
 
 const MainStack = createStackNavigator();
 function MainStackScreen() {

@@ -17,7 +17,7 @@ class ProductListScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingBottom: hp('3%'), marginTop: hp('3%') }} >
+                <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingBottom: hp('2%'), marginTop: hp('3%') }} >
                     <View >
                         <Text style={{ fontSize: 20, marginLeft: hp('2%'), padding: wp('3%') }}> New Arrivals</Text>
                     </View>
@@ -27,92 +27,139 @@ class ProductListScreen extends Component {
                     >
                         <TouchableOpacity onPress={() => { }}>
                             <View style={styles.newview}>
-                                <Text style={{ fontSize: hp('2%'), }}>Dress </Text>
+                                <Text style={{ fontSize: hp('2.3%'), }}>Dress </Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { }}>
                             <View style={styles.newtext}>
-                                <Text style={{ fontSize: hp('2%'), }}>Dress </Text>
+                                <Text style={{ fontSize: hp('2.3%'), }}>Dress </Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { }}>
                             <View style={styles.newtext}>
-                                <Text style={{ fontSize: hp('2%'), }}>Dress </Text>
+                                <Text style={{ fontSize: hp('2.3%'), }}>Dress </Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { }}>
                             <View style={styles.newtext}>
-                                <Text style={{ fontSize: hp('2%'), }}>Dress </Text>
+                                <Text style={{ fontSize: hp('2.3%'), }}>Dress </Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { }}>
                             <View style={styles.newtext}>
-                                <Text style={{ fontSize: hp('2%'), }}>Dress </Text>
+                                <Text style={{ fontSize: hp('2.3%'), }}>Dress </Text>
                             </View>
                         </TouchableOpacity>
                     </ScrollView>
                 </View>
                 <ScrollView>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('5%') }}>
-                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('NewLifeStyleScreen') }}>
-                            <View>
-                                <Image source={require('../../../assets/images/MaskGroup6.png')} />
-                                <FontAwesome name="heart" size={24} color="#737373" style={{ position: 'absolute', marginLeft: wp('2%'), marginTop: wp('1%') }} />
-                                <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
-                                <Text style={{ fontSize: hp('1.5%'), color: "#737373" }}>Comfort slim Block Print Shirt</Text>
-                                <Text>$125</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View>
-                                <Image source={require('../../../assets/images/MaskGroup7.png')} />
-                                <FontAwesome name="heart" size={24} color="#737373" style={{ position: 'absolute', marginLeft: wp('2%'), marginTop: wp('1%') }} />
-                                <Text style={{ fontSize: hp('2.5%') }}>VAN HEUSEN</Text>
-                                <Text style={{ fontSize: hp('1.5%'), color: "#737373" }}>Sheath Dress with Belt</Text>
-                                <Text>$140</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('3%'), }}>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View>
-                                <Image source={require('../../../assets/images/MaskGroup9.png')} />
-                                <FontAwesome name="heart" size={24} color="#737373" style={{ position: 'absolute', marginLeft: wp('2%'), marginTop: wp('1%') }} />
-                                <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
-                                <Text style={{ fontSize: hp('1.5%'), color: "#737373" }}>Comfort slim Block Print Shirt</Text>
-                                <Text>$125</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View>
-                                <Image source={require('../../../assets/images/MaskGroup92.png')} />
-                                <FontAwesome name="heart" size={24} color="#737373" style={{ position: 'absolute', marginLeft: wp('2%'), marginTop: wp('1%') }} />
-                                <Text style={{ fontSize: hp('2.5%') }}>VAN HEUSEN</Text>
-                                <Text style={{ fontSize: hp('1.5%'), color: "#737373" }}>Sheath Dress with Belt</Text>
-                                <Text>$140</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('3%'), paddingBottom: hp('10%') }}>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View>
-                                <Image source={require('../../../assets/images/MaskGroup91.png')} />
-                                <FontAwesome name="heart" size={24} color="#737373" style={{ position: 'absolute', marginLeft: wp('2%'), marginTop: wp('1%') }} />
-                                <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
-                                <Text style={{ fontSize: hp('1.5%'), color: "#737373" }}>Comfort slim Block Print Shirt</Text>
-                                <Text>$125</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: hp('5%'), flex: 0.5, }}>
+                        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: wp('5%') }}>
+                            <TouchableOpacity onPress={() => { }} >
+
                                 <Image source={require('../../../assets/images/MaskGroup93.png')} />
-                                <FontAwesome name="heart" size={24} color="#737373" style={{ position: 'absolute', marginLeft: wp('2%'), marginTop: wp('1%') }} />
-                                <Text style={{ fontSize: hp('2.5%') }}>VAN HEUSEN</Text>
-                                <Text style={{ fontSize: hp('1.5%'), color: "#737373" }}>Sheath Dress with Belt</Text>
-                                <Text>$140</Text>
+                            </TouchableOpacity>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
+                                <TouchableOpacity>
+                                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('6%'), }} />
+                                </TouchableOpacity>
                             </View>
-                        </TouchableOpacity>
+                            <Text style={{ fontSize: hp('2%'), color: "#737373", }}>Comfort slim Block Print Shirt</Text>
+
+                            <Text>$125</Text>
+                        </View>
+                        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: wp('3%') }}>
+                            <TouchableOpacity onPress={() => { }} >
+
+                                <Image source={require('../../../assets/images/MaskGroup91.png')} />
+                            </TouchableOpacity>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
+                                <TouchableOpacity>
+                                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('6%'), }} />
+                                </TouchableOpacity>
+                            </View>
+                            <Text style={{ fontSize: hp('2%'), color: "#737373", }}>Comfort slim Block Print Shirt</Text>
+
+                            <Text>$125</Text>
+
+
+                        </View>
                     </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: hp('5%'), flex: 0.5, }}>
+                        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: wp('5%') }}>
+                            <TouchableOpacity onPress={() => { }} >
+
+                                <Image source={require('../../../assets/images/MaskGroup9.png')} />
+                            </TouchableOpacity>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
+                                <TouchableOpacity>
+                                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('6%'), }} />
+                                </TouchableOpacity>
+                            </View>
+                            <Text style={{ fontSize: hp('2%'), color: "#737373", }}>Comfort slim Block Print Shirt</Text>
+
+                            <Text>$125</Text>
+
+
+                        </View>
+                        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: wp('3%') }}>
+                            <TouchableOpacity onPress={() => { }} >
+
+                                <Image source={require('../../../assets/images/MaskGroup92.png')} />
+                            </TouchableOpacity>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
+                                <TouchableOpacity>
+                                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('6%'), }} />
+                                </TouchableOpacity>
+                            </View>
+                            <Text style={{ fontSize: hp('2%'), color: "#737373", }}>Comfort slim Block Print Shirt</Text>
+
+                            <Text>$125</Text>
+
+
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: hp('5%'), flex: 0.5, paddingBottom: hp('20%') }}>
+                        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: wp('5%') }}>
+                            <TouchableOpacity onPress={() => { }} >
+
+                                <Image source={require('../../../assets/images/MaskGroup91.png')} />
+                            </TouchableOpacity>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
+                                <TouchableOpacity>
+                                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('6%'), }} />
+                                </TouchableOpacity>
+                            </View>
+                            <Text style={{ fontSize: hp('2%'), color: "#737373", }}>Comfort slim Block Print Shirt</Text>
+
+                            <Text>$125</Text>
+
+
+                        </View>
+                        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: wp('3%') }}>
+                            <TouchableOpacity onPress={() => { }} >
+
+                                <Image source={require('../../../assets/images/MaskGroup93.png')} />
+                            </TouchableOpacity>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Text style={{ fontSize: hp('2.5%') }}>TISTABENE</Text>
+                                <TouchableOpacity>
+                                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('6%'), }} />
+                                </TouchableOpacity>
+                            </View>
+                            <Text style={{ fontSize: hp('2%'), color: "#737373", }}>Comfort slim Block Print Shirt</Text>
+
+                            <Text>$125</Text>
+
+
+                        </View>
+                    </View>
+
                 </ScrollView>
             </View>
         );
@@ -123,13 +170,14 @@ export default ProductListScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: '#FFFFFF'
     },
     newview: {
         backgroundColor: "#FF95AD",
         borderRadius: wp('2%'),
-        width: wp('22%'),
-        height: hp('6%'),
+        width: wp('20%'),
+        height: hp('4%'),
         marginLeft: hp('3%'),
         alignItems: "center",
         justifyContent: 'center',
@@ -137,8 +185,8 @@ const styles = StyleSheet.create({
     newtext: {
         backgroundColor: "#ffff",
         borderRadius: wp('2%'),
-        width: wp('22%'),
-        height: hp('6%'),
+        width: wp('20%'),
+        height: hp('4%'),
         marginLeft: hp('2%'),
         alignItems: "center",
         justifyContent: 'center',

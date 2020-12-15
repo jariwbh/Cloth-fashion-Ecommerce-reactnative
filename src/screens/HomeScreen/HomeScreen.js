@@ -29,9 +29,9 @@ class HomeScreen extends Component {
 
     renderCategory = ({ item }) => (
         <TouchableOpacity onPress={() => { }} >
-            <View style={{ justifyContent: 'space-evenly', alignItems: 'center', marginTop: "-20%" }}>
+            <View style={{ marginTop: hp('-2%'), alignItems: 'center' }}>
                 <Image source={{ uri: item.property.icon_logo }} style={{ height: 100, width: 100 }} />
-                <Text style={{ marginTop: "-15%" }}>{item.property.title}</Text>
+                <Text style={{ marginTop: "-15%", alignItems: 'center' }}>{item.property.title}</Text>
             </View>
         </TouchableOpacity>
     )
@@ -78,7 +78,9 @@ const styles = StyleSheet.create({
     },
     backgroundImage: {
         flex: 1,
-        resizeMode: 'cover'
+        resizeMode: 'cover',
+        position: 'relative'
+
     },
     inputView: {
         backgroundColor: "#fff",
