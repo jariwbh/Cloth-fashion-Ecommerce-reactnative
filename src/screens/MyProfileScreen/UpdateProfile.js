@@ -22,7 +22,10 @@ class UpdateProfile extends Component {
                     <View style={styles.bodyContent}>
                         <Text style={styles.name}>John Doe</Text>
                     </View>
-                    <ScrollView>
+                    <ScrollView
+                        Vertical={true}
+                        showsVerticalScrollIndicator={false}
+                    >
                         <View style={{
                             flex: 1, flexDirection: 'column', alignItems: 'center'
                         }}>

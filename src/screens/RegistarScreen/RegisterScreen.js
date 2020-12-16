@@ -19,7 +19,10 @@ class RegisterScreen extends Component {
     render() {
         return (
             <ImageBackground source={require('../../../assets/images/2.png')} style={styles.backgroundImage}>
-                <ScrollView>
+                <ScrollView
+                    Vertical={true}
+                    showsVerticalScrollIndicator={false}
+                >
                     <View style={styles.Image} >
                         <Text style={{ fontSize: hp('4%'), color: '#000000' }}>Login / Register </Text>
 

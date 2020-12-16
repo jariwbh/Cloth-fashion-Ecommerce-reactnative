@@ -6,7 +6,7 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
-import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
+import { InventoryItemService } from '../../services/InventoryItemService/InventoryItemService'
 
 class ProductListScreen extends Component {
     constructor(props) {
@@ -25,19 +25,19 @@ class ProductListScreen extends Component {
     }
 
     renderInventoryItem = ({ item }) => (
-        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: wp('5%') }}>
+        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%'), }}>
             <TouchableOpacity onPress={() => { }} >
                 <Image source={{ uri: item.item_logo }}
-                    style={{ margin: hp('1.5%'), height: hp('25%'), width: wp('35%'), borderRadius: 10 }} />
+                    style={{ margin: hp('1.5%'), height: hp('30%'), width: wp('40%'), borderRadius: 10, borderColor: '#FFFFFF', borderWidth: 2 }} />
             </TouchableOpacity>
-            <View style={{ flexDirection: 'row', }}>
-                <Text style={{ fontSize: hp('2.5%') }}>{item.itemname}</Text>
+            <View style={{ flexDirection: 'row', marginLeft: hp('1%'), justifyContent: 'space-between', marginRight: hp('1%'), }}>
+                <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize' }}>{item.itemname}</Text>
                 <TouchableOpacity>
-                    <FontAwesome name="heart" size={24} color="#737373" style={{ marginLeft: wp('6%'), }} />
+                    <FontAwesome name="heart-o" size={24} color="#000000" />
                 </TouchableOpacity>
             </View>
-            <Text style={{ fontSize: hp('2%'), color: "#737373", }}>{item.sale.description}</Text>
-            <Text>$ {item.sale.rate}</Text>
+            <Text style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>{item.sale.description}</Text>
+            <Text style={{ marginLeft: hp('1%') }}>$ {item.sale.rate}</Text>
         </View>
     )
 
@@ -80,7 +80,10 @@ class ProductListScreen extends Component {
                         </TouchableOpacity>
                     </ScrollView>
                 </View>
-                <ScrollView>
+                <ScrollView
+                    Vertical={true}
+                    showsVerticalScrollIndicator={false}
+                >
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: hp('5%'), flex: 0.5, marginBottom: hp('10%') }}>
                         <FlatList
                             numColumns={2}

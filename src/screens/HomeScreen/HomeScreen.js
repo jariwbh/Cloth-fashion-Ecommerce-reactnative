@@ -5,7 +5,7 @@ import {
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { CategoryService } from '../../Services/CategoryService/CategoryService';
+import { CategoryService } from '../../services/CategoryService/CategoryService';
 
 
 class HomeScreen extends Component {
