@@ -6,7 +6,7 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
-import { InventoryItemService } from '../../services/InventoryItemService/InventoryItemService'
+import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
 
 class ProductListScreen extends Component {
     constructor(props) {
