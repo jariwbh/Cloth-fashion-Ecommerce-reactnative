@@ -6,10 +6,10 @@ import {
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { CouponsService } from '../../services/CouponsService/CouponsService';
+import { CouponsService } from '../../Services/CouponsService/CouponsService';
 import HTML from 'react-native-render-html';
-import { CategoryService } from '../../services/CategoryService/CategoryService';
-import { InventoryItemService } from '../../services/InventoryItemService/InventoryItemService'
+import { CategoryService } from '../../Services/CategoryService/CategoryService';
+import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
 
 class MainScreen extends Component {
 
