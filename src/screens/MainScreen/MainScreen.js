@@ -6,7 +6,7 @@ import {
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { CouponsService } from '../../services/CouponsService/CouponsService';
+import { CouponsService } from '../../Services/CouponsService/CouponsService';
 import HTML from 'react-native-render-html';
 import { CategoryService } from '../../Services/CategoryService/CategoryService';
 import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
@@ -49,7 +49,7 @@ class MainScreen extends Component {
 
     renderCategory = ({ item }) => (
         <View>
-            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ProductListScreen') }} style={{ alignItems: 'center' }}>
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ProductListScreen', { item }) }} style={{ alignItems: 'center' }}>
                 <Image source={{ uri: item.property.icon_logo }} style={{ height: 100, width: 100 }} />
                 <Text style={{ marginTop: hp('-1%') }}>{item.property.title}</Text>
             </TouchableOpacity>
@@ -92,7 +92,7 @@ class MainScreen extends Component {
                         >
                             <FlatList
                                 style={{ flexDirection: 'column' }}
-                                numColumns={5}
+                                numColumns={10}
                                 data={categoryList}
                                 renderItem={this.renderCategory}
                                 keyExtractor={item => `${item._id}`}

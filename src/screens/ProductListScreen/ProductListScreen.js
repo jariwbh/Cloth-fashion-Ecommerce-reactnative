@@ -2,25 +2,34 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
-} from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
+import { CategoryService } from '../../Services/CategoryService/CategoryService';
 
 class ProductListScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            productList: []
+            categoryId: this.props.route.params.item._id,
+            productList: [],
+            categoryList: null,
+
         };
     }
 
     getInventoryItemService() {
-        InventoryItemService().then(response => { this.setState({ productList: response }) })
+        const { categoryId } = this.state;
+        InventoryItemService(categoryId).then(response => { this.setState({ productList: response }) })
+    }
+
+    getCategory() {
+        CategoryService().then(response => {
+            this.setState({ categoryList: response })
+        })
     }
 
     componentDidMount() {
+        this.getCategory();
         this.getInventoryItemService();
     }
 
@@ -41,8 +50,27 @@ class ProductListScreen extends Component {
         </View>
     )
 
+    renderCategory = ({ item, index }) => (
+        <TouchableOpacity onPress={() => { this.onPressToCategoryService(item, index) }}>
+            <View style={item.selected ? styles.newview : styles.newtext}>
+                <Text style={item.selected ? styles.newrendertext : styles.viewrendertext}>{item.property.title}</Text>
+            </View>
+        </TouchableOpacity>
+    )
+
+    onPressToCategoryService(item, index) {
+        const { categoryList, categoryId } = this.state;
+        const category = categoryList.map((item) => {
+            item.selected = false;
+            return item;
+        });
+        category[index].selected = true;
+        this.setState({ categoryList: category, categoryId: item._id })
+        this.getInventoryItemService(categoryId)
+    }
+
     render() {
-        const { productList } = this.state;
+        const { productList, categoryList } = this.state;
         return (
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingBottom: hp('2%'), marginTop: hp('1%') }} >
@@ -53,31 +81,12 @@ class ProductListScreen extends Component {
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                     >
-                        <TouchableOpacity onPress={() => { }}>
-                            <View style={styles.newview}>
-                                <Text style={{ fontSize: hp('2.3%'), }}>Dress</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View style={styles.newtext}>
-                                <Text style={{ fontSize: hp('2.3%'), }}>T-Shirt</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View style={styles.newtext}>
-                                <Text style={{ fontSize: hp('2.3%'), }}>Pants</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View style={styles.newtext}>
-                                <Text style={{ fontSize: hp('2.3%'), }}>Western</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View style={styles.newtext}>
-                                <Text style={{ fontSize: hp('2.3%'), }}>Party</Text>
-                            </View>
-                        </TouchableOpacity>
+                        <FlatList
+                            numColumns={10}
+                            data={categoryList}
+                            renderItem={this.renderCategory}
+                            keyExtractor={item => `${item._id}`}
+                        />
                     </ScrollView>
                 </View>
                 <ScrollView
@@ -134,4 +143,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    newrendertext: {
+        fontSize: hp('2.3%'),
+        color: '#FFFFFF',
+    }, viewrendertext: {
+        fontSize: hp('2.3%'),
+        color: '#AAAAAA',
+    }
 })

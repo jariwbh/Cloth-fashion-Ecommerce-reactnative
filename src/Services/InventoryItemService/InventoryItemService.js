@@ -1,14 +1,30 @@
 import appConfig from '../../Helpers/appConfig'
 
-const InventoryItemService = () => {
-    const body =
-    {
-        "search": [{
-            "searchfield": "status",
-            "searchvalue": "active",
-            "criteria": "eq",
-            "datatype": "text"
-        }]
+const InventoryItemService = (id) => {
+    console.log('id', id)
+    let body
+
+    if (id != null) {
+        body =
+        {
+            "search": [{
+                "searchfield": "offertype",
+                "searchvalue": id,
+                "criteria": "eq",
+                "datatype": "ObjectId"
+            }]
+        }
+
+    } else {
+        body =
+        {
+            "search": [{
+                "searchfield": "status",
+                "searchvalue": "active",
+                "criteria": "eq",
+                "datatype": "text"
+            }]
+        }
     }
 
     const requestOptions = {
