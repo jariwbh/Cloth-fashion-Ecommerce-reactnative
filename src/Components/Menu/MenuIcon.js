@@ -6,17 +6,18 @@ import {
 } from 'react-native-responsive-screen'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export default function MenuIcon() {
+const MenuIcon = (props) => {
+    console.log('props', props)
     return (
-        <TouchableOpacity style={styles.menu} onPress={() => { }}>
+        <TouchableOpacity style={styles.menu} onPress={() => { alert('hiii') }}>
             <MaterialIcons name="sort" size={24} color="#000000" style={{ position: 'absolute', }} />
         </TouchableOpacity>
     )
 }
+export default MenuIcon;
 
 const styles = StyleSheet.create({
     menu: {
-
         width: wp('10%'),
         height: hp('5.5%'),
         borderRadius: hp('15%'),
