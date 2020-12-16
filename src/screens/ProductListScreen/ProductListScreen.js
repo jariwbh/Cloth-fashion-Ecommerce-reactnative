@@ -9,17 +9,21 @@ import { CategoryService } from '../../Services/CategoryService/CategoryService'
 class ProductListScreen extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            categoryId: this.props.route.params.item._id,
-            productList: [],
-            categoryList: null,
-
-        };
+        this.categoryId = this.props.route.params && this.props.route.params.item,
+            this.state = {
+                productList: null,
+                categoryList: null,
+            };
     }
 
-    getInventoryItemService() {
-        const { categoryId } = this.state;
-        InventoryItemService(categoryId).then(response => { this.setState({ productList: response }) })
+    getInventoryItemService(id) {
+        console.log('id', this.categoryId)
+        if (this.categoryId != null) {
+            InventoryItemService(this.categoryId._id).then(response => { this.setState({ productList: response }) })
+            this.categoryId = null
+        } else {
+            InventoryItemService(id).then(response => { this.setState({ productList: response }) })
+        }
     }
 
     getCategory() {
@@ -35,7 +39,7 @@ class ProductListScreen extends Component {
 
     renderInventoryItem = ({ item }) => (
         <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%'), }}>
-            <TouchableOpacity onPress={() => { }} >
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('NewLifeStyleScreen') }} >
                 <Image source={{ uri: item.item_logo }}
                     style={{ margin: hp('1.5%'), height: hp('30%'), width: wp('40%'), borderRadius: 10, borderColor: '#FFFFFF', borderWidth: 2 }} />
             </TouchableOpacity>
@@ -59,14 +63,14 @@ class ProductListScreen extends Component {
     )
 
     onPressToCategoryService(item, index) {
-        const { categoryList, categoryId } = this.state;
+        const { categoryList } = this.state;
         const category = categoryList.map((item) => {
             item.selected = false;
             return item;
         });
         category[index].selected = true;
-        this.setState({ categoryList: category, categoryId: item._id })
-        this.getInventoryItemService(categoryId)
+        this.setState({ categoryList: category })
+        this.getInventoryItemService(item._id)
     }
 
     render() {

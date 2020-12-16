@@ -1,19 +1,94 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, TextInput, } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, TextInput, ToastAndroid } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Loader from '../../components/Loader/Loader';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class LoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
-            password: ''
+            username: null,
+            usererror: null,
+            password: null,
+            passworderror: null,
+            loading: false,
         };
+        this.setEmail = this.setEmail.bind(this);
+        this.setPassword = this.setPassword.bind(this);
+        this.onPressSubmit = this.onPressSubmit.bind(this);
+    }
+
+    setEmail(email) {
+        if (!email || email.length <= 0) {
+            return this.setState({ usererror: 'User Name cannot be empty' });
+        }
+        return this.setState({ username: email, usererror: null })
+    }
+
+    setPassword(password) {
+        if (!password || password.length <= 0) {
+            return this.setState({ passworderror: 'Password cannot be empty' });
+        }
+        return this.setState({ password: password, passworderror: null })
+    }
+
+    resetScreen() {
+        this.setState({
+            username: null,
+            usererror: null,
+            password: null,
+            passworderror: null,
+            loading: false,
+        })
+    }
+
+    authenticateUser = (user) => (
+        AsyncStorage.setItem('@authuser', JSON.stringify(user))
+    )
+
+    onPressSubmit = async () => {
+        const { username, password } = this.state;
+        // if (!username || !password) {
+        //     this.setEmail(username)
+        //     this.setPassword(password)
+        //     return;
+        // }
+
+        // const body = {
+        //     username: username,
+        //     password: password
+        // }
+        // this.setState({ loading: true })
+        // try {
+        //     await LoginService(body)
+        //         .then(response => {
+        //             if (response.error) {
+        //                 this.setState({ loading: false })
+        //                 ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG);
+        //                 this.resetScreen()
+        //                 return
+        //             }
+
+        //             if (response != null || response != 'undefind') {
+        //                 this.authenticateUser(response.user)
+        ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
+        this.props.navigation.navigate('HomeScreen')
+        //                     this.resetScreen()
+        //                     return
+        //                 }
+        //             })
+        //     }
+        //     catch (error) {
+        //         this.setState({ loading: false })
+        //         ToastAndroid.show("SignIn Failed!", ToastAndroid.LONG)
+        //     }
+
     }
 
     render() {
@@ -24,46 +99,51 @@ class LoginScreen extends Component {
                     showsVerticalScrollIndicator={false}
                 >
                     <View style={styles.Image} >
-                        <Text style={{ fontSize: hp('4%'), color: '#000000', textAlign: 'center', }}>Login </Text>
-
+                        <Text style={{ fontSize: hp('4%'), color: '#000000' }}>Login </Text>
                     </View>
                     <View style={styles.inputview}>
                         <FontAwesome name="user-circle-o" size={30} color="#FF95AD" style={{ paddingLeft: hp('2%') }} />
                         <TextInput
                             style={styles.TextInput}
-                            placeholder="Email"
+                            defaultValue={this.state.username}
+                            placeholder="User Name"
                             type='clear'
-                            placeholderTextColor="#000000"
+                            placeholderTextColor="#AAAAAA"
                             returnKeyType="next"
-                        // onChangeText={(email) => this.setEmail(email)}
+                            onChangeText={(email) => this.setEmail(email)}
                         />
-
                     </View>
+                    <Text style={{ marginTop: hp('-2%'), marginLeft: wp('10%'), color: '#ff0000' }}>{this.state.usererror && this.state.usererror}</Text>
                     <View style={styles.inputview}>
                         <FontAwesome name="unlock-alt" size={30} color="#FF95AD" style={{ paddingLeft: hp('2.7%') }} />
                         <TextInput
                             style={styles.TextInput}
-                            placeholder="******"
-                            placeholderTextColor="#000000"
-                            secure={true}
-                        // onChangeText={(password) => this.setPassword(password)}
+                            defaultValue={this.state.password}
+                            placeholder="********"
+                            type='clear'
+                            placeholderTextColor="#AAAAAA"
+                            secureTextEntry={true}
+                            returnKeyType="done"
+                            onSubmitEditing={() => this.onPressSubmit()}
+                            onChangeText={(password) => this.setPassword(password)}
                         />
                     </View>
+                    <Text style={{ marginTop: hp('-2%'), marginLeft: wp('10%'), color: '#ff0000' }}>{this.state.passworderror && this.state.passworderror}</Text>
                     <View>
-                        <TouchableOpacity style={styles.loginBtn} onPress={() => { this.props.navigation.navigate('HomeScreen') }} >
-                            <Text style={styles.loginText}>Login Now</Text>
+                        <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()}>
+                            {this.state.loading === true ? <Loader /> : <Text style={styles.loginText}>Login Now</Text>}
                         </TouchableOpacity>
                     </View>
                     <View style={{ marginTop: hp('2%'), justifyContent: 'center', flexDirection: 'row' }} >
 
                         <Text style={styles.innerText}> i agree to app </Text>
-                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('Privacy') }} >
+                        <TouchableOpacity >
                             <Text style={styles.baseText}>Privacy , </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('User Agreement') }} >
+                        <TouchableOpacity >
                             <Text style={styles.baseText}>User Agreement ,</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('T&Cs') }} >
+                        <TouchableOpacity >
                             <Text style={styles.baseText}> T&Cs</Text>
                         </TouchableOpacity>
                     </View>
@@ -71,6 +151,7 @@ class LoginScreen extends Component {
                         <TouchableOpacity onPress={() => { this.props.navigation.navigate('RegisterScreen') }} >
                             <Text style={styles.baseText}>Register</Text>
                         </TouchableOpacity>
+                        <Text style={styles.innerText}> if you're New! </Text>
                     </View>
                 </ScrollView>
             </ImageBackground>
@@ -101,9 +182,8 @@ const styles = StyleSheet.create({
         width: wp('85%'),
         height: hp('8.3%'),
         marginLeft: hp('4%'),
-        marginBottom: hp('2%'),
-        alignItems: 'center'
-
+        marginBottom: hp('3%'),
+        alignItems: 'center',
     },
     TextInput: {
         fontSize: hp('2.5%'),
@@ -134,7 +214,7 @@ const styles = StyleSheet.create({
         textTransform: 'capitalize'
     },
     innerText: {
-        color: '#737373',
+        color: '#858585',
         fontSize: hp('2%'),
         textTransform: 'capitalize'
     },

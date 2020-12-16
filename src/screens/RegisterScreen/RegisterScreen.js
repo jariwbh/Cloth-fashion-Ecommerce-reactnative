@@ -25,8 +25,7 @@ class RegisterScreen extends Component {
                     showsVerticalScrollIndicator={false}
                 >
                     <View style={styles.Image} >
-                        <Text style={{ fontSize: hp('4%'), color: '#000000', textAlign: 'center', }}>Register </Text>
-
+                        <Text style={{ fontSize: hp('4%'), color: '#000000' }}>Register </Text>
                     </View>
                     <View style={styles.inputview}>
                         <FontAwesome name="user-circle-o" size={27} color="#FF95AD" style={{ paddingLeft: hp('2%') }} />

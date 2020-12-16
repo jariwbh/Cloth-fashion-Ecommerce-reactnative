@@ -58,7 +58,7 @@ class MainScreen extends Component {
 
     renderInventoryItem = ({ item }) => (
         <View style={{ flex: 1, marginLeft: wp('3%'), marginBottom: hp('1%') }}>
-            <TouchableOpacity onPress={() => { }} >
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ProductListScreen') }} >
                 <Image source={{ uri: item.item_logo }}
                     style={{ margin: hp('1.5%'), height: hp('25%'), width: wp('40%'), borderRadius: 10 }} />
             </TouchableOpacity>
