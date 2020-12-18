@@ -5,6 +5,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
 import { CategoryService } from '../../Services/CategoryService/CategoryService';
+import { saveLocalWishList } from '../../Helpers/localData';
 
 class ProductListScreen extends Component {
     constructor(props) {
@@ -17,7 +18,6 @@ class ProductListScreen extends Component {
     }
 
     getInventoryItemService(id) {
-        console.log('id', this.categoryId)
         if (this.categoryId != null) {
             InventoryItemService(this.categoryId._id).then(response => { this.setState({ productList: response }) })
             this.categoryId = null
@@ -37,20 +37,25 @@ class ProductListScreen extends Component {
         this.getInventoryItemService();
     }
 
+    saveLocalWishList(currentWishList) {
+        currentWishList.like = 'true'
+        saveLocalWishList(currentWishList)
+    }
+
     renderInventoryItem = ({ item }) => (
         <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%'), }}>
-            <TouchableOpacity onPress={() => { this.props.navigation.navigate('NewLifeStyleScreen') }} >
+            <TouchableOpacity onPress={() => { this.props.navigation.push('NewLifeStyleScreen', { item }) }} >
                 <Image source={{ uri: item.item_logo }}
                     style={{ margin: hp('1.5%'), height: hp('30%'), width: wp('40%'), borderRadius: 10, borderColor: '#FFFFFF', borderWidth: 2 }} />
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', marginLeft: hp('1%'), justifyContent: 'space-between', marginRight: hp('1%'), }}>
                 <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize' }}>{item.itemname}</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => { this.saveLocalWishList(item) }}>
                     <FontAwesome name="heart-o" size={24} color="#000000" />
                 </TouchableOpacity>
             </View>
             <Text style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>{item.sale.description}</Text>
-            <Text style={{ marginLeft: hp('1%') }}>$ {item.sale.rate}</Text>
+            <Text style={{ marginLeft: hp('1%') }}>₹ {item.sale.rate}</Text>
         </View>
     )
 

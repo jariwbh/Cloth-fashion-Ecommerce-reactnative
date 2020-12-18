@@ -7,7 +7,6 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import CheckBox from '@react-native-community/checkbox';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ScrollView } from 'react-native-gesture-handler';
 class AddToCartScreen extends Component {
@@ -20,120 +19,50 @@ class AddToCartScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{ flexDirection: 'row', marginTop: hp('2%') }}>
-                    <TouchableOpacity style={styles.back} onPress={() => { }}>
-                        <MaterialIcons name="arrow-back" size={24} color="#000000" style={{ position: 'absolute', }} />
-                    </TouchableOpacity>
-                    <Text style={{ marginTop: hp('5.5 %'), fontSize: hp('2.5%'), paddingLeft: hp('1.5%') }}> NewLifeStyle </Text>
-                    <TouchableOpacity onPress={() => { }}>
-                        <SimpleLineIcons name="bag" size={27} color="#000000" style={{ marginTop: hp('5.5 %'), paddingLeft: hp('10%') }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }}>
-                        <SimpleLineIcons name="bell" size={27} color="#000000" style={{ marginTop: hp('5.5 %'), paddingLeft: hp('1.5%') }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }}>
-                        <SimpleLineIcons name="settings" size={27} color="#000000" style={{ marginTop: hp('5.5 %'), paddingLeft: hp('1.5%') }} />
-                    </TouchableOpacity>
-                </View>
                 <ScrollView>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginTop: hp('5%') }} >
 
-                        <TouchableOpacity onPress={() => { }}>
-                            <View style={styles.cartview}>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#fff' }}>My Cart </Text>
+                    <View style={styles.imageview}>
+                        <View>
+                            <Image source={require('../../../assets/images/MaskGroup93.png')} style={{ margin: hp('1 %'), width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%') }} />
+                            <TouchableOpacity style={{ position: 'absolute', paddingHorizontal: hp('2%'), marginTop: hp('2%') }}>
+                                <AntDesign name="delete" size={24} color="#fff" />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ fontSize: hp('2.5%'), }}>Men's Solid Regular </Text>
+                            <Text style={{ fontSize: hp('2.5%'), color: '#AAAAAA' }}>Seller Name</Text>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Text style={{ fontSize: hp('2.5%'), }}>$125</Text>
+                                <Text style={{ fontSize: hp('2.5%'), }}>(10% off)</Text>
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View style={styles.carttext}>
-                                <Text style={{ fontSize: hp('2%'), }}>Address </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <View style={styles.carttext}>
-                                <Text style={{ fontSize: hp('2%'), }}>Payment </Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1%') }}>Colors</Text>
+                                <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1.5%') }}>Size</Text>
+                                <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%') }}>Qty</Text>
 
-                    <View style={{ flexDirection: 'column', marginTop: hp('3%'), }}>
-                        <View style={styles.imageview}>
-                            <View>
-                                <Image source={require('../../../assets/images/MaskGroup93.png')} style={{ margin: hp('1 %'), width: wp('35%'), borderRadius: hp('1.5%') }} />
-                                <TouchableOpacity style={{ position: 'absolute', paddingHorizontal: hp('2%'), marginTop: hp('2%') }}>
-                                    <AntDesign name="delete" size={24} color="#fff" />
+                            </View>
+                            <View style={{ flexDirection: 'row', marginLeft: hp('1%'), marginTop: hp('1%') }}>
+                                <TouchableOpacity style={styles.color}>
+                                </TouchableOpacity>
+
+                                <View style={styles.sizebox}  >
+                                    <Text> 40 </Text>
+                                </View>
+                                <TouchableOpacity style={styles.qnt} onPress={() => { }}>
+                                    <Text> + </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{ marginTop: hp('2%'), marginLeft: hp('1%'), }} onPress={() => { }}>
+                                    <Text style={{ fontSize: hp('2%') }}> 1 </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.qnt} onPress={() => { }}>
+                                    <Text> - </Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={{ flex: 1 }}>
-                                <Text style={{ fontSize: hp('2.5%'), }}>Men's Solid Regular </Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#AAAAAA' }}>Seller Name</Text>
-                                <View style={{ flexDirection: 'row', }}>
-                                    <Text style={{ fontSize: hp('2.5%'), }}>$125</Text>
-                                    {/* <Text style={{ fontSize: hp('2.5%'), }}>$140</Text>
-                                <Text style={{ fontSize: hp('2.5%'), }}>(10% off)</Text> */}
-                                </View>
-                                <View style={{ flexDirection: 'row', }}>
-                                    <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1%') }}>Colors</Text>
-                                    <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1.5%') }}>Size</Text>
-                                    <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%') }}>Qty</Text>
-
-                                </View>
-                                <View style={{ flexDirection: 'row', marginLeft: hp('1%'), marginTop: hp('1%') }}>
-                                    <TouchableOpacity style={styles.color}>
-                                        {/* <CheckBox
-                                        disabled={false}
-                                        value={this.state.toggleCheckBox}
-                                        onValueChange={() => this.setState({ toggleCheckBox: true })}
-                                        tintColors={{ true: '#D6D6D6', false: '#D6D6D6' }}
-
-                                    /> */}
-                                    </TouchableOpacity>
-
-                                    <View style={styles.sizebox}  >
-                                        <Text> 40 </Text>
-                                    </View>
-                                    <TouchableOpacity style={styles.qnt} onPress={() => { }}>
-                                        <Text> + </Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={{ marginTop: hp('2%'), marginLeft: hp('1%'), }} onPress={() => { }}>
-                                        <Text style={{ fontSize: hp('2%') }}> 1 </Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.qnt} onPress={() => { }}>
-                                        <Text> - </Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'row', marginTop: hp('3%'), marginLeft: hp('3%'), }} >
-                        <Text style={{ fontSize: hp('2.5%'), }}>Coupon</Text>
-                    </View>
-                    {/* <View style={{ flex: 0.3, }}> */}
-                    <View style={styles.coupon} >
-                        <TouchableOpacity >
-                            <AntDesign name="tago" size={27} color='#AAAAAA' style={{ alignItems: 'center', justifyContent: 'center', margin: hp('1%') }} />
-                        </TouchableOpacity>
-                        <Text style={{ position: 'absolute', fontSize: hp('2%'), marginLeft: hp('7%') }}>3 Coupon applied</Text>
-                        <Text style={{ position: 'absolute', fontSize: hp('2%'), marginLeft: hp('7%'), marginTop: hp('3%'), color: '#FF95AD' }}>You Saved $30</Text>
-                        <TouchableOpacity style={{ position: 'absolute', marginLeft: wp('72%'), marginTop: hp('1%') }}>
-                            <AntDesign name="closecircle" size={27} color='#ff0000' />
-                        </TouchableOpacity>
-                    </View>
-                    {/* </View> */}
-                    <View style={{ flexDirection: 'column', marginTop: hp('2%'), marginLeft: hp('3%'), }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }} >
-                            <TouchableOpacity>
-                                <Text style={{ fontSize: hp('2.5%') }}>Available Offers</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#FF95AD' }}>View All Offers</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ flexDirection: 'row', marginTop: hp('1%') }} >
-                            <MaterialCommunityIcons name="brightness-percent" size={27} color='#AAAAAA' style={{ marginLeft: hp('1%'), marginTop: hp('2%') }} />
-                            <Text style={{ fontSize: hp('2%'), color: '#AAAAAA', marginTop: hp('2.5%'), marginLeft: hp('1%'), }}>10% off instant Discount with All Credit Cards</Text>
-                        </View>
-                    </View>
-                    <View style={{ flexDirection: 'column', marginTop: hp('1%'), marginLeft: hp('3%') }}>
+
+
+                    <View style={{ marginLeft: hp('3%') }}>
                         <Text style={{ fontSize: hp('2.5%') }}>Bill Details</Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={{ fontSize: hp('2.5%') }}>Item Total</Text>

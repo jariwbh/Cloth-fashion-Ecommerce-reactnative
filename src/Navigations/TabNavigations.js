@@ -7,12 +7,15 @@ import ProductListScreen from '../screens/ProductListScreen/ProductListScreen'
 import LikeScreen from '../screens/LikeScreen/LikeScreen';
 import AboutScreen from '../screens/AboutScreen/AboutScreen';
 import MyProfileScreen from '../screens/MyProfileScreen/MyProfileScreen';
+import NewLifeStyleScreen from '../screens/NewLifeStyleScreen/NewLifeStyleScreen'
+import AddToCartScreen from '../screens/AddToCartScreen/AddToCartScreen'
 import AppScreen from '../screens/AppScreen/AppScreen';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import MenuBarIcon from '../components/Menu/MenuBarIcon';
 import MenuIcon from '../components/Menu/MenuIcon';
+import MenuBack from '../components/Menu/MenuBack';
 
 const MainStack = createStackNavigator();
 function MainStackScreen() {
@@ -38,7 +41,66 @@ function MainStackScreen() {
                     <MenuIcon />, headerRight: () =>
                         <MenuBarIcon />
             }} component={ProductListScreen} />
+            <MainStack.Screen name="NewLifeStyleScreen" options={{
+                tabBarVisible: false,
+                title: 'NewLifeStyle', headerStyle: {
+                    backgroundColor: '#FFFFFF',
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                }, headerLeft: () =>
+                    <MenuBack />, headerRight: () =>
+                        <MenuBarIcon />
+            }} component={NewLifeStyleScreen} />
+            <MainStack.Screen name="AddToCartScreen" options={{
+                title: '', headerStyle: {
+                    backgroundColor: '#FFFFFF',
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                }, headerLeft: () =>
+                    <MenuBack />, headerRight: () =>
+                        <MenuBarIcon />
+            }} component={AddToCartScreen} />
+            <MainStack.Screen name="AppScreen" component={AppStackScreen} />
+            <MainStack.Screen name="Likes" component={LikeStackScreen} />
         </MainStack.Navigator>
+    );
+}
+
+const AppStack = createStackNavigator();
+function AppStackScreen() {
+    return (
+        <AppStack.Navigator initialRouteName="AppScreen" headerMode='screen' >
+            <AppStack.Screen name="AppScreen" options={{
+                title: 'NewLifestyle', headerStyle: {
+                    backgroundColor: '#FFFFFF',
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                }, headerLeft: () =>
+                    <MenuIcon />, headerRight: () =>
+                        <MenuBarIcon />
+            }} component={AppScreen} />
+        </AppStack.Navigator>
+    );
+}
+
+const LikeStack = createStackNavigator();
+function LikeStackScreen() {
+    return (
+        <LikeStack.Navigator initialRouteName="Likes" headerMode='screen' >
+            <LikeStack.Screen name="Likes" options={{
+                title: 'Whish List', headerStyle: {
+                    backgroundColor: '#FFFFFF',
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                }, headerLeft: () =>
+                    <MenuIcon />, headerRight: () =>
+                        <MenuBarIcon />
+            }} component={LikeScreen} />
+        </LikeStack.Navigator>
     );
 }
 
@@ -108,10 +170,10 @@ export default function TabNavigations() {
                     showLabel: false
                 }}
             >
-                <Tab.Screen name="App" component={AppScreen} />
+                <Tab.Screen name="App" component={AppStackScreen} />
                 <Tab.Screen name="AboutScreen" component={AboutScreen} />
                 <Tab.Screen name="Main" component={MainStackScreen} />
-                <Tab.Screen name="Likes" component={LikeScreen} />
+                <Tab.Screen name="Likes" component={LikeStackScreen} />
                 <Tab.Screen name="Profile" component={MyProfileScreen} />
             </Tab.Navigator>
         </>
