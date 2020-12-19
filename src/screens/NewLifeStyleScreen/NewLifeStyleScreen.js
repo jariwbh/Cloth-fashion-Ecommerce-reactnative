@@ -5,6 +5,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { saveLocalWishList, removeLocalWishList } from '../../Helpers/LocalWishList';
 
 class NewLifeStyleScreen extends Component {
     constructor(props) {
@@ -20,8 +21,19 @@ class NewLifeStyleScreen extends Component {
             sizeList: this.itemObj.property.size,
             colorList: this.itemObj.property.color,
             selectedColor: null,
-            selectedSize: null
+            selectedSize: null,
+            selectedWishList: this.itemObj.selected
         };
+    }
+
+    onPressWishlisthandler(item) {
+        if (item.selected) {
+            removeLocalWishList(item)
+        } else {
+            item.selected = true
+            saveLocalWishList(item)
+        }
+        this.props.navigation.navigate('ProductListScreen')
     }
 
     onPressToSelectsize(selectedSize, index) {
@@ -61,8 +73,22 @@ class NewLifeStyleScreen extends Component {
         </TouchableOpacity>
     )
 
+    addToCarthandlar() {
+        const { selectedColor, selectedSize } = this.state;
+
+        if (!selectedColor) {
+            alert('selected color required')
+            return;
+        }
+        if (!selectedSize) {
+            alert('selected size required')
+            return;
+        }
+        let item = this.itemObj
+        this.props.navigation.navigate('AddToCartScreen', { item })
+    }
     render() {
-        const { item_logo, itemname, price, discount, description, sizeList, colorList, selectedSize } = this.state;
+        const { item_logo, itemname, price, discount, description, sizeList, colorList, selectedSize, selectedWishList } = this.state;
         return (
             <View style={styles.container}>
                 <ScrollView>
@@ -114,12 +140,12 @@ class NewLifeStyleScreen extends Component {
                         <Text style={{ fontSize: hp('1.8%'), paddingBottom: hp('1%'), textTransform: 'capitalize' }}>{description}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginBottom: hp('7%') }}>
-                        <TouchableOpacity style={styles.cart} onPress={() => { this.props.navigation.navigate('AddToCartScreen') }}>
+                        <TouchableOpacity style={styles.cart} onPress={() => this.addToCarthandlar()}>
                             <SimpleLineIcons name="bag" size={24} color="#fff" style={{ marginLeft: hp('2%'), }} />
                             <Text style={{ fontSize: hp('2.3%'), color: '#fff', padding: wp('2 %'), }}>ADD TO CART </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.wishlist}>
-                            <FontAwesome name="heart-o" size={24} color="#B9B913" />
+                        <TouchableOpacity style={styles.wishlist} onPress={() => this.onPressWishlisthandler(this.itemObj)}>
+                            {selectedWishList === true ? <FontAwesome name="heart" size={24} color="red" /> : <FontAwesome name="heart-o" size={24} color="#B9B913" />}
                             <Text style={{ fontSize: hp('2.3%'), color: '#B9B913', padding: wp('2 %') }}>WISHLIST </Text>
                         </TouchableOpacity>
                     </View>

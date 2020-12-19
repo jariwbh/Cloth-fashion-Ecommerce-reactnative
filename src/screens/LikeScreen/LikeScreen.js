@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react
 import { ScrollView } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
-import { getLocalWishList } from '../../Helpers/localData'
+import { getLocalWishList, removeLocalWishList } from '../../Helpers/LocalWishList'
 
 class LikeScreen extends Component {
     constructor(props) {
@@ -13,14 +13,23 @@ class LikeScreen extends Component {
         };
     }
 
-    getsaveLocalWishListService() {
-        const productList = getLocalWishList()
+    async getLocalWishListService() {
+        const productList = await getLocalWishList()
         this.setState({ productList: productList })
     }
 
-    componentDidMount() {
-        this.getsaveLocalWishListService();
+    async removeLocalWishListService(item) {
+        await removeLocalWishList(item)
+        await this.getLocalWishListService();
     }
+
+    async componentDidMount() {
+        await this.getLocalWishListService();
+    }
+
+    // async componentDidUpdate() {
+    //     await this.getLocalWishListService();
+    // }
 
     renderInventoryItem = ({ item }) => (
         <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%'), }}>
@@ -30,8 +39,8 @@ class LikeScreen extends Component {
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', marginLeft: hp('1%'), justifyContent: 'space-between', marginRight: hp('1%'), }}>
                 <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize' }}>{item.itemname}</Text>
-                <TouchableOpacity>
-                    <FontAwesome name="heart-o" size={24} color="#000000" />
+                <TouchableOpacity onPress={() => this.removeLocalWishListService(item)}>
+                    <FontAwesome name="heart" size={24} color="red" />
                 </TouchableOpacity>
             </View>
             <Text style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>{item.sale.description}</Text>

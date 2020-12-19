@@ -173,7 +173,7 @@ export default function TabNavigations() {
                 <Tab.Screen name="App" component={AppStackScreen} />
                 <Tab.Screen name="AboutScreen" component={AboutScreen} />
                 <Tab.Screen name="Main" component={MainStackScreen} />
-                <Tab.Screen name="Likes" component={LikeStackScreen} />
+                <Tab.Screen name="Likes" options={{ unmountOnBlur: true }} component={LikeStackScreen} />
                 <Tab.Screen name="Profile" component={MyProfileScreen} />
             </Tab.Navigator>
         </>

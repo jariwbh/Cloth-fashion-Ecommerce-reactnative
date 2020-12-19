@@ -5,8 +5,8 @@ async function getLocalWishList() {
     return JSON.parse(localWishLists)
 }
 
-function getLocalWishListByID(currentWishListId) {
-    let localWishLists = getLocalWishList();
+async function getLocalWishListByID(currentWishListId) {
+    let localWishLists = await getLocalWishList();
     let foundWishList
     if (localWishLists) {
         foundWishList = localWishLists.find(x => x._id === currentWishListId)
@@ -15,9 +15,7 @@ function getLocalWishListByID(currentWishListId) {
 }
 
 async function saveLocalWishList(currentWishList) {
-    console.log('currentWishList', currentWishList)
     let localWishLists = await getLocalWishList();
-    console.log('localWishLists', localWishLists)
     let filteredWishLists = []
     if (localWishLists) {
         filteredWishLists = localWishLists.filter(x => x._id !== currentWishList._id)
@@ -29,12 +27,12 @@ async function saveLocalWishList(currentWishList) {
     AsyncStorage.setItem('@unsavedWishLists', JSON.stringify(filteredWishLists));
 }
 
-function removeLocalWishList(currentWishListID) {
-    let localWishLists = getLocalWishList();
+async function removeLocalWishList(currentWishListObj) {
+    let localWishLists = await getLocalWishList();
     let filteredWishLists = []
     if (localWishLists) {
-        filteredWishLists = localWishLists.filter(x => x._id !== currentWishListID)
-        AsyncStorage.setItem('@unsavedWishLists', filteredWishLists);
+        filteredWishLists = localWishLists.filter(x => x._id !== currentWishListObj._id)
+        AsyncStorage.setItem('@unsavedWishLists', JSON.stringify(filteredWishLists));
     }
 }
 
