@@ -18,7 +18,7 @@ import MenuIcon from '../components/Menu/MenuIcon';
 import MenuBack from '../components/Menu/MenuBack';
 
 const MainStack = createStackNavigator();
-function MainStackScreen() {
+function MainStackScreen({ navigation }) {
     return (
         <MainStack.Navigator initialRouteName="MainScreen" headerMode='screen' >
             <MainStack.Screen name="MainScreen" options={{
@@ -28,8 +28,8 @@ function MainStackScreen() {
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
-                    <MenuIcon />, headerRight: () =>
-                        <MenuBarIcon />
+                    <MenuIcon onPress={() => navigation.navigate("FilterScreen")} />, headerRight: () =>
+                        <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
             }} component={MainScreen} />
             <MainStack.Screen name="ProductListScreen" options={{
                 title: 'New Arrivals', headerStyle: {
@@ -38,8 +38,8 @@ function MainStackScreen() {
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
-                    <MenuIcon />, headerRight: () =>
-                        <MenuBarIcon />
+                    <MenuIcon onPress={() => navigation.navigate("FilterScreen")} />, headerRight: () =>
+                        <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
             }} component={ProductListScreen} />
             <MainStack.Screen name="NewLifeStyleScreen" options={{
                 tabBarVisible: false,
@@ -49,18 +49,18 @@ function MainStackScreen() {
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
-                    <MenuBack />, headerRight: () =>
-                        <MenuBarIcon />
+                    <MenuBack onPress={() => navigation.navigate("ProductListScreen")} />, headerRight: () =>
+                        <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
             }} component={NewLifeStyleScreen} />
             <MainStack.Screen name="AddToCartScreen" options={{
-                title: '', headerStyle: {
+                title: 'My Cart', headerStyle: {
                     backgroundColor: '#FFFFFF',
                     elevation: 0,
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
-                    <MenuBack />, headerRight: () =>
-                        <MenuBarIcon />
+                    <MenuBack onPress={() => navigation.navigate("ProductListScreen")} />, headerRight: () =>
+                        <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
             }} component={AddToCartScreen} />
             <MainStack.Screen name="AppScreen" component={AppStackScreen} />
             <MainStack.Screen name="Likes" component={LikeStackScreen} />
@@ -69,7 +69,7 @@ function MainStackScreen() {
 }
 
 const AppStack = createStackNavigator();
-function AppStackScreen() {
+function AppStackScreen({ navigation }) {
     return (
         <AppStack.Navigator initialRouteName="AppScreen" headerMode='screen' >
             <AppStack.Screen name="AppScreen" options={{
@@ -80,14 +80,14 @@ function AppStackScreen() {
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
                     <MenuIcon />, headerRight: () =>
-                        <MenuBarIcon />
+                        <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
             }} component={AppScreen} />
         </AppStack.Navigator>
     );
 }
 
 const LikeStack = createStackNavigator();
-function LikeStackScreen() {
+function LikeStackScreen({ navigation }) {
     return (
         <LikeStack.Navigator initialRouteName="Likes" headerMode='screen' >
             <LikeStack.Screen name="Likes" options={{
@@ -97,8 +97,8 @@ function LikeStackScreen() {
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
-                    <MenuIcon />, headerRight: () =>
-                        <MenuBarIcon />
+                    <MenuIcon onPress={() => navigation.navigate("FilterScreen")} />, headerRight: () =>
+                        <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
             }} component={LikeScreen} />
         </LikeStack.Navigator>
     );

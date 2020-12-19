@@ -109,7 +109,7 @@ class ProductListScreen extends Component {
         </TouchableOpacity>
     )
 
-    onPressToCategoryService(item, index) {
+    async onPressToCategoryService(item, index) {
         const { categoryList } = this.state;
         const category = categoryList.map((item) => {
             item.selected = false;
@@ -117,7 +117,8 @@ class ProductListScreen extends Component {
         });
         category[index].selected = true;
         this.setState({ categoryList: category })
-        this.getInventoryItemService(item._id)
+        await this.getInventoryItemService(item._id)
+        await this.onLoadHandler();
     }
 
     render() {

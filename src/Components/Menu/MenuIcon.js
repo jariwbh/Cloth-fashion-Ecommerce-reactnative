@@ -8,7 +8,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const MenuIcon = (props) => {
     return (
-        <TouchableOpacity style={styles.menu} onPress={() => { alert('hiii') }}>
+        <TouchableOpacity style={styles.menu} onPress={props.onPress}>
             <MaterialIcons name="sort" size={24} color="#000000" style={{ position: 'absolute', }} />
         </TouchableOpacity>
     )

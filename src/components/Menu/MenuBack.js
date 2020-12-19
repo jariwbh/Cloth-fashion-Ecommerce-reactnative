@@ -6,9 +6,9 @@ import {
 } from 'react-native-responsive-screen'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const MenuBack = () => {
+const MenuBack = (props) => {
     return (
-        <TouchableOpacity style={styles.back} onPress={() => { }}>
+        <TouchableOpacity style={styles.back} onPress={props.onPress}>
             <MaterialIcons name="arrow-back" size={24} color="#000000" style={{ position: 'absolute', }} />
         </TouchableOpacity>
     )

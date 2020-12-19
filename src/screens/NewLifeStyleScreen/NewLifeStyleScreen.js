@@ -6,6 +6,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { saveLocalWishList, removeLocalWishList } from '../../Helpers/LocalWishList';
+import { saveLocalAddtocardlist } from '../../Helpers/LocalAddTOcart';
 
 class NewLifeStyleScreen extends Component {
     constructor(props) {
@@ -75,18 +76,21 @@ class NewLifeStyleScreen extends Component {
 
     addToCarthandlar() {
         const { selectedColor, selectedSize } = this.state;
-
         if (!selectedColor) {
-            alert('selected color required')
+            alert('please select your color')
             return;
         }
         if (!selectedSize) {
-            alert('selected size required')
+            alert('please select your size')
             return;
         }
+        this.itemObj.selectedColorCode = selectedColor
+        this.itemObj.selectedSizeSize = selectedSize
         let item = this.itemObj
-        this.props.navigation.navigate('AddToCartScreen', { item })
+        saveLocalAddtocardlist(item)
+        this.props.navigation.navigate('ProductListScreen')
     }
+
     render() {
         const { item_logo, itemname, price, discount, description, sizeList, colorList, selectedSize, selectedWishList } = this.state;
         return (
