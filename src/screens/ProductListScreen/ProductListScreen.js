@@ -77,7 +77,7 @@ class ProductListScreen extends Component {
             if (data._id == item._id) {
                 data.selected = (data.selected == null) ? (true) : !data.selected;
                 data.selected === true ? this.saveLocalWishList(item) : this.removeLocalWishList(item)
-                console.log('data.selected', data.selected)
+                console.log('data.selected', data)
                 break;
             }
         }

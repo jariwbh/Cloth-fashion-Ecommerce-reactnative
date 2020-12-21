@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, TouchableHighlight } from 'react-native';
 import {
     heightPercentageToDP as hp, widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
@@ -13,6 +13,12 @@ class AddToCartScreen extends Component {
         this.state = {
             cartlist: [],
         };
+        this.totalAmount = 0;
+        this.totalDiscount = 0;
+        this.finalAmount = 0;
+        this.totalTax = 0;
+        this.taxAmount = 0;
+        this.totalQty = 0;
     }
 
     async getLocaladdtocardlist() {
@@ -29,6 +35,15 @@ class AddToCartScreen extends Component {
         await this.getLocaladdtocardlist()
     }
 
+    calculatorAmount() {
+        let renderData = this.state.cartlist;
+        this.totalAmount = renderData.map(item => (item.sale.rate ? item.sale.rate : 0) * (item.itemqty ? item.itemqty : 0)).reduce((prev, next) => prev + next);
+        this.totalDiscount = renderData.map(item => (item.sale.discount ? item.sale.discount : 0) * (item.itemqty ? item.itemqty : 0)).reduce((prev, next) => prev + next);
+        this.totalTax = renderData.map(item => (item.sale.taxes ? item.sale.taxes[0].amount : 0) * (item.itemqty ? item.itemqty : 0)).reduce((prev, next) => prev + next);
+        this.finalAmount = ((this.totalAmount - this.totalDiscount) + this.totalTax);
+        this.totalQty = this.totalQty + data.itemqty;
+    }
+
     onPressIncrementItem(item) {
         let renderData = [...this.state.cartlist];
         for (let data of renderData) {
@@ -40,6 +55,7 @@ class AddToCartScreen extends Component {
                 break;
             }
         }
+        this.calculatorAmount()
         this.setState({ cartlist: renderData });
     }
 
@@ -54,7 +70,9 @@ class AddToCartScreen extends Component {
                 break;
             }
         }
+        this.calculatorAmount()
         this.setState({ cartlist: renderData });
+        console.log('renderData', renderData)
     }
 
     renderAddtoCardList = ({ item }) => (
@@ -89,7 +107,7 @@ class AddToCartScreen extends Component {
                     <TouchableOpacity style={{ marginTop: hp('2%'), marginLeft: hp('1%'), }}>
                         <Text style={{ fontSize: hp('2%') }}> {item.itemqty ? item.itemqty : 0} </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.qnt} onPress={() => this.onPressDecreaseItem(item)}>
+                    <TouchableOpacity disabled={item.itemqty > 0 ? false : true} style={styles.qnt} onPress={() => this.onPressDecreaseItem(item)}>
                         <Text> - </Text>
                     </TouchableOpacity>
                 </View>
@@ -103,6 +121,31 @@ class AddToCartScreen extends Component {
         </View>
     )
 
+    onPressSubmit() {
+        console.log('this.state.cartlist', this.state.cartlist)
+        let renderData = [...this.state.cartlist];
+        for (let data of renderData) {
+            if (!data.itemqty) {
+                return alert('Quantity Invalid')
+            }
+            break;
+        }
+
+        let billdetails = {
+            customerid: "5fe09682e2b9185c969db61d",
+            status: "Unpaid",
+            items: this.state.cartlist,
+            onModel: "Member",
+            totalamount: this.finalAmount,
+            preparedby: '',
+            taxamount: this.totalTax,
+            discount: this.totalDiscount,
+            billingdate: '',
+        }
+
+        this.props.navigation.navigate('ProductListScreen')
+    }
+
     render() {
         const { cartlist } = this.state;
         return (
@@ -115,32 +158,32 @@ class AddToCartScreen extends Component {
                     />
                     <View style={{ marginLeft: hp('3%') }}>
                         <Text style={{ fontSize: hp('2.5%') }}>Bill Details</Text>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: hp('1%') }}>
                             <Text style={{ fontSize: hp('2.5%') }}>Item Total</Text>
-                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>$125</Text>
+                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ {this.totalAmount}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={{ fontSize: hp('2.5%') }}>Texes and Charges</Text>
-                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>$0</Text>
+                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ {this.totalTax}</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={{ fontSize: hp('2.5%') }}>Delivery Fees</Text>
-                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>$0</Text>
+                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ 0</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ fontSize: hp('2.5%') }}>Coupon</Text>
-                                <Text style={{ color: '#AAAAAA', fontSize: hp('2.5%') }}>(New coupon) </Text>
-                                <TouchableOpacity  >
-                                    <Text style={{ fontSize: hp('2.5%'), color: '#FF95AD' }}>Change</Text>
-                                </TouchableOpacity>
+                                <Text style={{ fontSize: hp('2.5%') }}>Total Discount</Text>
                             </View>
-                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>-$30.00</Text>
+                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ -{this.totalDiscount}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Text style={{ fontSize: hp('2.5%') }}>Total Amount</Text>
+                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ {this.finalAmount}</Text>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: hp('1%'), marginBottom: hp('10%') }}>
                         <View>
-                            <TouchableOpacity style={styles.order}>
+                            <TouchableOpacity style={styles.order} onPress={() => this.onPressSubmit()}>
                                 <Text style={{ fontSize: hp('2%'), color: '#FFF' }}>BOOK ORDER</Text>
                             </TouchableOpacity>
                         </View>
