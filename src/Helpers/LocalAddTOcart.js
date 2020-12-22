@@ -36,4 +36,8 @@ async function removeLocalAddtocardlist(currentAddtocardlistObj) {
     }
 }
 
-export { getLocaladdtocardlist, getLocalAddtocardlistByID, saveLocalAddtocardlist, removeLocalAddtocardlist }
+function removeLocalAllAddtocardlist() {
+    AsyncStorage.removeItem('@addtocardlist');
+}
+
+export { getLocaladdtocardlist, getLocalAddtocardlistByID, saveLocalAddtocardlist, removeLocalAddtocardlist, removeLocalAllAddtocardlist }
