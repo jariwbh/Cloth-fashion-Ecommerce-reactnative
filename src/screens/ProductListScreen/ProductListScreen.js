@@ -87,17 +87,24 @@ class ProductListScreen extends Component {
     renderInventoryItem = ({ item }) => (
         <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%'), }}>
             <TouchableOpacity onPress={() => { this.props.navigation.push('NewLifeStyleScreen', { item }) }} >
-                <Image source={{ uri: item.item_logo }}
-                    style={{ margin: hp('1.5%'), height: hp('30%'), width: wp('40%'), borderRadius: 10, borderColor: '#FFFFFF', borderWidth: 2 }} />
+                <Image source={{ uri: item.item_logo }} resizeMode="stretch"
+                    style={{ alignSelf: 'auto', flex: 1, margin: hp('1.5%'), height: hp('30%'), width: wp('40%'), borderRadius: hp('2%'), borderColor: '#FFFFFF', }} />
             </TouchableOpacity>
-            <View style={{ flexDirection: 'row', marginLeft: hp('1%'), justifyContent: 'space-between', marginRight: hp('1%'), }}>
-                <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize' }}>{item.itemname}</Text>
-                <TouchableOpacity onPress={() => { this.onPressHandler(item) }}>
-                    {item.selected == true ? <FontAwesome name="heart" size={24} color="red" /> : <FontAwesome name="heart-o" size={24} color="#000000" />}
+            <View style={styles.heart}>
+                <TouchableOpacity onPress={() => { this.onPressHandler(item) }} style={{ alignItems: 'center', }}>
+                    {item.selected == true ? <FontAwesome name="heart" size={24} color="red" /> : <FontAwesome name="heart-o" size={24} color="red" />}
                 </TouchableOpacity>
             </View>
-            <Text style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>{item.sale.description}</Text>
-            <Text style={{ marginLeft: hp('1%') }}>₹ {item.sale.rate}</Text>
+            <View style={{ flexDirection: 'row', marginLeft: hp('1%'), justifyContent: 'space-between', marginRight: hp('1%'), }}>
+                <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize' }}>{item.itemname}</Text>
+            </View>
+            <View>
+                <Text style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>{item.sale.description}</Text>
+            </View>
+            <View style={{ flexDirection: 'row', }}>
+                <Text style={{ marginLeft: hp('2%'), fontSize: hp('2%') }}>₹ {item.sale.rate}</Text>
+                {item.sale.discount && <Text style={{ fontSize: hp('2%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>}
+            </View>
         </View>
     )
 
@@ -165,6 +172,28 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FFFFFF'
+    },
+    heart: {
+        flex: 1,
+        width: wp('10%'),
+        height: hp('5.5%'),
+        borderRadius: hp('15%'),
+        marginLeft: hp('19%'),
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor: '#000000',
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        shadowOffset: {
+            height: 0,
+            width: 0,
+        },
+        elevation: 3,
+        position: 'absolute',
+        marginTop: hp('28%'),
+
+
     },
     newview: {
         backgroundColor: "#FF95AD",

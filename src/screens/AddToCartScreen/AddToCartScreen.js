@@ -77,10 +77,21 @@ class AddToCartScreen extends Component {
 
     renderAddtoCardList = ({ item }) => (
         <View style={styles.imageview}>
-            <View>
-                <Image source={{ uri: item.item_logo }} style={{ margin: hp('1 %'), width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%') }} />
+            <View style={{ flexDirection: 'column-reverse' }}>
+                <View>
+                    <Image source={{ uri: item.item_logo }} resizeMode="stretch" style={{
+                        alignSelf: 'auto', width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%'),
+
+                    }} />
+                </View>
+                <View style={styles.heart}>
+                    <TouchableOpacity onPress={() => this.removeLocalAddtocardlist(item)}
+                        style={{}}>
+                        <AntDesign name="delete" size={24} color="red" />
+                    </TouchableOpacity>
+                </View>
             </View>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, marginTop: hp('3%') }}>
                 <Text style={{ fontSize: hp('2.5%'), }}>{item.itemname}</Text>
                 <View style={{ flexDirection: 'row', }}>
                     <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.sale.rate}</Text>
@@ -111,12 +122,12 @@ class AddToCartScreen extends Component {
                         <Text> - </Text>
                     </TouchableOpacity>
                 </View>
-                <View>
+                {/* <View>
                     <TouchableOpacity onPress={() => this.removeLocalAddtocardlist(item)}
                         style={{ position: 'absolute', paddingHorizontal: hp('2%'), marginTop: hp('2%') }}>
                         <AntDesign name="delete" size={24} color="red" />
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
         </View>
     )
@@ -201,25 +212,27 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFFFFF'
     },
-    back: {
-        width: wp('12.5%'),
-        height: hp('6.5%'),
+    heart: {
+        flex: 1,
+        width: wp('10%'),
+        height: hp('5.5%'),
         borderRadius: hp('15%'),
-        paddingLeft: hp('4%'),
-        marginLeft: hp('2%'),
-        marginTop: hp('4 %'),
-        backgroundColor: '#fff',
+        marginLeft: hp('16%'),
+        backgroundColor: '#FFFFFF',
         alignItems: 'center',
-        justifyContent: 'center'
-    },
-    cartview: {
-        backgroundColor: "#FF95AD",
-        borderRadius: wp('2%'),
-        width: wp('22%'),
-        height: hp('6%'),
-        marginLeft: hp('2%'),
-        alignItems: "center",
         justifyContent: 'center',
+        borderColor: '#000000',
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        shadowOffset: {
+            height: 0,
+            width: 0,
+        },
+        elevation: 3,
+        position: 'absolute',
+
+
+
     },
     carttext: {
         backgroundColor: "#ffff",
@@ -231,12 +244,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     imageview: {
+        flex: 1,
         flexDirection: 'row',
-        backgroundColor: "#fff",
-        borderRadius: wp('2%'),
-        width: wp('98%'),
-        height: hp('27%'),
-        marginLeft: hp('0.5%'),
+
     },
     sizebox: {
         width: wp('10%'),

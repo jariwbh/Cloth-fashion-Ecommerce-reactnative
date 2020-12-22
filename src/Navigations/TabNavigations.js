@@ -10,12 +10,14 @@ import MyProfileScreen from '../screens/MyProfileScreen/MyProfileScreen';
 import NewLifeStyleScreen from '../screens/NewLifeStyleScreen/NewLifeStyleScreen'
 import AddToCartScreen from '../screens/AddToCartScreen/AddToCartScreen'
 import AppScreen from '../screens/AppScreen/AppScreen';
-import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MenuBarIcon from '../components/Menu/MenuBarIcon';
 import MenuIcon from '../components/Menu/MenuIcon';
 import MenuBack from '../components/Menu/MenuBack';
+import { MaterialCommunityIcons } from 'react-native-vector-icons'
+
+
 
 const MainStack = createStackNavigator();
 function MainStackScreen({ navigation }) {
@@ -27,6 +29,7 @@ function MainStackScreen({ navigation }) {
                     elevation: 0,
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
+
                 }, headerLeft: () =>
                     <MenuIcon onPress={() => navigation.navigate("FilterScreen")} />, headerRight: () =>
                         <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
@@ -114,32 +117,33 @@ export default function TabNavigations() {
                     tabBarIcon: ({ focused, color, size }) => {
                         if (route.name === 'Main') {
                             return (
-                                <Feather
-                                    name={focused ? 'home' : 'home'}
-                                    size={23}
+                                <MaterialCommunityIcons
+                                    name={focused ? 'home' : 'home-outline'}
+                                    size={30}
                                     color={color}
+
                                 />
                             );
                         } else if (route.name === 'Likes') {
                             return (
-                                <Feather
-                                    name={focused ? 'heart' : 'heart'}
+                                <FontAwesome
+                                    name={focused ? 'heart' : 'heart-o'}
                                     size={23}
                                     color={color}
                                 />
                             );
                         } else if (route.name === 'Profile') {
                             return (
-                                <SimpleLineIcons
-                                    name={focused ? 'user' : 'user'}
-                                    size={23}
+                                <FontAwesome
+                                    name={focused ? 'user' : 'user-o'}
+                                    size={25}
                                     color={color}
                                 />
                             );
                         } else if (route.name === 'AboutScreen') {
                             return (
                                 <AntDesign
-                                    name={focused ? 'questioncircleo' : 'questioncircleo'}
+                                    name={focused ? 'questioncircle' : 'questioncircleo'}
                                     size={23}
                                     color={color}
                                 />
@@ -147,7 +151,7 @@ export default function TabNavigations() {
                         } else if (route.name === 'App') {
                             return (
                                 <AntDesign
-                                    name={focused ? 'appstore-o' : 'appstore-o'}
+                                    name={focused ? 'appstore1' : 'appstore-o'}
                                     size={23}
                                     color={color}
                                 />
@@ -179,3 +183,6 @@ export default function TabNavigations() {
         </>
     );
 }
+
+
+
