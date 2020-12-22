@@ -46,7 +46,7 @@ class MainScreen extends Component {
     renderCategory = ({ item }) => (
         <View>
             <TouchableOpacity onPress={() => { this.props.navigation.navigate('ProductListScreen', { item }) }} style={{ alignItems: 'center' }}>
-                <Image source={{ uri: item.property.icon_logo }} style={{ height: 100, width: 100 }} />
+                <Image source={{ uri: item.property.icon_logo }} style={{ height: hp('10%'), width: wp('20%') }} />
                 <Text style={{ marginTop: hp('-1%') }}>{item.property.title}</Text>
             </TouchableOpacity>
         </View>
@@ -55,8 +55,8 @@ class MainScreen extends Component {
     renderInventoryItem = ({ item }) => (
         <View style={{ flex: 1, marginLeft: wp('3%'), marginBottom: hp('1%') }}>
             <TouchableOpacity onPress={() => { this.props.navigation.navigate('ProductListScreen') }} >
-                <Image source={{ uri: item.item_logo }}
-                    style={{ margin: hp('1.5%'), height: hp('25%'), width: wp('40%'), borderRadius: 10 }} />
+                <Image source={{ uri: item.item_logo }} resizeMode="stretch"
+                    style={{ margin: hp('1.5%'), height: hp('25%'), alignSelf: 'auto', width: wp('40%'), borderRadius: hp('1.5%') }} />
             </TouchableOpacity>
             <View style={{ marginLeft: wp('2%') }}>
                 <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize' }}>{item.itemname}</Text>

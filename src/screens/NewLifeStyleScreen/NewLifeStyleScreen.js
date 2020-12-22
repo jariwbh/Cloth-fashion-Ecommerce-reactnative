@@ -119,9 +119,10 @@ class NewLifeStyleScreen extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: hp('1%') }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: hp('1%'), flex: 1 }}>
                         <TouchableOpacity>
-                            <Image source={{ uri: item_logo }} style={{ height: 300, width: 300 }} />
+                            <Image source={{ uri: item_logo }} resizeMode="stretch" style={{ height: hp('40%'), width: wp('50%'), borderRadius: hp('1.5%'), alignSelf: 'auto', flex: 1 }} />
+
                         </TouchableOpacity>
                     </View>
                     <View style={{ flexDirection: 'column', marginTop: hp('1%'), marginLeft: hp('5%'), justifyContent: 'flex-start', alignItems: 'flex-start', }}>

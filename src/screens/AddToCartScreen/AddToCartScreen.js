@@ -104,30 +104,44 @@ class AddToCartScreen extends Component {
 
     renderAddtoCardList = ({ item }) => (
         <View style={styles.imageview}>
-            <View>
-                <Image source={{ uri: item.itemid.item_logo }} style={{ margin: hp('1 %'), width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%') }} />
+            <View style={{ flexDirection: 'column-reverse' }}>
+                <View>
+                    <Image source={{ uri: item.itemid.item_logo }}
+                        resizeMode="stretch" style={{
+                            alignSelf: 'auto', width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%')
+                        }} />
+                </View>
+                <View style={styles.heart}>
+                    <TouchableOpacity onPress={() => this.removeLocalAddtocardlist(item)}>
+                        <AntDesign name="delete" size={24} color="red" />
+                    </TouchableOpacity>
+                </View>
             </View>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, marginTop: hp('3%') }}>
                 <Text style={{ fontSize: hp('2.5%'), }}>{item.itemid.itemname}</Text>
                 <View style={{ flexDirection: 'row', }}>
                     <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.itemid.sale.rate}</Text>
                     {item.itemid.sale.discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.itemid.sale.discount} ₹ OFF)</Text>}
                 </View>
-                <View style={{ flexDirection: 'row', }}>
-                    <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1%') }}>Colors</Text>
-                    <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1.5%') }}>Size</Text>
-                    <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%') }}>Qty</Text>
+                <View style={{ flexDirection: 'row', marginLeft: hp('1%'), }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                        <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1%'), marginTop: hp('1%') }}>Colors</Text>
+                        <View style={{
+                            width: wp('3%'), height: hp('2%'), borderColor: '#000000',
+                            borderWidth: hp('0.1 %'), marginLeft: hp('1%'), marginTop: hp('2%'),
+                            alignItems: 'center', justifyContent: 'center', backgroundColor: item.selectedColorCode
+                        }}>
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                        <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1.5%'), marginTop: hp('1%') }}>Size :</Text>
+                        <View style={styles.sizebox}  >
+                            <Text style={{ fontSize: hp('2%') }} > {item.selectedSizeSize}</Text>
+                        </View>
+                    </View>
                 </View>
-                <View style={{ flexDirection: 'row', marginLeft: hp('1%'), marginTop: hp('1%') }}>
-                    <View style={{
-                        width: wp('10%'), height: hp('5%'), borderRadius: hp('1%'), borderColor: '#000000',
-                        borderWidth: hp('0.1 %'), marginLeft: hp('1%'), marginTop: hp('1 %'),
-                        alignItems: 'center', justifyContent: 'center', backgroundColor: item.selectedColorCode
-                    }}>
-                    </View>
-                    <View style={styles.sizebox}  >
-                        <Text> {item.selectedSizeSize}</Text>
-                    </View>
+                <View style={{ flexDirection: 'row', }}>
+                    <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), marginTop: hp('1.5%') }}>Qty</Text>
                     <TouchableOpacity style={styles.qnt} onPress={() => this.onPressIncrementItem(item)}>
                         <Text> + </Text>
                     </TouchableOpacity>
@@ -136,12 +150,6 @@ class AddToCartScreen extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity disabled={item.itemqty > 1 ? false : true} style={styles.qnt} onPress={() => this.onPressDecreaseItem(item)}>
                         <Text> - </Text>
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    <TouchableOpacity onPress={() => this.removeLocalAddtocardlist(item)}
-                        style={{ position: 'absolute', paddingHorizontal: hp('2%'), marginTop: hp('2%') }}>
-                        <AntDesign name="delete" size={24} color="red" />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -258,25 +266,24 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFFFFF'
     },
-    back: {
-        width: wp('12.5%'),
-        height: hp('6.5%'),
+    heart: {
+        flex: 1,
+        width: wp('10%'),
+        height: hp('5.5%'),
         borderRadius: hp('15%'),
-        paddingLeft: hp('4%'),
-        marginLeft: hp('2%'),
-        marginTop: hp('4 %'),
-        backgroundColor: '#fff',
+        marginLeft: hp('16%'),
+        backgroundColor: '#FFFFFF',
         alignItems: 'center',
-        justifyContent: 'center'
-    },
-    cartview: {
-        backgroundColor: "#FF95AD",
-        borderRadius: wp('2%'),
-        width: wp('22%'),
-        height: hp('6%'),
-        marginLeft: hp('2%'),
-        alignItems: "center",
         justifyContent: 'center',
+        borderColor: '#000000',
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        shadowOffset: {
+            height: 0,
+            width: 0,
+        },
+        elevation: 3,
+        position: 'absolute',
     },
     carttext: {
         backgroundColor: "#ffff",
@@ -288,21 +295,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     imageview: {
+        flex: 1,
         flexDirection: 'row',
-        backgroundColor: "#fff",
-        borderRadius: wp('2%'),
-        width: wp('98%'),
-        height: hp('27%'),
-        marginLeft: hp('0.5%'),
+
     },
     sizebox: {
-        width: wp('10%'),
-        height: hp('5%'),
-        borderRadius: hp('1%'),
+        flexDirection: 'row',
         borderColor: '#000000',
-        borderWidth: hp('0.1 %'),
-        marginLeft: hp('2%'),
-        marginTop: hp('1 %'),
+        marginLeft: hp('1%'),
+        marginTop: hp('1.5%'),
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center'
@@ -321,7 +322,6 @@ const styles = StyleSheet.create({
     },
     coupon: {
         flex: 0.1,
-        // width: wp('80%'),
         height: hp('7%'),
         borderRadius: hp('1%'),
         borderColor: '#000000',
