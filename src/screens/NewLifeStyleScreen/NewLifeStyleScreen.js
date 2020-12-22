@@ -13,6 +13,7 @@ class NewLifeStyleScreen extends Component {
     constructor(props) {
         super(props);
         this.itemID = this.props.route.params.item._id
+        console.log('this.itemID', this.itemID)
         this.state = {
             itemObj: null,
             item_logo: null,
@@ -133,39 +134,45 @@ class NewLifeStyleScreen extends Component {
                             {discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({discount} ₹ OFF)</Text>}
                         </View>
                     </View>
-                    <View style={styles.colorview}>
-                        <View>
-                            <Text style={{ padding: hp('2%'), fontSize: hp('2.5%') }}>Colors</Text>
-                        </View>
-                        <View style={styles.checkboxview}>
-                            <FlatList
-                                numColumns={10}
-                                data={colorList}
-                                renderItem={this.renderColor}
-                                keyExtractor={(item) => `${item.id}`}
-                            />
-                        </View>
-                        <View style={styles.size}>
-                            <Text style={{ fontSize: hp('2.5%') }}>Size </Text>
-                            <Text style={{ fontSize: hp('2%'), marginRight: hp('2%'), color: '#FF9DB9' }}>Size Chart </Text>
-                        </View>
-                        <ScrollView
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={false}
-                        >
-                            <View style={{ flexDirection: 'row' }}>
+                    {colorList &&
+                        <View style={styles.colorview}>
+                            <View>
+                                <Text style={{ padding: hp('2%'), fontSize: hp('2.5%') }}>Colors</Text>
+                            </View>
+                            <View style={styles.checkboxview}>
                                 <FlatList
                                     numColumns={10}
-                                    data={sizeList}
-                                    renderItem={this.renderSize}
-                                    keyExtractor={item => `${item.id}`}
+                                    data={colorList}
+                                    renderItem={this.renderColor}
+                                    keyExtractor={(item) => `${item.id}`}
                                 />
                             </View>
-                        </ScrollView>
-                    </View>
+                            {sizeList &&
+                                <>
+                                    <View style={styles.size}>
+                                        <Text style={{ fontSize: hp('2.5%') }}>Size </Text>
+                                        <Text style={{ fontSize: hp('2%'), marginRight: hp('2%'), color: '#FF9DB9' }}>Size Chart </Text>
+                                    </View>
+                                    <ScrollView
+                                        horizontal={true}
+                                        showsHorizontalScrollIndicator={false}
+                                    >
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <FlatList
+                                                numColumns={10}
+                                                data={sizeList}
+                                                renderItem={this.renderSize}
+                                                keyExtractor={item => `${item.id}`}
+                                            />
+                                        </View>
+                                    </ScrollView>
+                                </>
+                            }
+                        </View>
+                    }
                     <View style={{ marginTop: hp('1%'), marginLeft: hp('5%'), }}>
                         <Text style={{ fontSize: hp('2%'), marginBottom: hp('2%') }}>PRODUCT DETAILS</Text>
-                        <Text style={{ fontSize: hp('1.8%'), paddingBottom: hp('1%'), textTransform: 'capitalize' }}>{description}</Text>
+                        {description && <Text style={{ fontSize: hp('1.8%'), paddingBottom: hp('1%'), textTransform: 'capitalize' }}>description</Text>}
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginBottom: hp('7%') }}>
                         <TouchableOpacity style={styles.cart} onPress={() => this.addToCarthandlar()}>
