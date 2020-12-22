@@ -27,7 +27,7 @@ export class AppScreen extends Component {
     renderCategory = ({ item }) => (
         <TouchableOpacity onPress={() => this.props.navigation.navigate('ProductListScreen', { item })} >
             <View style={{ marginTop: hp('-2%'), alignItems: 'center' }}>
-                <Image source={{ uri: item.property.icon_logo }} style={{ height: 100, width: 100 }} />
+                <Image source={{ uri: item.property.icon_logo }} resizeMode="stretch" style={{ height: hp('30%'), width: wp('35%') }} />
                 <Text style={{ marginTop: "-15%", alignItems: 'center' }}>{item.property.title}</Text>
             </View>
         </TouchableOpacity>
