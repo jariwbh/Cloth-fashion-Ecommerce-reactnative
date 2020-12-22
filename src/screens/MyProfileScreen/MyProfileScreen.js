@@ -1,34 +1,76 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, ToastAndroid, Alert } from 'react-native'
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 import { Entypo } from '@expo/vector-icons';
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class MyProfileScreen extends Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            companyData: null,
+            companyProfile: '',
+        }
     }
+
+    componentDidMount() {
+        this.getdata()
+    }
+
+    getdata = async () => {
+        var getUser = await AsyncStorage.getItem('@authuser')
+        this.setState({ companyData: JSON.parse(getUser) })
+    }
+
+    onPressUpdateProfile() {
+        const { companyData } = this.state;
+        if (companyData != null) {
+            this.props.navigation.navigate('UpdateProfile', { companyData })
+        }
+    }
+
+    onPressLogout() {
+        Alert.alert(
+            "Confirmation required",
+            "Do you really want to logout?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "Yes", onPress: () => {
+                        ToastAndroid.show("Log Out Success!", ToastAndroid.SHORT),
+                            AsyncStorage.removeItem('@authuser');
+                        this.props.navigation.replace('Auth')
+                    }
+                }
+            ],
+            { cancelable: false }
+        );
+    }
+
     render() {
+        const { companyData, companyProfile } = this.state;
         return (
             <View style={styles.container}>
                 <View style={styles.header}></View>
-                <Image style={styles.avatar} source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }} />
+                <Image style={styles.avatar} source={{ uri: (companyProfile ? companyProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
                 <View style={styles.body}>
                     <View style={styles.bodyContent}>
-                        <Text style={styles.name}>John Doe</Text>
+                        <Text style={styles.name}>{companyData && companyData.fullname}</Text>
                     </View>
                     <View style={{
                         flex: 1, flexDirection: 'column', alignItems: 'center'
                     }}>
-                        <TouchableOpacity style={styles.buttonContainer} onPress={() => { this.props.navigation.navigate('UpdateProfile') }}>
+                        <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onPressUpdateProfile()}>
                             <Entypo name="edit" size={27} color="#FF95AD" style={{ padding: hp('1.5%'), paddingLeft: hp('1%'), }} />
                             <Text style={styles.textContainer}> Update Profile</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonContainer} onPress={() => { }}>
+                        <TouchableOpacity style={styles.buttonContainer} onPress={() => { this.onPressLogout() }}>
                             <Entypo name="log-out" size={27} color="#FF95AD" style={{ padding: hp('1.5%'), paddingLeft: hp('1%') }} />
                             <Text style={styles.textContainer}> Log out</Text>
                         </TouchableOpacity>

@@ -1,7 +1,6 @@
 import appConfig from '../../Helpers/appConfig'
 
 const InventoryItemService = (id) => {
-    console.log('id', id)
     let body
 
     if (id != null) {

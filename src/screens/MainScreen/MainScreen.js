@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { ScrollView, TextInput, TouchableOpacity, FlatList } from 'react-native-gesture-handler';
-import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
-} from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { CouponsService } from '../../Services/CouponsService/CouponsService';
 import HTML from 'react-native-render-html';
@@ -12,7 +9,6 @@ import { CategoryService } from '../../Services/CategoryService/CategoryService'
 import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
 
 class MainScreen extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -58,7 +54,7 @@ class MainScreen extends Component {
 
     renderInventoryItem = ({ item }) => (
         <View style={{ flex: 1, marginLeft: wp('3%'), marginBottom: hp('1%') }}>
-            <TouchableOpacity onPress={() => { }} >
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('ProductListScreen') }} >
                 <Image source={{ uri: item.item_logo }}
                     style={{ margin: hp('1.5%'), height: hp('25%'), width: wp('40%'), borderRadius: 10 }} />
             </TouchableOpacity>

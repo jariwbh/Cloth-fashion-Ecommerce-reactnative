@@ -23,13 +23,9 @@ class LoginHomeScreen extends Component {
                     <Text style={{ fontSize: hp('4%'), color: '#fff' }}>NewLifeStyle </Text>
                 </View>
                 <View style={styles.login}>
-                    <TextInput
+                    <Text
                         style={styles.TextInput}
-                        placeholder="Continue to Login"
-                        type='clear'
-                        placeholderTextColor="#000000"
-                        autoCapitalize="none"
-                    />
+                    > Continue to Login</Text>
                     <MaterialCommunityIcons name="arrow-right-bold-circle" size={30} color="#FF95AD" style={styles.icon} onPress={() => { this.props.navigation.navigate('LoginScreen') }} />
                 </View>
             </ImageBackground>
@@ -68,6 +64,8 @@ const styles = StyleSheet.create({
         fontSize: hp('2.5%'),
         flex: 1,
         padding: wp('2%'),
+        textTransform: 'uppercase',
+        textAlign: 'center'
     },
     icon: {
         padding: wp('3%')

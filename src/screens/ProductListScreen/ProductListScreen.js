@@ -5,48 +5,99 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
 import { CategoryService } from '../../Services/CategoryService/CategoryService';
+import { saveLocalWishList, getLocalWishList, removeLocalWishList } from '../../Helpers/LocalWishList';
 
 class ProductListScreen extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            categoryId: this.props.route.params.item._id,
-            productList: [],
-            categoryList: null,
+        this.categoryId = this.props.route.params && this.props.route.params.item,
+            this.state = {
+                productList: null,
+                categoryList: null,
+                selectedItem: null,
+            };
 
-        };
+        this.willFocus = this.props.navigation.addListener('focus', e => {
+            this.reloaddata();
+        });
     }
 
-    getInventoryItemService() {
-        const { categoryId } = this.state;
-        InventoryItemService(categoryId).then(response => { this.setState({ productList: response }) })
+    async getInventoryItemService(id) {
+        if (this.categoryId != null) {
+            await InventoryItemService(this.categoryId._id).then(response => { this.setState({ productList: response }) })
+            this.categoryId = null
+        } else {
+            await InventoryItemService(id).then(response => { this.setState({ productList: response }) })
+        }
     }
 
-    getCategory() {
-        CategoryService().then(response => {
+    async getCategory() {
+        await CategoryService().then(response => {
             this.setState({ categoryList: response })
         })
     }
 
-    componentDidMount() {
-        this.getCategory();
-        this.getInventoryItemService();
+    async reloaddata() {
+        await this.getCategory();
+        await this.getInventoryItemService();
+        await this.onLoadHandler();
+    }
+
+    async componentDidMount() {
+        await this.getCategory();
+        await this.getInventoryItemService();
+        await this.onLoadHandler();
+    }
+
+    saveLocalWishList(currentWishList) {
+        saveLocalWishList(currentWishList)
+    }
+
+    removeLocalWishList(currentWishList) {
+        removeLocalWishList(currentWishList)
+    }
+
+    async onLoadHandler() {
+        let localWishLists = await getLocalWishList();
+        let renderData = [...this.state.productList];
+        for (let data of renderData) {
+            for (let localdata of localWishLists) {
+                if (data._id == localdata._id && localdata.selected == true) {
+                    data.selected = true
+                    break;
+                }
+            }
+        }
+        this.setState({ productList: renderData });
+    }
+
+    onPressHandler(item) {
+        let renderData = [...this.state.productList];
+        for (let data of renderData) {
+            if (data._id == item._id) {
+                data.selected = (data.selected == null) ? (true) : !data.selected;
+                data.selected === true ? this.saveLocalWishList(item) : this.removeLocalWishList(item)
+                console.log('data.selected', data)
+                break;
+            }
+        }
+        this.setState({ productList: renderData });
     }
 
     renderInventoryItem = ({ item }) => (
         <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%'), }}>
-            <TouchableOpacity onPress={() => { }} >
+            <TouchableOpacity onPress={() => { this.props.navigation.push('NewLifeStyleScreen', { item }) }} >
                 <Image source={{ uri: item.item_logo }}
                     style={{ margin: hp('1.5%'), height: hp('30%'), width: wp('40%'), borderRadius: 10, borderColor: '#FFFFFF', borderWidth: 2 }} />
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', marginLeft: hp('1%'), justifyContent: 'space-between', marginRight: hp('1%'), }}>
                 <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize' }}>{item.itemname}</Text>
-                <TouchableOpacity>
-                    <FontAwesome name="heart-o" size={24} color="#000000" />
+                <TouchableOpacity onPress={() => { this.onPressHandler(item) }}>
+                    {item.selected == true ? <FontAwesome name="heart" size={24} color="red" /> : <FontAwesome name="heart-o" size={24} color="#000000" />}
                 </TouchableOpacity>
             </View>
             <Text style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>{item.sale.description}</Text>
-            <Text style={{ marginLeft: hp('1%') }}>$ {item.sale.rate}</Text>
+            <Text style={{ marginLeft: hp('1%') }}>₹ {item.sale.rate}</Text>
         </View>
     )
 
@@ -58,15 +109,16 @@ class ProductListScreen extends Component {
         </TouchableOpacity>
     )
 
-    onPressToCategoryService(item, index) {
-        const { categoryList, categoryId } = this.state;
+    async onPressToCategoryService(item, index) {
+        const { categoryList } = this.state;
         const category = categoryList.map((item) => {
             item.selected = false;
             return item;
         });
         category[index].selected = true;
-        this.setState({ categoryList: category, categoryId: item._id })
-        this.getInventoryItemService(categoryId)
+        this.setState({ categoryList: category })
+        await this.getInventoryItemService(item._id)
+        await this.onLoadHandler();
     }
 
     render() {
