@@ -72,7 +72,7 @@ class AddToCartScreen extends Component {
         }
         this.calculatorAmount()
         this.setState({ cartlist: renderData });
-        console.log('renderData', renderData)
+
     }
 
     renderAddtoCardList = ({ item }) => (
