@@ -45,7 +45,7 @@ export default class MyProfileScreen extends Component {
                     text: "Yes", onPress: () => {
                         ToastAndroid.show("Log Out Success!", ToastAndroid.SHORT),
                             AsyncStorage.removeItem('@authuser');
-                        this.props.navigation.replace('Auth')
+                        this.props.navigation.replace('LoginScreen')
                     }
                 }
             ],

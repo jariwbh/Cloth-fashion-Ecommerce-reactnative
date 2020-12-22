@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, TouchableHighlight } from 'react-native';
-import {
-    heightPercentageToDP as hp, widthPercentageToDP as wp,
-} from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ScrollView } from 'react-native-gesture-handler';
-import { getLocaladdtocardlist, removeLocalAddtocardlist } from '../../Helpers/LocalAddTOcart';
+import { getLocaladdtocardlist, removeLocalAddtocardlist, removeLocalAllAddtocardlist } from '../../Helpers/LocalAddTOcart';
+import AsyncStorage from '@react-native-community/async-storage';
+import { BillingService } from '../../Services/BillingService/BillingService';
 
 class AddToCartScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             cartlist: [],
+            userData: null,
+            totalAmount: 0,
+            totalDiscount: 0,
+            finalAmount: 0,
+            totalTax: 0,
+            taxAmount: 0,
+            totalQty: 0,
         };
-        this.totalAmount = 0;
-        this.totalDiscount = 0;
-        this.finalAmount = 0;
-        this.totalTax = 0;
-        this.taxAmount = 0;
-        this.totalQty = 0;
     }
 
     async getLocaladdtocardlist() {
@@ -26,32 +28,56 @@ class AddToCartScreen extends Component {
         this.setState({ cartlist: localAddtocardlists })
     }
 
+    getdata = async () => {
+        var getUser = await AsyncStorage.getItem('@authuser')
+        this.setState({ userData: JSON.parse(getUser) })
+    }
+
     async componentDidMount() {
         await this.getLocaladdtocardlist();
+        await this.getdata();
+        this.calculatorAmount();
     }
 
     async removeLocalAddtocardlist(item) {
         await removeLocalAddtocardlist(item)
-        await this.getLocaladdtocardlist()
+        await this.getLocaladdtocardlist();
+        this.calculatorAmount();
     }
 
     calculatorAmount() {
         let renderData = this.state.cartlist;
-        this.totalAmount = renderData.map(item => (item.sale.rate ? item.sale.rate : 0) * (item.itemqty ? item.itemqty : 0)).reduce((prev, next) => prev + next);
-        this.totalDiscount = renderData.map(item => (item.sale.discount ? item.sale.discount : 0) * (item.itemqty ? item.itemqty : 0)).reduce((prev, next) => prev + next);
-        this.totalTax = renderData.map(item => (item.sale.taxes ? item.sale.taxes[0].amount : 0) * (item.itemqty ? item.itemqty : 0)).reduce((prev, next) => prev + next);
-        this.finalAmount = ((this.totalAmount - this.totalDiscount) + this.totalTax);
-        this.totalQty = this.totalQty + data.itemqty;
+        let totalAmount = 0
+        let totalDiscount = 0
+        let finalAmount = 0
+        let totalQty = 0
+        let totalTax = 0
+
+        totalAmount = renderData.map(item => (item.itemid.sale.rate ? item.itemid.sale.rate : 0) * (item.itemqty)).reduce((prev, next) => prev + next);
+        totalDiscount = renderData.map(item => (item.itemid.sale.discount ? item.itemid.sale.discount : 0) * (item.itemqty)).reduce((prev, next) => prev + next);
+        totalQty = totalQty + renderData.map(item => (item.itemqty)).reduce((prev, next) => prev + next);
+
+        for (let elemt of renderData) {
+            for (let tax of elemt.itemid.sale.taxes) {
+                totalTax += (((elemt.itemid.sale.rate * (elemt.itemqty)) * tax.amount) / 100);
+            }
+        }
+
+        finalAmount = ((totalAmount - totalDiscount) + totalTax);
+        this.setState({ totalAmount: totalAmount, totalDiscount: totalDiscount, finalAmount: finalAmount, totalQty: totalQty, totalTax: totalTax })
+        return;
     }
 
     onPressIncrementItem(item) {
+        let totalTax = 0;
         let renderData = [...this.state.cartlist];
         for (let data of renderData) {
-            if (data._id == item._id) {
-                if (!data.itemqty) {
-                    data.itemqty = 0
-                }
+            if (data.itemid._id == item.itemid._id) {
                 data.itemqty = data.itemqty + 1
+                for (let tax of data.itemid.sale.taxes) {
+                    totalTax += (((item.itemid.sale.rate * (item.itemqty)) * tax.amount) / 100);
+                }
+                this.setState({ totalTax: totalTax });
                 break;
             }
         }
@@ -60,31 +86,32 @@ class AddToCartScreen extends Component {
     }
 
     onPressDecreaseItem(item) {
+        let totalTax = 0;
         let renderData = [...this.state.cartlist];
         for (let data of renderData) {
-            if (data._id == item._id) {
-                if (!data.itemqty) {
-                    data.itemqty = 0
-                }
+            if (data.itemid._id == item.itemid._id) {
                 data.itemqty = data.itemqty - 1
+                for (let tax of data.itemid.sale.taxes) {
+                    totalTax -= (((item.itemid.sale.rate * (item.itemqty)) * tax.amount) / 100);
+                }
+                this.setState({ totalTax: totalTax });
                 break;
             }
         }
         this.calculatorAmount()
         this.setState({ cartlist: renderData });
-        console.log('renderData', renderData)
     }
 
     renderAddtoCardList = ({ item }) => (
         <View style={styles.imageview}>
             <View>
-                <Image source={{ uri: item.item_logo }} style={{ margin: hp('1 %'), width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%') }} />
+                <Image source={{ uri: item.itemid.item_logo }} style={{ margin: hp('1 %'), width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%') }} />
             </View>
             <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: hp('2.5%'), }}>{item.itemname}</Text>
+                <Text style={{ fontSize: hp('2.5%'), }}>{item.itemid.itemname}</Text>
                 <View style={{ flexDirection: 'row', }}>
-                    <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.sale.rate}</Text>
-                    {item.sale.discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>}
+                    <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.itemid.sale.rate}</Text>
+                    {item.itemid.sale.discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.itemid.sale.discount} ₹ OFF)</Text>}
                 </View>
                 <View style={{ flexDirection: 'row', }}>
                     <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1%') }}>Colors</Text>
@@ -105,9 +132,9 @@ class AddToCartScreen extends Component {
                         <Text> + </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ marginTop: hp('2%'), marginLeft: hp('1%'), }}>
-                        <Text style={{ fontSize: hp('2%') }}> {item.itemqty ? item.itemqty : 0} </Text>
+                        <Text style={{ fontSize: hp('2%') }}> {item.itemqty} </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity disabled={item.itemqty > 0 ? false : true} style={styles.qnt} onPress={() => this.onPressDecreaseItem(item)}>
+                    <TouchableOpacity disabled={item.itemqty > 1 ? false : true} style={styles.qnt} onPress={() => this.onPressDecreaseItem(item)}>
                         <Text> - </Text>
                     </TouchableOpacity>
                 </View>
@@ -122,7 +149,6 @@ class AddToCartScreen extends Component {
     )
 
     onPressSubmit() {
-        console.log('this.state.cartlist', this.state.cartlist)
         let renderData = [...this.state.cartlist];
         for (let data of renderData) {
             if (!data.itemqty) {
@@ -131,64 +157,95 @@ class AddToCartScreen extends Component {
             break;
         }
 
-        let billdetails = {
-            customerid: "5fe09682e2b9185c969db61d",
-            status: "Unpaid",
-            items: this.state.cartlist,
+        let billdetails;
+        let itemdata = [];
+
+        renderData.forEach(element => {
+            let obj = {
+                item: element._id,
+                quantity: element.itemqty,
+                cost: element.itemid.sale.rate,
+                totalcost: element.itemid.sale.rate * element.itemqty,
+                discount: element.itemid.sale.discount * element.itemqty
+
+            }
+            obj['tax'] = [];
+            if (element.itemid.sale.taxes && element.itemid.sale.taxes.length != 0) {
+                let amount = (element.itemid.sale.rate * element.itemqty) - (element.itemid.sale.discount * element.itemqty);
+                element.itemid.sale.taxes.forEach(el => {
+                    let tobj = { taxname: el.taxname, taxper: el.amount, taxamount: (amount * el.amount) / 100 };
+                    obj['tax'].push(tobj);
+                });
+            }
+            itemdata.push(obj);
+        });
+
+        billdetails = {
+            customerid: this.state.userData._id,
             onModel: "Member",
-            totalamount: this.finalAmount,
-            preparedby: '',
-            taxamount: this.totalTax,
-            discount: this.totalDiscount,
-            billingdate: '',
+            items: itemdata,
+            billingdate: moment().format('L')
         }
 
-        this.props.navigation.navigate('ProductListScreen')
+        BillingService(billdetails).then(response => {
+            console.log('response', response);
+            if (response.type === "Error") {
+                return;
+            }
+            if (response != null || response != 'undefind') {
+                removeLocalAllAddtocardlist()
+                this.props.navigation.navigate('ProductListScreen')
+            }
+        })
     }
 
     render() {
-        const { cartlist } = this.state;
+        const { cartlist, totalAmount, totalDiscount, finalAmount, totalQty, totalTax } = this.state;
         return (
             <View style={styles.container}>
-                <ScrollView>
-                    <FlatList
-                        data={cartlist}
-                        renderItem={this.renderAddtoCardList}
-                        keyExtractor={item => `${item._id}`}
-                    />
-                    <View style={{ marginLeft: hp('3%') }}>
-                        <Text style={{ fontSize: hp('2.5%') }}>Bill Details</Text>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: hp('1%') }}>
-                            <Text style={{ fontSize: hp('2.5%') }}>Item Total</Text>
-                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ {this.totalAmount}</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontSize: hp('2.5%') }}>Texes and Charges</Text>
-                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ {this.totalTax}</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                {!cartlist ?
+                    <Text style={{ fontSize: hp('2.5%'), alignItems: 'center', justifyContent: 'center' }}>There are no items in your cart</Text> :
+                    <ScrollView>
+                        <FlatList
+                            data={cartlist}
+                            renderItem={this.renderAddtoCardList}
+                            keyExtractor={item => `${item._id}`}
+                        />
+                        <View style={{ marginLeft: hp('3%') }}>
+                            <Text style={{ fontSize: hp('2.5%') }}>Bill Details</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: hp('1%') }}>
+                                <Text style={{ fontSize: hp('2.5%') }}>Item Total</Text>
+                                <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ {Number(totalAmount).toFixed(2)}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={{ fontSize: hp('2.5%') }}>Texes and Charges</Text>
+                                <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ {Number(totalTax).toFixed(2)}</Text>
+                            </View>
+                            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={{ fontSize: hp('2.5%') }}>Delivery Fees</Text>
                             <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ 0</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ fontSize: hp('2.5%') }}>Total Discount</Text>
+                        </View> */}
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{ fontSize: hp('2.5%') }}>Total Discount</Text>
+                                </View>
+                                <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ -{Number(totalDiscount).toFixed(2)}</Text>
                             </View>
-                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ -{this.totalDiscount}</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={{ fontSize: hp('2.5%') }}>Total Amount</Text>
+                                <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ {Number(finalAmount).toFixed(2)}</Text>
+                            </View>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontSize: hp('2.5%') }}>Total Amount</Text>
-                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ {this.finalAmount}</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: hp('1%'), marginBottom: hp('10%') }}>
+                            <View>
+                                <TouchableOpacity style={styles.order} onPress={() => this.onPressSubmit()}>
+                                    <Text style={{ fontSize: hp('2%'), color: '#FFF' }}>BOOK ORDER</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: hp('1%'), marginBottom: hp('10%') }}>
-                        <View>
-                            <TouchableOpacity style={styles.order} onPress={() => this.onPressSubmit()}>
-                                <Text style={{ fontSize: hp('2%'), color: '#FFF' }}>BOOK ORDER</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </ScrollView>
+                    </ScrollView>
+
+                }
             </View>
         );
     }

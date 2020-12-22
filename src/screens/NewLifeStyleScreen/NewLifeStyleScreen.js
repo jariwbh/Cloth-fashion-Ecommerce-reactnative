@@ -7,24 +7,44 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { saveLocalWishList, removeLocalWishList } from '../../Helpers/LocalWishList';
 import { saveLocalAddtocardlist } from '../../Helpers/LocalAddTOcart';
+import { membershipoffersService } from '../../Services/membershipoffersService/membershipoffersService';
 
 class NewLifeStyleScreen extends Component {
     constructor(props) {
         super(props);
-        this.itemObj = this.props.route.params.item
-        console.log('this.itemObj', this.itemObj)
+        this.itemID = this.props.route.params.item._id
         this.state = {
-            item_logo: this.itemObj.item_logo,
-            itemname: this.itemObj.itemname,
-            price: this.itemObj.sale.rate,
-            discount: this.itemObj.sale.discount,
-            description: this.itemObj.sale.description,
-            sizeList: this.itemObj.property.size,
-            colorList: this.itemObj.property.color,
+            itemObj: null,
+            item_logo: null,
+            itemname: null,
+            price: null,
+            discount: null,
+            description: null,
+            sizeList: null,
+            colorList: null,
             selectedColor: null,
             selectedSize: null,
-            selectedWishList: this.itemObj.selected
         };
+    }
+
+    getinventeryDetails() {
+        let id = this.itemID
+        membershipoffersService(id).then(response => {
+            this.setState({
+                itemObj: response[0],
+                item_logo: response[0].itemid.item_logo,
+                itemname: response[0].itemid.itemname,
+                price: response[0].itemid.sale.rate,
+                description: response[0].itemid.sale.description,
+                discount: response[0].itemid.sale.discount,
+                sizeList: response[0].itemid.property.size,
+                colorList: response[0].itemid.property.color
+            })
+        })
+    }
+
+    componentDidMount() {
+        this.getinventeryDetails()
     }
 
     onPressWishlisthandler(item) {
@@ -75,24 +95,27 @@ class NewLifeStyleScreen extends Component {
     )
 
     addToCarthandlar() {
-        const { selectedColor, selectedSize } = this.state;
+        const { selectedColor, selectedSize, itemObj } = this.state;
         if (!selectedColor) {
             alert('please select your color')
             return;
         }
+
         if (!selectedSize) {
             alert('please select your size')
             return;
         }
-        this.itemObj.selectedColorCode = selectedColor
-        this.itemObj.selectedSizeSize = selectedSize
-        let item = this.itemObj
+
+        itemObj.itemqty = 1
+        itemObj.selectedColorCode = selectedColor
+        itemObj.selectedSizeSize = selectedSize
+        let item = itemObj
         saveLocalAddtocardlist(item)
         this.props.navigation.navigate('ProductListScreen')
     }
 
     render() {
-        const { item_logo, itemname, price, discount, description, sizeList, colorList, selectedSize, selectedWishList } = this.state;
+        const { item_logo, itemname, price, discount, description, sizeList, colorList, itemObj } = this.state;
         return (
             <View style={styles.container}>
                 <ScrollView>
@@ -148,8 +171,8 @@ class NewLifeStyleScreen extends Component {
                             <SimpleLineIcons name="bag" size={24} color="#fff" style={{ marginLeft: hp('2%'), }} />
                             <Text style={{ fontSize: hp('2.3%'), color: '#fff', padding: wp('2 %'), }}>ADD TO CART </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.wishlist} onPress={() => this.onPressWishlisthandler(this.itemObj)}>
-                            {selectedWishList === true ? <FontAwesome name="heart" size={24} color="red" /> : <FontAwesome name="heart-o" size={24} color="#B9B913" />}
+                        <TouchableOpacity style={styles.wishlist} onPress={() => this.onPressWishlisthandler(itemObj)}>
+                            <FontAwesome name="heart-o" size={24} color="#B9B913" />
                             <Text style={{ fontSize: hp('2.3%'), color: '#B9B913', padding: wp('2 %') }}>WISHLIST </Text>
                         </TouchableOpacity>
                     </View>
