@@ -211,8 +211,11 @@ class AddToCartScreen extends Component {
         const { cartlist, totalAmount, totalDiscount, finalAmount, totalTax } = this.state;
         return (
             <View style={styles.container}>
+
                 {!cartlist ?
                     <Text style={{ fontSize: hp('2.5%'), alignItems: 'center', justifyContent: 'center' }}>There are no items in your cart</Text> :
+
+
                     <ScrollView>
                         <FlatList
                             data={cartlist}
@@ -260,7 +263,8 @@ export default AddToCartScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
+
     },
     heart: {
         flex: 1,
