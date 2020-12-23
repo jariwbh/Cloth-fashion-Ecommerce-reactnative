@@ -108,7 +108,7 @@ class SearchBarScreen extends Component {
         const { productList } = this.state;
         const EmptyListMessage = () => {
             return (
-                <Text style={{ fontSize: hp('2.5%'), alignItems: 'center', justifyContent: 'center' }}>No Items Found</Text>
+                <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: 'red', marginTop: hp('30%') }}>No Items Found</Text>
             );
         };
 

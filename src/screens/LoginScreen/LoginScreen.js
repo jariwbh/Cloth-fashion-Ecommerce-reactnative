@@ -139,13 +139,13 @@ class LoginScreen extends Component {
 
                         <Text style={styles.innerText}> i agree to app </Text>
                         <TouchableOpacity >
-                            <Text style={styles.baseText}>Privacy , </Text>
+                            <Text style={styles.innerText}>Privacy , </Text>
                         </TouchableOpacity>
                         <TouchableOpacity >
-                            <Text style={styles.baseText}>User Agreement ,</Text>
+                            <Text style={styles.innerText}>User Agreement ,</Text>
                         </TouchableOpacity>
                         <TouchableOpacity >
-                            <Text style={styles.baseText}> T&Cs</Text>
+                            <Text style={styles.innerText}> T&Cs</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{ marginTop: hp('1%'), justifyContent: 'center', flexDirection: 'row' }} >
