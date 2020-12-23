@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, TouchableHighlight } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ScrollView } from 'react-native-gesture-handler';
@@ -123,9 +123,9 @@ class AddToCartScreen extends Component {
                     <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.sale.rate}</Text>
                     {item.sale.discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>}
                 </View>
-                <View style={{ flexDirection: 'row', marginLeft: hp('1%'), }}>
+                <View style={{ flexDirection: 'row', }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                        <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1%'), marginTop: hp('1%') }}>Colors</Text>
+                        <Text style={{ fontSize: hp('2.5%'), marginTop: hp('1%') }}>Colors</Text>
                         <View style={{
                             width: wp('3%'), height: hp('2%'), borderColor: '#000000',
                             borderWidth: hp('0.1 %'), marginLeft: hp('1%'), marginTop: hp('2%'),
@@ -141,7 +141,7 @@ class AddToCartScreen extends Component {
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', }}>
-                    <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), marginTop: hp('1.5%') }}>Qty</Text>
+                    <Text style={{ fontSize: hp('2.5%'), marginTop: hp('1.5%') }}>Qty</Text>
                     <TouchableOpacity style={styles.qnt} onPress={() => this.onPressIncrementItem(item)}>
                         <Text> + </Text>
                     </TouchableOpacity>

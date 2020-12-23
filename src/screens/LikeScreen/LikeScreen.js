@@ -30,8 +30,8 @@ class LikeScreen extends Component {
     renderInventoryItem = ({ item }) => (
         <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%'), }}>
             <TouchableOpacity onPress={() => { this.props.navigation.navigate('NewLifeStyleScreen', { item }) }} >
-                <Image source={{ uri: item.item_logo }}
-                    style={{ margin: hp('1.5%'), height: hp('30%'), width: wp('40%'), borderRadius: 10, borderColor: '#FFFFFF', borderWidth: 2 }} />
+                <Image source={{ uri: item.item_logo }} resizeMode="stretch"
+                    style={{ alignSelf: 'auto', margin: hp('1.5%'), height: hp('30%'), width: wp('40%'), borderRadius: hp('1.5%'), flex: 1, }} />
             </TouchableOpacity>
             <View style={styles.heart}>
                 <TouchableOpacity onPress={() => this.removeLocalWishListService(item)}>
@@ -47,8 +47,8 @@ class LikeScreen extends Component {
                 </View>
             }
             <View style={{ flexDirection: 'row', }}>
-                <Text style={{ marginLeft: hp('2%'), fontSize: hp('2%') }}>₹ {item.sale.rate}</Text>
-                {item.sale.discount && <Text style={{ fontSize: hp('2%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>}
+                <Text style={{ marginLeft: hp('1%'), fontSize: hp('2%') }}>₹ {item.sale.rate}</Text>
+                {item.sale.discount && <Text style={{ fontSize: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>}
             </View>
         </View>
     )
