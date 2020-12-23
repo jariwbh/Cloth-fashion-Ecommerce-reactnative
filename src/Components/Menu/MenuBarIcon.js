@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text } from 'react-native'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 export default function MenuBarIcon(props) {
-    const cartnumber = 1
+    const cartnumber = 0
     return (
         <View style={{ flexDirection: "row", marginRight: 20, backgroundColor: '#FFFFFF' }}>
             <TouchableOpacity onPress={props.onPress}>

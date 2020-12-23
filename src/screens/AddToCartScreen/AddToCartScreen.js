@@ -209,9 +209,10 @@ class AddToCartScreen extends Component {
 
     render() {
         const { cartlist, totalAmount, totalDiscount, finalAmount, totalTax } = this.state;
+
         return (
             <View style={styles.container}>
-                {!cartlist ?
+                {(cartlist == null) || (cartlist && cartlist.length == 0) ?
                     <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: 'red', marginTop: hp('30%') }}>There are no items in your cart</Text>
                     :
 

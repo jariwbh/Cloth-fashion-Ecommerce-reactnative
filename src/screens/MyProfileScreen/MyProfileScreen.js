@@ -33,24 +33,9 @@ export default class MyProfileScreen extends Component {
     }
 
     onPressLogout() {
-        Alert.alert(
-            "Confirmation required",
-            "Do you really want to logout?",
-            [
-                {
-                    text: "Cancel",
-                    style: "cancel"
-                },
-                {
-                    text: "Yes", onPress: () => {
-                        ToastAndroid.show("Log Out Success!", ToastAndroid.SHORT),
-                            AsyncStorage.removeItem('@authuser');
-                        this.props.navigation.replace('LoginScreen')
-                    }
-                }
-            ],
-            { cancelable: false }
-        );
+        AsyncStorage.removeItem('@authuser');
+        ToastAndroid.show("Log Out Success!", ToastAndroid.SHORT);
+        this.props.navigation.replace('LoginScreen')
     }
 
     render() {

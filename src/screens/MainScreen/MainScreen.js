@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, BackHandler } from 'react-native';
 import { ScrollView, TextInput, TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { CouponsService } from '../../Services/CouponsService/CouponsService';
@@ -15,12 +15,32 @@ class MainScreen extends Component {
             categoryList: null,
             productList: null
         };
+
+        this._unsubscribeSiFocus = this.props.navigation.addListener('focus', e => {
+            BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        });
+
+        this._unsubscribeSiBlur = this.props.navigation.addListener('blur', e => {
+            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton,
+            );
+        });
     }
 
     componentDidMount() {
         this.getCategory();
         this.getCoupons();
         this.getInventoryItemService();
+    }
+
+    componentWillUnmount() {
+        this._unsubscribeSiFocus();
+        this._unsubscribeSiBlur();
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+    handleBackButton = () => {
+        BackHandler.exitApp()
+        return true;
     }
 
     getCategory() {
@@ -67,18 +87,6 @@ class MainScreen extends Component {
         const { coupon, categoryList, productList } = this.state;
         return (
             <View style={styles.container}>
-                {/* <View style={{ flexDirection: 'row' }}>
-                    <View style={styles.serchbar}>
-                        <TextInput
-                            style={styles.TextInput}
-                            placeholder="Search Brand Or Products.."
-                            type='clear'
-                            placeholderTextColor="#737373"
-                            autoCapitalize="none"
-                        />
-                        <FontAwesome name="search" size={24} color="#737373" style={{ padding: hp('2%') }} />
-                    </View>
-                </View> */}
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('1%'), paddingBottom: hp('0.5%') }}>
                         <ScrollView
@@ -109,38 +117,6 @@ class MainScreen extends Component {
                             : <Text style={{ fontSize: hp('3%'), marginTop: hp('1%') }}> Tops New Fashion Cloths</Text>
                         }
                     </View>
-                    {/* <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('-4.5%'), alignItems: 'center', paddingLeft: hp('25%') }} >
-                        <ScrollView
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={false}
-                        >
-                            <TouchableOpacity onPress={() => { }}>
-                                <View style={styles.newview}>
-                                    <Text style={{ fontSize: hp('2.3%'), }}>Dress</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { }}>
-                                <View style={styles.newtext}>
-                                    <Text style={{ fontSize: hp('2.3%'), }}>T-Shirt</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { }}>
-                                <View style={styles.newtext}>
-                                    <Text style={{ fontSize: hp('2.3%'), }}>Pants</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { }}>
-                                <View style={styles.newtext}>
-                                    <Text style={{ fontSize: hp('2.3%'), }}>Western</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { }}>
-                                <View style={styles.newtext}>
-                                    <Text style={{ fontSize: hp('2.3%'), }}>Party</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </ScrollView>
-                    </View> */}
                     <View style={{ flexDirection: 'row', marginBottom: hp('10%'), flex: 0.5 }}>
                         <FlatList
                             numColumns={2}
@@ -151,7 +127,6 @@ class MainScreen extends Component {
                     </View>
                 </ScrollView>
             </View>
-
         );
     }
 }
