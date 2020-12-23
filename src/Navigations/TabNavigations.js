@@ -16,8 +16,9 @@ import MenuBarIcon from '../components/Menu/MenuBarIcon';
 import MenuIcon from '../components/Menu/MenuIcon';
 import MenuBack from '../components/Menu/MenuBack';
 import { MaterialCommunityIcons } from 'react-native-vector-icons'
-
-
+import SearchBarScreen from '../screens/SearchBarScreen/SearchBarScreen'
+import SearchIcon from '../components/Menu/SearchIcon';
+import { View } from 'react-native';
 
 const MainStack = createStackNavigator();
 function MainStackScreen({ navigation }) {
@@ -31,8 +32,11 @@ function MainStackScreen({ navigation }) {
                     borderBottomWidth: 0,
 
                 }, headerLeft: () =>
-                    <MenuIcon onPress={() => navigation.navigate("FilterScreen")} />, headerRight: () =>
-                        <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
+                    <MenuIcon />, headerRight: () =>
+                        <View style={{ flexDirection: 'row' }}>
+                            <SearchIcon onPress={() => navigation.navigate("SearchBarScreen")} />
+                            <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
+                        </View>
             }} component={MainScreen} />
             <MainStack.Screen name="ProductListScreen" options={{
                 title: 'New Arrivals', headerStyle: {
@@ -41,7 +45,7 @@ function MainStackScreen({ navigation }) {
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
-                    <MenuIcon onPress={() => navigation.navigate("FilterScreen")} />, headerRight: () =>
+                    <MenuIcon />, headerRight: () =>
                         <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
             }} component={ProductListScreen} />
             <MainStack.Screen name="NewLifeStyleScreen" options={{
@@ -65,6 +69,16 @@ function MainStackScreen({ navigation }) {
                     <MenuBack onPress={() => navigation.navigate("ProductListScreen")} />, headerRight: () =>
                         <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
             }} component={AddToCartScreen} />
+            <MainStack.Screen name="SearchBarScreen" options={{
+                title: 'Search Product', headerStyle: {
+                    backgroundColor: '#FFFFFF',
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                }, headerLeft: () =>
+                    <MenuBack onPress={() => navigation.navigate("MainScreen")} />, headerRight: () =>
+                        <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
+            }} component={SearchBarScreen} />
             <MainStack.Screen name="AppScreen" component={AppStackScreen} />
             <MainStack.Screen name="Likes" component={LikeStackScreen} />
         </MainStack.Navigator>
@@ -83,7 +97,10 @@ function AppStackScreen({ navigation }) {
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
                     <MenuIcon />, headerRight: () =>
-                        <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
+                        <View style={{ flexDirection: 'row' }}>
+                            <SearchIcon onPress={() => navigation.navigate("SearchBarScreen")} />
+                            <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
+                        </View>
             }} component={AppScreen} />
         </AppStack.Navigator>
     );
@@ -100,7 +117,7 @@ function LikeStackScreen({ navigation }) {
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
-                    <MenuIcon onPress={() => navigation.navigate("FilterScreen")} />, headerRight: () =>
+                    <MenuIcon />, headerRight: () =>
                         <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
             }} component={LikeScreen} />
         </LikeStack.Navigator>

@@ -8,9 +8,7 @@ import HomeScreen from '../screens/HomeScreen/HomeScreen'
 import FilterScreen from '../screens/FilterScreen/FilterScreen'
 import TabNavigations from './TabNavigations';
 import UpdateProfile from '../screens/MyProfileScreen/UpdateProfile';
-
 const Stack = createStackNavigator();
-const NewLifeStyleStrack = createStackNavigator();
 
 export default NavigationsApp = () => {
     return (

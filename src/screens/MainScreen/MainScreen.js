@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { ScrollView, TextInput, TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { CouponsService } from '../../Services/CouponsService/CouponsService';
 import HTML from 'react-native-render-html';
 import { CategoryService } from '../../Services/CategoryService/CategoryService';
@@ -68,7 +67,7 @@ class MainScreen extends Component {
         const { coupon, categoryList, productList } = this.state;
         return (
             <View style={styles.container}>
-                <View style={{ flexDirection: 'row' }}>
+                {/* <View style={{ flexDirection: 'row' }}>
                     <View style={styles.serchbar}>
                         <TextInput
                             style={styles.TextInput}
@@ -79,7 +78,7 @@ class MainScreen extends Component {
                         />
                         <FontAwesome name="search" size={24} color="#737373" style={{ padding: hp('2%') }} />
                     </View>
-                </View>
+                </View> */}
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('1%'), paddingBottom: hp('0.5%') }}>
                         <ScrollView

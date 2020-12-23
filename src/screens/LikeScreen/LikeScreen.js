@@ -9,7 +9,7 @@ class LikeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            productList: null,
+            productList: [],
         };
     }
 
@@ -57,7 +57,7 @@ class LikeScreen extends Component {
         const { productList } = this.state;
         return (
             <View style={styles.container}>
-                {!productList ?
+                {!productList.length > 0 ?
                     <Text style={{ fontSize: hp('2.5%'), alignItems: 'center', justifyContent: 'center' }}>There are no items in your Whish List</Text>
                     :
                     <ScrollView
