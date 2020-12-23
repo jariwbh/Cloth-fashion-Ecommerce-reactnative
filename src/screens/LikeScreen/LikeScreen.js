@@ -58,7 +58,7 @@ class LikeScreen extends Component {
         return (
             <View style={styles.container}>
                 {!productList.length > 0 ?
-                    <Text style={{ fontSize: hp('2.5%'), alignItems: 'center', justifyContent: 'center' }}>There are no items in your Whish List</Text>
+                    <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: 'red', marginTop: hp('30%') }}>There are no items in your Whish List</Text>
                     :
                     <ScrollView
                         Vertical={true}
