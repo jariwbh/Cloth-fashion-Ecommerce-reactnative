@@ -27,10 +27,6 @@ class LikeScreen extends Component {
         await this.getLocalWishListService();
     }
 
-    // async componentDidUpdate() {
-    //     await this.getLocalWishListService();
-    // }
-
     renderInventoryItem = ({ item }) => (
         <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%'), }}>
             <TouchableOpacity onPress={() => { this.props.navigation.navigate('NewLifeStyleScreen', { item }) }} >
@@ -44,13 +40,12 @@ class LikeScreen extends Component {
             </View>
             <View style={{ flexDirection: 'row', marginLeft: hp('1%'), justifyContent: 'space-between', marginRight: hp('1%'), }}>
                 <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize' }}>{item.itemname}</Text>
-                {/* <TouchableOpacity onPress={() => this.removeLocalWishListService(item)}>
-                    <FontAwesome name="heart" size={24} color="red" />
-                </TouchableOpacity> */}
             </View>
-            <View>
-                <Text style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>{item.sale.description}</Text>
-            </View>
+            {item.sale.description &&
+                <View>
+                    <Text style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>{item.sale.description}</Text>
+                </View>
+            }
             <View style={{ flexDirection: 'row', }}>
                 <Text style={{ marginLeft: hp('2%'), fontSize: hp('2%') }}>₹ {item.sale.rate}</Text>
                 {item.sale.discount && <Text style={{ fontSize: hp('2%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>}
@@ -62,19 +57,23 @@ class LikeScreen extends Component {
         const { productList } = this.state;
         return (
             <View style={styles.container}>
-                <ScrollView
-                    Vertical={true}
-                    showsVerticalScrollIndicator={false}
-                >
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: hp('5%'), flex: 0.5, marginBottom: hp('10%') }}>
-                        <FlatList
-                            numColumns={2}
-                            data={productList}
-                            renderItem={this.renderInventoryItem}
-                            keyExtractor={item => `${item._id}`}
-                        />
-                    </View>
-                </ScrollView>
+                {!productList ?
+                    <Text style={{ fontSize: hp('2.5%'), alignItems: 'center', justifyContent: 'center' }}>There are no items in your Whish List</Text>
+                    :
+                    <ScrollView
+                        Vertical={true}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: hp('5%'), flex: 0.5, marginBottom: hp('10%') }}>
+                            <FlatList
+                                numColumns={2}
+                                data={productList}
+                                renderItem={this.renderInventoryItem}
+                                keyExtractor={item => `${item._id}`}
+                            />
+                        </View>
+                    </ScrollView>
+                }
             </View>
         );
     }

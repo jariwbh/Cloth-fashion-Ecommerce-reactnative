@@ -208,7 +208,7 @@ class AddToCartScreen extends Component {
     }
 
     render() {
-        const { cartlist, totalAmount, totalDiscount, finalAmount, totalQty, totalTax } = this.state;
+        const { cartlist, totalAmount, totalDiscount, finalAmount, totalTax } = this.state;
         return (
             <View style={styles.container}>
                 {!cartlist ?
@@ -229,10 +229,6 @@ class AddToCartScreen extends Component {
                                 <Text style={{ fontSize: hp('2.5%') }}>Texes and Charges</Text>
                                 <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ {Number(totalTax).toFixed(2)}</Text>
                             </View>
-                            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontSize: hp('2.5%') }}>Delivery Fees</Text>
-                            <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ 0</Text>
-                        </View> */}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={{ fontSize: hp('2.5%') }}>Total Discount</Text>
