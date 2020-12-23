@@ -53,13 +53,13 @@ class AddToCartScreen extends Component {
         let totalQty = 0
         let totalTax = 0
 
-        totalAmount = renderData.map(item => (item.itemid.sale.rate ? item.itemid.sale.rate : 0) * (item.itemqty)).reduce((prev, next) => prev + next);
-        totalDiscount = renderData.map(item => (item.itemid.sale.discount ? item.itemid.sale.discount : 0) * (item.itemqty)).reduce((prev, next) => prev + next);
+        totalAmount = renderData.map(item => (item.sale.rate ? item.sale.rate : 0) * (item.itemqty)).reduce((prev, next) => prev + next);
+        totalDiscount = renderData.map(item => (item.sale.discount ? item.sale.discount : 0) * (item.itemqty)).reduce((prev, next) => prev + next);
         totalQty = totalQty + renderData.map(item => (item.itemqty)).reduce((prev, next) => prev + next);
 
         for (let elemt of renderData) {
-            for (let tax of elemt.itemid.sale.taxes) {
-                totalTax += (((elemt.itemid.sale.rate * (elemt.itemqty)) * tax.amount) / 100);
+            for (let tax of elemt.sale.taxes) {
+                totalTax += (((elemt.sale.rate * (elemt.itemqty)) * tax.amount) / 100);
             }
         }
 
@@ -72,10 +72,10 @@ class AddToCartScreen extends Component {
         let totalTax = 0;
         let renderData = [...this.state.cartlist];
         for (let data of renderData) {
-            if (data.itemid._id == item.itemid._id) {
+            if (data._id == item._id) {
                 data.itemqty = data.itemqty + 1
-                for (let tax of data.itemid.sale.taxes) {
-                    totalTax += (((item.itemid.sale.rate * (item.itemqty)) * tax.amount) / 100);
+                for (let tax of data.sale.taxes) {
+                    totalTax += (((item.sale.rate * (item.itemqty)) * tax.amount) / 100);
                 }
                 this.setState({ totalTax: totalTax });
                 break;
@@ -89,10 +89,10 @@ class AddToCartScreen extends Component {
         let totalTax = 0;
         let renderData = [...this.state.cartlist];
         for (let data of renderData) {
-            if (data.itemid._id == item.itemid._id) {
+            if (data._id == item._id) {
                 data.itemqty = data.itemqty - 1
-                for (let tax of data.itemid.sale.taxes) {
-                    totalTax -= (((item.itemid.sale.rate * (item.itemqty)) * tax.amount) / 100);
+                for (let tax of data.sale.taxes) {
+                    totalTax -= (((item.sale.rate * (item.itemqty)) * tax.amount) / 100);
                 }
                 this.setState({ totalTax: totalTax });
                 break;
@@ -106,7 +106,7 @@ class AddToCartScreen extends Component {
         <View style={styles.imageview}>
             <View style={{ flexDirection: 'column-reverse' }}>
                 <View>
-                    <Image source={{ uri: item.itemid.item_logo }}
+                    <Image source={{ uri: item.item_logo }}
                         resizeMode="stretch" style={{
                             alignSelf: 'auto', width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%')
                         }} />
@@ -118,10 +118,10 @@ class AddToCartScreen extends Component {
                 </View>
             </View>
             <View style={{ flex: 1, marginTop: hp('3%') }}>
-                <Text style={{ fontSize: hp('2.5%'), }}>{item.itemid.itemname}</Text>
+                <Text style={{ fontSize: hp('2.5%'), }}>{item.itemname}</Text>
                 <View style={{ flexDirection: 'row', }}>
-                    <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.itemid.sale.rate}</Text>
-                    {item.itemid.sale.discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.itemid.sale.discount} ₹ OFF)</Text>}
+                    <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.sale.rate}</Text>
+                    {item.sale.discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>}
                 </View>
                 <View style={{ flexDirection: 'row', marginLeft: hp('1%'), }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
@@ -172,15 +172,15 @@ class AddToCartScreen extends Component {
             let obj = {
                 item: element._id,
                 quantity: element.itemqty,
-                cost: element.itemid.sale.rate,
-                totalcost: element.itemid.sale.rate * element.itemqty,
-                discount: element.itemid.sale.discount * element.itemqty
+                cost: element.sale.rate,
+                totalcost: element.sale.rate * element.itemqty,
+                discount: element.sale.discount * element.itemqty
 
             }
             obj['tax'] = [];
-            if (element.itemid.sale.taxes && element.itemid.sale.taxes.length != 0) {
-                let amount = (element.itemid.sale.rate * element.itemqty) - (element.itemid.sale.discount * element.itemqty);
-                element.itemid.sale.taxes.forEach(el => {
+            if (element.sale.taxes && element.sale.taxes.length != 0) {
+                let amount = (element.sale.rate * element.itemqty) - (element.sale.discount * element.itemqty);
+                element.sale.taxes.forEach(el => {
                     let tobj = { taxname: el.taxname, taxper: el.amount, taxamount: (amount * el.amount) / 100 };
                     obj['tax'].push(tobj);
                 });
@@ -211,8 +211,7 @@ class AddToCartScreen extends Component {
         const { cartlist, totalAmount, totalDiscount, finalAmount, totalTax } = this.state;
         return (
             <View style={styles.container}>
-
-                {!cartlist.length > 0 ?
+                {!cartlist ?
                     <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: 'red', marginTop: hp('30%') }}>There are no items in your cart</Text>
                     :
 

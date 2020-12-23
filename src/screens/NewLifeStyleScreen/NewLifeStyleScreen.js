@@ -7,45 +7,24 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { saveLocalWishList, removeLocalWishList } from '../../Helpers/LocalWishList';
 import { saveLocalAddtocardlist } from '../../Helpers/LocalAddTOcart';
-import { membershipoffersService } from '../../Services/membershipoffersService/membershipoffersService';
 
 class NewLifeStyleScreen extends Component {
     constructor(props) {
         super(props);
-        this.itemID = this.props.route.params.item._id
-        console.log('this.itemID', this.itemID)
+        this.itemObj = this.props.route.params.item
+        console.log('this.itemObj', this.itemObj)
         this.state = {
-            itemObj: null,
-            item_logo: null,
-            itemname: null,
-            price: null,
-            discount: null,
-            description: null,
-            sizeList: null,
-            colorList: null,
+            item_logo: this.itemObj.item_logo,
+            itemname: this.itemObj.itemname,
+            price: this.itemObj.sale.rate,
+            discount: this.itemObj.sale.discount,
+            description: this.itemObj.sale.description,
+            sizeList: this.itemObj.property.size,
+            colorList: this.itemObj.property.color,
             selectedColor: null,
             selectedSize: null,
+            selectedWishList: this.itemObj.selected
         };
-    }
-
-    getinventeryDetails() {
-        let id = this.itemID
-        membershipoffersService(id).then(response => {
-            this.setState({
-                itemObj: response[0],
-                item_logo: response[0].itemid.item_logo,
-                itemname: response[0].itemid.itemname,
-                price: response[0].itemid.sale.rate,
-                description: response[0].itemid.sale.description,
-                discount: response[0].itemid.sale.discount,
-                sizeList: response[0].itemid.property.size,
-                colorList: response[0].itemid.property.color
-            })
-        })
-    }
-
-    componentDidMount() {
-        this.getinventeryDetails()
     }
 
     onPressWishlisthandler(item) {
@@ -96,34 +75,31 @@ class NewLifeStyleScreen extends Component {
     )
 
     addToCarthandlar() {
-        const { selectedColor, selectedSize, itemObj } = this.state;
+        const { selectedColor, selectedSize } = this.state;
         if (!selectedColor) {
             alert('please select your color')
             return;
         }
-
         if (!selectedSize) {
             alert('please select your size')
             return;
         }
-
-        itemObj.itemqty = 1
-        itemObj.selectedColorCode = selectedColor
-        itemObj.selectedSizeSize = selectedSize
-        let item = itemObj
+        this.itemObj.itemqty = 1
+        this.itemObj.selectedColorCode = selectedColor
+        this.itemObj.selectedSizeSize = selectedSize
+        let item = this.itemObj
         saveLocalAddtocardlist(item)
         this.props.navigation.navigate('ProductListScreen')
     }
 
     render() {
-        const { item_logo, itemname, price, discount, description, sizeList, colorList, itemObj } = this.state;
+        const { item_logo, itemname, price, discount, description, sizeList, colorList, selectedSize, selectedWishList } = this.state;
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: hp('1%'), flex: 1 }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: hp('1%') }}>
                         <TouchableOpacity>
-                            <Image source={{ uri: item_logo }} resizeMode="stretch" style={{ height: hp('40%'), width: wp('50%'), borderRadius: hp('1.5%'), alignSelf: 'auto', flex: 1 }} />
-
+                            <Image source={{ uri: item_logo }} style={{ height: 300, width: 300 }} />
                         </TouchableOpacity>
                     </View>
                     <View style={{ flexDirection: 'column', marginTop: hp('1%'), marginLeft: hp('5%'), justifyContent: 'flex-start', alignItems: 'flex-start', }}>
@@ -134,53 +110,47 @@ class NewLifeStyleScreen extends Component {
                             {discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({discount} ₹ OFF)</Text>}
                         </View>
                     </View>
-                    {colorList &&
-                        <View style={styles.colorview}>
-                            <View>
-                                <Text style={{ padding: hp('2%'), fontSize: hp('2.5%') }}>Colors</Text>
-                            </View>
-                            <View style={styles.checkboxview}>
+                    <View style={styles.colorview}>
+                        <View>
+                            <Text style={{ padding: hp('2%'), fontSize: hp('2.5%') }}>Colors</Text>
+                        </View>
+                        <View style={styles.checkboxview}>
+                            <FlatList
+                                numColumns={10}
+                                data={colorList}
+                                renderItem={this.renderColor}
+                                keyExtractor={(item) => `${item.id}`}
+                            />
+                        </View>
+                        <View style={styles.size}>
+                            <Text style={{ fontSize: hp('2.5%') }}>Size </Text>
+                            <Text style={{ fontSize: hp('2%'), marginRight: hp('2%'), color: '#FF9DB9' }}>Size Chart </Text>
+                        </View>
+                        <ScrollView
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                        >
+                            <View style={{ flexDirection: 'row' }}>
                                 <FlatList
                                     numColumns={10}
-                                    data={colorList}
-                                    renderItem={this.renderColor}
-                                    keyExtractor={(item) => `${item.id}`}
+                                    data={sizeList}
+                                    renderItem={this.renderSize}
+                                    keyExtractor={item => `${item.id}`}
                                 />
                             </View>
-                            {sizeList &&
-                                <>
-                                    <View style={styles.size}>
-                                        <Text style={{ fontSize: hp('2.5%') }}>Size </Text>
-                                        <Text style={{ fontSize: hp('2%'), marginRight: hp('2%'), color: '#FF9DB9' }}>Size Chart </Text>
-                                    </View>
-                                    <ScrollView
-                                        horizontal={true}
-                                        showsHorizontalScrollIndicator={false}
-                                    >
-                                        <View style={{ flexDirection: 'row' }}>
-                                            <FlatList
-                                                numColumns={10}
-                                                data={sizeList}
-                                                renderItem={this.renderSize}
-                                                keyExtractor={item => `${item.id}`}
-                                            />
-                                        </View>
-                                    </ScrollView>
-                                </>
-                            }
-                        </View>
-                    }
+                        </ScrollView>
+                    </View>
                     <View style={{ marginTop: hp('1%'), marginLeft: hp('5%'), }}>
                         <Text style={{ fontSize: hp('2%'), marginBottom: hp('2%') }}>PRODUCT DETAILS</Text>
-                        {description && <Text style={{ fontSize: hp('1.8%'), paddingBottom: hp('1%'), textTransform: 'capitalize' }}>description</Text>}
+                        <Text style={{ fontSize: hp('1.8%'), paddingBottom: hp('1%'), textTransform: 'capitalize' }}>{description}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginBottom: hp('7%') }}>
                         <TouchableOpacity style={styles.cart} onPress={() => this.addToCarthandlar()}>
                             <SimpleLineIcons name="bag" size={24} color="#fff" style={{ marginLeft: hp('2%'), }} />
                             <Text style={{ fontSize: hp('2.3%'), color: '#fff', padding: wp('2 %'), }}>ADD TO CART </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.wishlist} onPress={() => this.onPressWishlisthandler(itemObj)}>
-                            <FontAwesome name="heart-o" size={24} color="#B9B913" />
+                        <TouchableOpacity style={styles.wishlist} onPress={() => this.onPressWishlisthandler(this.itemObj)}>
+                            {selectedWishList === true ? <FontAwesome name="heart" size={24} color="red" /> : <FontAwesome name="heart-o" size={24} color="#B9B913" />}
                             <Text style={{ fontSize: hp('2.3%'), color: '#B9B913', padding: wp('2 %') }}>WISHLIST </Text>
                         </TouchableOpacity>
                     </View>
