@@ -114,7 +114,7 @@ class LoginScreen extends Component {
                             onChangeText={(email) => this.setEmail(email)}
                         />
                     </View>
-                    <Text style={{ marginTop: hp('-2%'), marginLeft: wp('10%'), color: '#ff0000' }}>{this.state.usererror && this.state.usererror}</Text>
+                    <Text style={{ marginTop: hp('-3%'), marginLeft: wp('10%'), color: '#ff0000', marginBottom: hp('1%') }}>{this.state.usererror && this.state.usererror}</Text>
                     <View style={styles.inputview}>
                         <FontAwesome name="unlock-alt" size={30} color="#FF95AD" style={{ paddingLeft: hp('2.7%') }} />
                         <TextInput
@@ -129,7 +129,7 @@ class LoginScreen extends Component {
                             onChangeText={(password) => this.setPassword(password)}
                         />
                     </View>
-                    <Text style={{ marginTop: hp('-2%'), marginLeft: wp('10%'), color: '#ff0000' }}>{this.state.passworderror && this.state.passworderror}</Text>
+                    <Text style={{ marginTop: hp('-3%'), marginLeft: wp('10%'), color: '#ff0000' }}>{this.state.passworderror && this.state.passworderror}</Text>
                     <View>
                         <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()}>
                             {this.state.loading === true ? <Loader /> : <Text style={styles.loginText}>Login Now</Text>}
