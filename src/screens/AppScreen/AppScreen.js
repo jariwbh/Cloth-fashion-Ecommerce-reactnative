@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import { View, Text, ImageBackground, TouchableOpacity, StyleSheet, Image, FlatList, ScrollView } from 'react-native';
 import { CategoryService } from '../../Services/CategoryService/CategoryService';
-import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
-} from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
+import Loader from '../../components/Loader/Loader'
 
 export class AppScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            categoryList: null
+            categoryList: []
         };
     }
 
@@ -37,12 +35,16 @@ export class AppScreen extends Component {
         const { categoryList } = this.state;
         return (
             <View style={styles.container}>
-                <FlatList
-                    data={categoryList}
-                    numColumns={3}
-                    renderItem={this.renderCategory}
-                    keyExtractor={item => `${item._id}`}
-                />
+                {(categoryList == null) || (categoryList && categoryList.length == 0) ?
+                    <Loader />
+                    :
+                    <FlatList
+                        data={categoryList}
+                        numColumns={3}
+                        renderItem={this.renderCategory}
+                        keyExtractor={item => `${item._id}`}
+                    />
+                }
             </View>
         )
     }

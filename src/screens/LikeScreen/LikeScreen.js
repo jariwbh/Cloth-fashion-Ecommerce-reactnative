@@ -55,7 +55,6 @@ class LikeScreen extends Component {
 
     render() {
         const { productList } = this.state;
-
         return (
             <View style={styles.container}>
                 {(productList == null) || (productList && productList.length == 0) ?

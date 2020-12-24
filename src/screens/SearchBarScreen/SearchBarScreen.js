@@ -5,6 +5,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
 import { saveLocalWishList, getLocalWishList, removeLocalWishList } from '../../Helpers/LocalWishList';
+import Loader from '../../components/Loader/Loader';
 
 class SearchBarScreen extends Component {
     constructor(props) {
@@ -95,13 +96,15 @@ class SearchBarScreen extends Component {
         </View>
     )
 
-    searchFilterFunction(text) {
+    async searchFilterFunction(text) {
         const newData = this.searchproductList.filter(item => {
             const itemData = `${item.itemname.toUpperCase()}`
             const textData = text.toUpperCase();
+            console.log('itemData', itemData)
             return itemData.indexOf(textData) > -1;
         });
         this.setState({ productList: newData });
+
     };
 
     render() {
@@ -113,7 +116,7 @@ class SearchBarScreen extends Component {
         };
 
         return (
-            <View style={styles.container}>
+            <View style={styles.container} >
                 <View style={{ flexDirection: 'row' }}>
                     <View style={styles.serchbar}>
                         <TextInput

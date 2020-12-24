@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
 import { FontAwesome, MaterialCommunityIcons } from 'react-native-vector-icons';
 import { RegisterService } from '../../Services/RegisterService/RegisterService';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../components/Loader/MyLoader';
 
 class RegisterScreen extends Component {
     constructor(props) {

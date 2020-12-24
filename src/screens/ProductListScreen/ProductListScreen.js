@@ -6,16 +6,17 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
 import { CategoryService } from '../../Services/CategoryService/CategoryService';
 import { saveLocalWishList, getLocalWishList, removeLocalWishList } from '../../Helpers/LocalWishList';
+import Loader from '../../components/Loader/Loader';
 
 class ProductListScreen extends Component {
     constructor(props) {
         super(props);
-        this.categoryId = this.props.route.params && this.props.route.params.item,
-            this.state = {
-                productList: null,
-                categoryList: null,
-                selectedItem: null,
-            };
+        this.categoryId = this.props.route.params && this.props.route.params.item;
+        this.state = {
+            productList: null,
+            categoryList: null,
+            selectedItem: null,
+        };
 
         this.willFocus = this.props.navigation.addListener('focus', e => {
             this.reloaddata();
@@ -132,35 +133,39 @@ class ProductListScreen extends Component {
         const { productList, categoryList } = this.state;
         return (
             <View style={styles.container}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingBottom: hp('2%'), marginTop: hp('1%') }} >
-                    <View >
-                        <Text style={{ fontSize: 20, marginLeft: hp('2%'), padding: wp('3%') }}> New Arrivals</Text>
-                    </View>
-                    <ScrollView
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                    >
-                        <FlatList
-                            numColumns={10}
-                            data={categoryList}
-                            renderItem={this.renderCategory}
-                            keyExtractor={item => `${item._id}`}
-                        />
-                    </ScrollView>
-                </View>
-                <ScrollView
-                    Vertical={true}
-                    showsVerticalScrollIndicator={false}
-                >
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: hp('5%'), flex: 0.5, marginBottom: hp('10%') }}>
-                        <FlatList
-                            numColumns={2}
-                            data={productList}
-                            renderItem={this.renderInventoryItem}
-                            keyExtractor={item => `${item._id}`}
-                        />
-                    </View>
-                </ScrollView>
+                {productList == null ? <Loader /> :
+                    <>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingBottom: hp('2%'), marginTop: hp('1%') }} >
+                            <View >
+                                <Text style={{ fontSize: 20, marginLeft: hp('2%'), padding: wp('3%') }}> New Arrivals</Text>
+                            </View>
+                            <ScrollView
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                            >
+                                <FlatList
+                                    numColumns={10}
+                                    data={categoryList}
+                                    renderItem={this.renderCategory}
+                                    keyExtractor={item => `${item._id}`}
+                                />
+                            </ScrollView>
+                        </View>
+                        <ScrollView
+                            Vertical={true}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: hp('5%'), flex: 0.5, marginBottom: hp('10%') }}>
+                                <FlatList
+                                    numColumns={2}
+                                    data={productList}
+                                    renderItem={this.renderInventoryItem}
+                                    keyExtractor={item => `${item._id}`}
+                                />
+                            </View>
+                        </ScrollView>
+                    </>
+                }
             </View>
         );
     }
