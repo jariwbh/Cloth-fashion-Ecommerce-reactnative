@@ -8,7 +8,7 @@ const Loader = (props) => {
       <View style={styles.activityIndicatorWrapper}>
         <ActivityIndicator
           animating={true}
-          color="#FFFFFF"
+          color="#FF95AD"
           size="large"
           style={styles.activityIndicator}
         />

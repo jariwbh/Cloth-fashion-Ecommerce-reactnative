@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, StyleSheet, Image, FlatList, ScrollView } from 'react-native';
-import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
-} from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Loader from '../../components/Loader/Loader';
 import { CategoryService } from '../../Services/CategoryService/CategoryService';
-
 
 class HomeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            categoryList: null
+            categoryList: []
         };
     }
 
@@ -28,7 +25,7 @@ class HomeScreen extends Component {
     }
 
     renderCategory = ({ item }) => (
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('TabNavigations')} >
+        <TouchableOpacity onPress={() => this.props.navigation.replace('TabNavigations', { item: item })} >
             <View style={{ marginTop: hp('-2%'), alignItems: 'center' }}>
                 <Image source={{ uri: item.property.icon_logo }} style={{ height: 100, width: 100 }} />
                 <Text style={{ marginTop: "-15%", alignItems: 'center' }}>{item.property.title}</Text>
@@ -50,18 +47,25 @@ class HomeScreen extends Component {
                                 <Text style={styles.inerInput}>Million of Collections </Text>
                             </View>
                         </View>
-                        <FlatList
-                            data={categoryList}
-                            numColumns={3}
-                            renderItem={this.renderCategory}
-                            keyExtractor={item => `${item._id}`}
-                        />
-                        <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-                            <TouchableOpacity style={styles.go} onPress={() => { this.props.navigation.navigate('TabNavigations') }}>
-                                <Text style={styles.textgo} >GO</Text>
-                                <FontAwesome name="chevron-right" size={15} color="#B9B913" style={{ margin: wp('1%') }} />
-                            </TouchableOpacity>
-                        </View>
+                        {(categoryList == null) || (categoryList && categoryList.length == 0) ?
+                            <Loader />
+                            :
+                            <>
+                                <FlatList
+                                    data={categoryList}
+                                    numColumns={3}
+                                    renderItem={this.renderCategory}
+                                    keyExtractor={item => `${item._id}`}
+                                />
+
+                                <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                                    <TouchableOpacity style={styles.go} onPress={() => { this.props.navigation.navigate('TabNavigations') }}>
+                                        <Text style={styles.textgo} >GO</Text>
+                                        <FontAwesome name="chevron-right" size={15} color="#B9B913" style={{ margin: wp('1%') }} />
+                                    </TouchableOpacity>
+                                </View>
+                            </>
+                        }
                     </View>
                 </View>
             </ImageBackground>

@@ -66,8 +66,7 @@ function MainStackScreen({ navigation }) {
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
-                    <MenuBack onPress={() => navigation.navigate("ProductListScreen")} />, headerRight: () =>
-                        <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
+                    <MenuBack onPress={() => navigation.navigate("ProductListScreen")} />
             }} component={AddToCartScreen} />
             <MainStack.Screen name="SearchBarScreen" options={{
                 title: 'Search Product', headerStyle: {
@@ -125,7 +124,6 @@ function LikeStackScreen({ navigation }) {
 }
 
 const Tab = createBottomTabNavigator();
-
 export default function TabNavigations() {
     return (
         <>

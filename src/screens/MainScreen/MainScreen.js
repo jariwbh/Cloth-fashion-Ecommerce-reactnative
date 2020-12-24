@@ -6,6 +6,7 @@ import { CouponsService } from '../../Services/CouponsService/CouponsService';
 import HTML from 'react-native-render-html';
 import { CategoryService } from '../../Services/CategoryService/CategoryService';
 import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
+import MyLoader from '../../components/Loader/Loader';
 
 class MainScreen extends Component {
     constructor(props) {
@@ -87,45 +88,51 @@ class MainScreen extends Component {
         const { coupon, categoryList, productList } = this.state;
         return (
             <View style={styles.container}>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('1%'), paddingBottom: hp('0.5%') }}>
-                        <ScrollView
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={false}
-                        >
+                {(productList == null) || (productList && productList.length == 0) ?
+                    <>
+                        <MyLoader />
+                    </>
+                    :
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('1%'), paddingBottom: hp('0.5%') }}>
+                            <ScrollView
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                            >
+                                <FlatList
+                                    style={{ flexDirection: 'column' }}
+                                    numColumns={10}
+                                    data={categoryList}
+                                    renderItem={this.renderCategory}
+                                    keyExtractor={item => `${item._id}`}
+                                />
+                            </ScrollView>
+                        </View>
+                        <View>
+                            {coupon ?
+                                <View style={{ marginTop: hp('-2%') }}>
+                                    <HTML html={`<html> ${coupon} </html>`} />
+                                </View>
+                                : <Image source={{ uri: "https://res.cloudinary.com/dnogrvbs2/image/upload/v1608008335/Stylish_recommendation_h41aw7.png" }}
+                                    style={{ margin: hp('1.5%'), height: hp('15%'), width: wp('95%'), borderRadius: 10 }} />
+                            }
+                        </View>
+                        <View>
+                            {coupon ?
+                                <Text style={{ fontSize: hp('3%'), marginTop: hp('-5%'), paddingLeft: hp('2%') }}> Tops New Fashion Cloths</Text>
+                                : <Text style={{ fontSize: hp('3%'), marginTop: hp('1%') }}> Tops New Fashion Cloths</Text>
+                            }
+                        </View>
+                        <View style={{ flexDirection: 'row', marginBottom: hp('10%'), flex: 0.5 }}>
                             <FlatList
-                                style={{ flexDirection: 'column' }}
-                                numColumns={10}
-                                data={categoryList}
-                                renderItem={this.renderCategory}
+                                numColumns={2}
+                                data={productList}
+                                renderItem={this.renderInventoryItem}
                                 keyExtractor={item => `${item._id}`}
                             />
-                        </ScrollView>
-                    </View>
-                    <View>
-                        {coupon ?
-                            <View style={{ marginTop: hp('-2%') }}>
-                                <HTML html={`<html> ${coupon} </html>`} />
-                            </View>
-                            : <Image source={{ uri: "https://res.cloudinary.com/dnogrvbs2/image/upload/v1608008335/Stylish_recommendation_h41aw7.png" }}
-                                style={{ margin: hp('1.5%'), height: hp('15%'), width: wp('95%'), borderRadius: 10 }} />
-                        }
-                    </View>
-                    <View>
-                        {coupon ?
-                            <Text style={{ fontSize: hp('3%'), marginTop: hp('-5%'), paddingLeft: hp('2%') }}> Tops New Fashion Cloths</Text>
-                            : <Text style={{ fontSize: hp('3%'), marginTop: hp('1%') }}> Tops New Fashion Cloths</Text>
-                        }
-                    </View>
-                    <View style={{ flexDirection: 'row', marginBottom: hp('10%'), flex: 0.5 }}>
-                        <FlatList
-                            numColumns={2}
-                            data={productList}
-                            renderItem={this.renderInventoryItem}
-                            keyExtractor={item => `${item._id}`}
-                        />
-                    </View>
-                </ScrollView>
+                        </View>
+                    </ScrollView>
+                }
             </View>
         );
     }

@@ -6,6 +6,7 @@ import {
 } from 'react-native-responsive-screen'
 import { Entypo } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
+import Loader from '../../components/Loader/Loader';
 
 export default class MyProfileScreen extends Component {
     constructor(props) {
@@ -23,11 +24,15 @@ export default class MyProfileScreen extends Component {
     getdata = async () => {
         var getUser = await AsyncStorage.getItem('@authuser')
         this.setState({ companyData: JSON.parse(getUser) })
+        setTimeout(() => {
+            this.props.navigation.replace('LoginScreen')
+        }, 5000);
     }
 
     onPressUpdateProfile() {
         const { companyData } = this.state;
         if (companyData != null) {
+            ToastAndroid.show("LogIn Expired!", ToastAndroid.SHORT);
             this.props.navigation.navigate('UpdateProfile', { companyData })
         }
     }
@@ -42,25 +47,31 @@ export default class MyProfileScreen extends Component {
         const { companyData, companyProfile } = this.state;
         return (
             <View style={styles.container}>
-                <View style={styles.header}></View>
-                <Image style={styles.avatar} source={{ uri: (companyProfile ? companyProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
-                <View style={styles.body}>
-                    <View style={styles.bodyContent}>
-                        <Text style={styles.name}>{companyData && companyData.fullname}</Text>
-                    </View>
-                    <View style={{
-                        flex: 1, flexDirection: 'column', alignItems: 'center'
-                    }}>
-                        <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onPressUpdateProfile()}>
-                            <Entypo name="edit" size={27} color="#FF95AD" style={{ padding: hp('1.5%'), paddingLeft: hp('1%'), }} />
-                            <Text style={styles.textContainer}> Update Profile</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonContainer} onPress={() => { this.onPressLogout() }}>
-                            <Entypo name="log-out" size={27} color="#FF95AD" style={{ padding: hp('1.5%'), paddingLeft: hp('1%') }} />
-                            <Text style={styles.textContainer}> Log out</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                {(companyData == null) ?
+                    <Loader />
+                    :
+                    <>
+                        <View style={styles.header}></View>
+                        <Image style={styles.avatar} source={{ uri: (companyProfile ? companyProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
+                        <View style={styles.body}>
+                            <View style={styles.bodyContent}>
+                                <Text style={styles.name}>{companyData && companyData.fullname}</Text>
+                            </View>
+                            <View style={{
+                                flex: 1, flexDirection: 'column', alignItems: 'center'
+                            }}>
+                                <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onPressUpdateProfile()}>
+                                    <Entypo name="edit" size={27} color="#FF95AD" style={{ padding: hp('1.5%'), paddingLeft: hp('1%'), }} />
+                                    <Text style={styles.textContainer}> Update Profile</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.buttonContainer} onPress={() => { this.onPressLogout() }}>
+                                    <Entypo name="log-out" size={27} color="#FF95AD" style={{ padding: hp('1.5%'), paddingLeft: hp('1%') }} />
+                                    <Text style={styles.textContainer}> Log out</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </>
+                }
             </View>
         )
     }

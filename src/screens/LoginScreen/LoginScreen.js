@@ -6,9 +6,9 @@ import {
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Loader from '../../components/Loader/Loader';
 import AsyncStorage from '@react-native-community/async-storage';
 import { LoginService } from '../../Services/LoginService/LoginService';
+import Loader from '../../components/Loader/MyLoader';
 
 class LoginScreen extends Component {
     constructor(props) {
@@ -54,42 +54,41 @@ class LoginScreen extends Component {
     )
 
     onPressSubmit = async () => {
-        const { username, password } = this.state;
-        if (!username || !password) {
-            this.setEmail(username)
-            this.setPassword(password)
-            return;
-        }
+        // const { username, password } = this.state;
+        // if (!username || !password) {
+        //     this.setEmail(username)
+        //     this.setPassword(password)
+        //     return;
+        // }
 
-        const body = {
-            username: username,
-            password: password
-        }
+        // const body = {
+        //     username: username,
+        //     password: password
+        // }
         this.setState({ loading: true })
-        try {
-            await LoginService(body)
-                .then(response => {
-                    if (response.type === "Error") {
-                        this.setState({ loading: false })
-                        ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG);
-                        this.resetScreen()
-                        return
-                    }
+        // try {
+        //     await LoginService(body)
+        //         .then(response => {
+        //             if (response.type === "Error") {
+        //                 this.setState({ loading: false })
+        //                 ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG);
+        //                 this.resetScreen()
+        //                 return
+        //             }
 
-                    if (response != null || response != 'undefind') {
-                        this.authenticateUser(response.user)
-                        ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
-                        this.props.navigation.navigate('HomeScreen')
-                        this.resetScreen()
-                        return
-                    }
-                })
-        }
-        catch (error) {
-            this.setState({ loading: false })
-            ToastAndroid.show("SignIn Failed!", ToastAndroid.LONG)
-        }
-
+        //             if (response != null || response != 'undefind') {
+        //                 this.authenticateUser(response.user)
+        ToastAndroid.show("SignIn Success!", ToastAndroid.SHORT);
+        this.props.navigation.navigate('HomeScreen')
+        //                 this.resetScreen()
+        //                 return
+        //             }
+        //         })
+        // }
+        // catch (error) {
+        //     this.setState({ loading: false })
+        //     ToastAndroid.show("SignIn Failed!", ToastAndroid.LONG)
+        // }
     }
 
     render() {
