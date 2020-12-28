@@ -1,13 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import { getLocaladdtocardlist } from '../../Helpers/LocalAddTOcart'
-let cartnumber = 0
 
 export default function MenuBarIcon(props) {
-    // useEffect(() => {
-    //     getLocaladdtocard()
-    // }, [])
+    const [cartnumber, setCount] = useState(0);
+    let cart = 0
+    async function getLocaladdtocard() {
+        let localAddtocardlists = await getLocaladdtocardlist();
+        cart = localAddtocardlists.length
+        setCount(cart);
+    };
+
+    useEffect(() => {
+        (async () => {
+            getLocaladdtocard()
+        })();
+    }, [])
+    getLocaladdtocard()
     return (
         <View style={{ flexDirection: "row", marginRight: 20, backgroundColor: '#FFFFFF' }}>
             <TouchableOpacity onPress={props.onPress}>
@@ -25,7 +35,5 @@ export default function MenuBarIcon(props) {
     )
 }
 
-async function getLocaladdtocard() {
-    let localAddtocardlists = await getLocaladdtocardlist();
-    cartnumber = localAddtocardlists.length
-};
+
+
