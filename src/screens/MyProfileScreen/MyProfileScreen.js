@@ -24,9 +24,11 @@ export default class MyProfileScreen extends Component {
     getdata = async () => {
         var getUser = await AsyncStorage.getItem('@authuser')
         this.setState({ companyData: JSON.parse(getUser) })
-        setTimeout(() => {
-            this.props.navigation.replace('LoginScreen')
-        }, 5000);
+        if (getUser == null || getUser && getUser.length == 0) {
+            setTimeout(() => {
+                this.props.navigation.replace('LoginScreen')
+            }, 5000);
+        }
     }
 
     onPressUpdateProfile() {
