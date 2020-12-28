@@ -11,7 +11,8 @@ const InventoryItemService = (id) => {
                 "searchvalue": id,
                 "criteria": "eq",
                 "datatype": "ObjectId"
-            }]
+            }, { "searchfield": "status", "searchvalue": "active", "criteria": "eq" }
+            ]
         }
 
     } else {
@@ -22,7 +23,8 @@ const InventoryItemService = (id) => {
                 "searchvalue": "active",
                 "criteria": "eq",
                 "datatype": "text"
-            }]
+            }, { "searchfield": "status", "searchvalue": "active", "criteria": "eq" }
+            ]
         }
     }
 

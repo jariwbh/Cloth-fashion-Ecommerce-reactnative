@@ -202,6 +202,7 @@ class AddToCartScreen extends Component {
             }
             if (response != null || response != 'undefind') {
                 removeLocalAllAddtocardlist()
+                alert('Thank you,Your Order has been Book successfully')
                 this.props.navigation.navigate('ProductListScreen')
             }
         })
