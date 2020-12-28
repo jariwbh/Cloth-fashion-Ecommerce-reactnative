@@ -79,7 +79,7 @@ class LoginScreen extends Component {
                     if (response != null || response != 'undefind') {
                         this.authenticateUser(response.user)
                         ToastAndroid.show("SignIn Success!", ToastAndroid.SHORT);
-                        this.props.navigation.navigate('TabNavigations')
+                        this.props.navigation.navigate('HomeScreen')
                         this.resetScreen()
                         return
                     }
