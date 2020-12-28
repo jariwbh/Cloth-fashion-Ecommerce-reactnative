@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 
 const Loader = (props) => {
-
   return (
     <View style={styles.modalBackground}>
       <View style={styles.activityIndicatorWrapper}>
