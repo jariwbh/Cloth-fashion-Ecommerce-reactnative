@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, TextInput, ToastAndroid } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
-} from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-community/async-storage';
 import { LoginService } from '../../Services/LoginService/LoginService';
 import Loader from '../../components/Loader/MyLoader';
+import appConfig from '../../Helpers/appConfig'
 
 class LoginScreen extends Component {
     constructor(props) {
@@ -78,6 +76,7 @@ class LoginScreen extends Component {
 
                     if (response != null || response != 'undefind') {
                         this.authenticateUser(response.user)
+                        appConfig.headers["authkey"] = response.user.addedby;
                         ToastAndroid.show("SignIn Success!", ToastAndroid.SHORT);
                         this.props.navigation.navigate('HomeScreen')
                         this.resetScreen()
@@ -98,8 +97,8 @@ class LoginScreen extends Component {
                     Vertical={true}
                     showsVerticalScrollIndicator={false}
                 >
-                    <View style={styles.Image} >
-                        <Text style={{ fontSize: hp('4%'), color: '#000000' }}>Login </Text>
+                    <View style={styles.loginTitle} >
+                        <Text style={{ fontSize: hp('4%'), color: '#000000', }}>Login </Text>
                     </View>
                     <View style={styles.inputview}>
                         <FontAwesome name="user-circle-o" size={30} color="#FF95AD" style={{ paddingLeft: hp('2%') }} />
@@ -169,11 +168,11 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'cover'
     },
-    Image: {
+    loginTitle: {
         marginTop: hp('50%'),
-        marginLeft: hp('3%'),
-        marginBottom: hp('2%')
-
+        marginRight: hp('3%'),
+        marginBottom: hp('2%'),
+        alignItems: 'flex-end'
     },
     inputview: {
         flexDirection: 'row',
@@ -214,7 +213,7 @@ const styles = StyleSheet.create({
         textTransform: 'capitalize'
     },
     innerText: {
-        color: '#858585',
+        color: '#595959',
         fontSize: hp('2%'),
         textTransform: 'capitalize'
     },

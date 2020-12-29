@@ -16,6 +16,8 @@ const CategoryService = () => {
         headers: appConfig.headers,
         body: JSON.stringify(body)
     };
+
+    console.log("category service requestionoption", requestOptions)
     return fetch(appConfig.baseUrl + 'formdatas/filter', requestOptions)
         .then(response => response.json()).catch(error => {
             console.error('There was an error!', error);

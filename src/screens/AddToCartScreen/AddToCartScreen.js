@@ -214,7 +214,7 @@ class AddToCartScreen extends Component {
         return (
             <View style={styles.container}>
                 {(cartlist == null) || (cartlist && cartlist.length == 0) ?
-                    <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: 'red', marginTop: hp('30%') }}>There are no items in your cart</Text>
+                    <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: '#747474', marginTop: hp('30%') }}>There are no items in your cart</Text>
                     :
 
                     <ScrollView>

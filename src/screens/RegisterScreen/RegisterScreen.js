@@ -100,7 +100,7 @@ class RegisterScreen extends Component {
                     Vertical={true}
                     showsVerticalScrollIndicator={false}
                 >
-                    <View style={styles.Image} >
+                    <View style={styles.registerTitle} >
                         <Text style={{ fontSize: hp('4%'), color: '#000000' }}>Register </Text>
                     </View>
                     <View style={styles.inputview}>
@@ -115,7 +115,7 @@ class RegisterScreen extends Component {
                             onChangeText={(fullname) => this.setFullName(fullname)}
                         />
                     </View>
-                    <Text style={{ marginTop: hp('-3%'), marginLeft: wp('7%'), color: '#ff0000' }}>{this.state.fullnameError && this.state.fullnameError}</Text>
+                    <Text style={{ marginTop: hp('-4%'), marginLeft: wp('7%'), color: '#ff0000', marginBottom: hp('2%') }}>{this.state.fullnameError && this.state.fullnameError}</Text>
                     <View style={styles.inputview}>
                         <MaterialCommunityIcons name="email" size={27} color="#FF95AD" style={{ paddingLeft: hp('2%') }} />
                         <TextInput
@@ -132,7 +132,7 @@ class RegisterScreen extends Component {
                             onChangeText={(username) => this.setUserName(username)}
                         />
                     </View>
-                    <Text style={{ marginTop: hp('-3%'), marginLeft: wp('7%'), color: '#ff0000' }}>{this.state.usernameError && this.state.usernameError}</Text>
+                    <Text style={{ marginTop: hp('-4%'), marginLeft: wp('7%'), color: '#ff0000', marginBottom: hp('2%') }}>{this.state.usernameError && this.state.usernameError}</Text>
                     <View style={styles.inputview} >
                         <FontAwesome name="phone" size={27} color="#FF95AD" style={{ paddingLeft: hp('2%') }} />
                         <TextInput
@@ -146,7 +146,7 @@ class RegisterScreen extends Component {
                             onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
                         />
                     </View>
-                    <Text style={{ marginTop: hp('-3%'), marginLeft: wp('7%'), color: '#ff0000' }}>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
+                    <Text style={{ marginTop: hp('-4%'), marginLeft: wp('7%'), color: '#ff0000', marginBottom: hp('1%') }}>{this.state.mobilenumberError && this.state.mobilenumberError}</Text>
                     <View>
                         <TouchableOpacity style={styles.loginBtn} onPress={() => this.onPressSubmit()} >
                             {this.state.loading === true ? <Loader /> : <Text style={styles.loginText} >Register Now</Text>}
@@ -174,11 +174,11 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'cover'
     },
-    Image: {
+    registerTitle: {
         marginTop: hp('40%'),
-        marginLeft: hp('3%'),
-        marginBottom: hp('2%')
-
+        marginRight: hp('3%'),
+        marginBottom: hp('2%'),
+        alignItems: 'flex-end'
     },
     inputview: {
         flexDirection: 'row',
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
         fontSize: hp('2%'),
     },
     innerText: {
-        color: '#737373',
+        color: '#595959',
         fontSize: hp('2%'),
     },
 
