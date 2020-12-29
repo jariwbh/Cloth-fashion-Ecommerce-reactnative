@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Cloth fashion Ecommerce",
+    "name": "Cloth Fashion Ecommerce",
     "slug": "Cloth-fashion-Ecommerce",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,6 +15,14 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "splash": {
+        "mdpi": "./assets/images/splash-mdpi.png",
+        "hdpi": "./assets/images/splash-hdpi.png",
+        "xhdpi": "./assets/images/splash-xhdpi.png",
+        "xxhdpi": "./assets/images/splash-xxhdpi.png",
+        "xxxhdpi": "./assets/images/splash-xxxhdpi.png",
+        "resizeMode": "cover"
       }
     }
   }

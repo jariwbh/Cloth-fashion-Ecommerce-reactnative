@@ -5,19 +5,20 @@ import { getLocaladdtocardlist } from '../../Helpers/LocalAddTOcart'
 
 export default function MenuBarIcon(props) {
     const [cartnumber, setCount] = useState(0);
-    let cart = 0
     async function getLocaladdtocard() {
         let localAddtocardlists = await getLocaladdtocardlist();
-        cart = localAddtocardlists.length
-        setCount(cart);
+        setCount(localAddtocardlists.length);
     };
 
     useEffect(() => {
         (async () => {
-            getLocaladdtocard()
+            let localAddtocardlists = await getLocaladdtocardlist();
+            setCount(localAddtocardlists.length);
         })();
-    }, [])
+    }, [cartnumber])
+
     getLocaladdtocard()
+    console.log('cart', cartnumber)
     return (
         <View style={{ flexDirection: "row", marginRight: 20, backgroundColor: '#FFFFFF' }}>
             <TouchableOpacity onPress={props.onPress}>

@@ -20,7 +20,7 @@ class UpdateProfile extends Component {
             usernameError: null,
             mobilenumber: this.companyData.property.mobile_number,
             mobilenumberError: null,
-            userProfile: this.companyData.branchid.branchlogo,
+            userProfile: null,
             profileName: this.companyData.fullname,
             userMemberName: this.companyData.username
         }
@@ -81,7 +81,6 @@ class UpdateProfile extends Component {
         }
 
         await UpdateUserService(body).then(response => {
-            console.log('response', response)
             if (response != null) {
                 ToastAndroid.show("Your Profile Update!", ToastAndroid.LONG);
                 this.props.navigation.navigate('Profile')
@@ -93,7 +92,7 @@ class UpdateProfile extends Component {
         const { fullname, username, mobilenumber, userProfile, profileName } = this.state;
         return (
             <View style={styles.container}>
-                <Image style={styles.avatar} source={{ uri: (userProfile ? userProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
+                <Image style={styles.avatar} source={require('../../../assets/images/userimage.jpg')} />
                 <View style={styles.body}>
                     <View style={styles.bodyContent}>
                         <Text style={styles.name}>{profileName && profileName}</Text>

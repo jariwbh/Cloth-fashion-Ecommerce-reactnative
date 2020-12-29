@@ -37,7 +37,8 @@ async function removeLocalAddtocardlist(currentAddtocardlistObj) {
 }
 
 function removeLocalAllAddtocardlist() {
-    AsyncStorage.removeItem('@addtocardlist');
+    let filteredWishLists = []
+    AsyncStorage.setItem('@addtocardlist', JSON.stringify(filteredWishLists));
 }
 
 export { getLocaladdtocardlist, getLocalAddtocardlistByID, saveLocalAddtocardlist, removeLocalAddtocardlist, removeLocalAllAddtocardlist }

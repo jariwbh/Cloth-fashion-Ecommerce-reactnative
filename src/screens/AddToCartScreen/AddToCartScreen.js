@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ScrollView } from 'react-native-gesture-handler';
@@ -196,13 +196,13 @@ class AddToCartScreen extends Component {
         }
 
         BillingService(billdetails).then(response => {
-            console.log('response', response);
             if (response.type === "Error") {
                 return;
             }
+
             if (response != null || response != 'undefind') {
                 removeLocalAllAddtocardlist()
-                alert('Thank you,Your Order has been Book successfully')
+                alert('Thank you, Your Order has been Book successfully')
                 this.props.navigation.navigate('ProductListScreen')
             }
         })

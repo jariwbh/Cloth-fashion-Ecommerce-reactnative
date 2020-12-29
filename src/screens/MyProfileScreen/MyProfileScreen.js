@@ -41,6 +41,8 @@ export default class MyProfileScreen extends Component {
 
     onPressLogout() {
         AsyncStorage.removeItem('@authuser');
+        AsyncStorage.removeItem('@unsavedWishLists');
+        AsyncStorage.removeItem('@addtocardlist');
         ToastAndroid.show("Log Out Success!", ToastAndroid.SHORT);
         this.props.navigation.replace('LoginScreen')
     }
@@ -54,7 +56,7 @@ export default class MyProfileScreen extends Component {
                     :
                     <>
                         <View style={styles.header}></View>
-                        <Image style={styles.avatar} source={{ uri: (companyProfile ? companyProfile : 'https://bootdey.com/img/Content/avatar/avatar6.png') }} />
+                        <Image style={styles.avatar} source={require('../../../assets/images/userimage.jpg')} />
                         <View style={styles.body}>
                             <View style={styles.bodyContent}>
                                 <Text style={styles.name}>{companyData && companyData.fullname}</Text>

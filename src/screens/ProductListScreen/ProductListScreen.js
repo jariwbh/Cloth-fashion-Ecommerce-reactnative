@@ -78,7 +78,6 @@ class ProductListScreen extends Component {
             if (data._id == item._id) {
                 data.selected = (data.selected == null) ? (true) : !data.selected;
                 data.selected === true ? this.saveLocalWishList(item) : this.removeLocalWishList(item)
-                console.log('data.selected', data)
                 break;
             }
         }
@@ -86,7 +85,8 @@ class ProductListScreen extends Component {
     }
 
     renderInventoryItem = ({ item }) => (
-        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%'), }}>
+        <TouchableOpacity style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%') }}
+            onPress={() => { this.props.navigation.push('NewLifeStyleScreen', { item }) }}>
             <TouchableOpacity onPress={() => { this.props.navigation.push('NewLifeStyleScreen', { item }) }} >
                 <Image source={{ uri: item.item_logo }} resizeMode="stretch"
                     style={{ alignSelf: 'auto', flex: 1, margin: hp('1.5%'), height: hp('30%'), width: wp('40%'), borderRadius: hp('2%'), borderColor: '#FFFFFF', }} />
@@ -106,7 +106,7 @@ class ProductListScreen extends Component {
                 <Text style={{ marginLeft: hp('1%'), fontSize: hp('2%') }}>₹ {item.sale.rate}</Text>
                 {item.sale.discount && <Text style={{ fontSize: hp('2%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>}
             </View>
-        </View>
+        </TouchableOpacity>
     )
 
     renderCategory = ({ item, index }) => (
