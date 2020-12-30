@@ -1,4 +1,4 @@
-import appConfig from '../../Helpers/appConfig'
+import appConfig from '../../Helpers/appConfigReg'
 
 const RegisterService = (data) => {
     const body = JSON.stringify(data)
