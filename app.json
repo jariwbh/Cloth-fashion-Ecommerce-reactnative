@@ -2,13 +2,23 @@
   "expo": {
     "name": "Cloth Fashion Ecommerce",
     "slug": "Cloth-fashion-Ecommerce",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "ios": {
       "bundleIdentifier": "com.app.clothfashionecommerce",
       "buildNumber": "1.0.0"
     },
+    "splash": {
+      "image": "./assets/images/splashxxxhdpi.png",
+      "resizeMode": "cover"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
       "package": "com.app.clothfashionecommerce",
       "versionCode": 1,
@@ -17,13 +27,16 @@
         "backgroundColor": "#FFFFFF"
       },
       "splash": {
-        "mdpi": "./assets/images/splash-mdpi.png",
-        "hdpi": "./assets/images/splash-hdpi.png",
-        "xhdpi": "./assets/images/splash-xhdpi.png",
-        "xxhdpi": "./assets/images/splash-xxhdpi.png",
-        "xxxhdpi": "./assets/images/splash-xxxhdpi.png",
+        "mdpi": "./assets/images/splashmdpi.png",
+        "hdpi": "./assets/images/splashhdpi.png",
+        "xhdpi": "./assets/images/splashxhdpi.png",
+        "xxhdpi": "./assets/images/splashxxhdpi.png",
+        "xxxhdpi": "./assets/images/splashxxxhdpi.png",
         "resizeMode": "cover"
       }
+    },
+    "web": {
+      "favicon": "./assets/logo.png"
     }
   }
 }

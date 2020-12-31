@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
-// import styles from './styles';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
     heightPercentageToDP as hp,
@@ -22,12 +20,12 @@ class LoginHomeScreen extends Component {
                     <Text style={{ fontSize: hp('2%'), color: '#fff' }}> Welcome to </Text>
                     <Text style={{ fontSize: hp('4%'), color: '#fff' }}>NewLifeStyle </Text>
                 </View>
-                <View style={styles.login}>
+                <TouchableOpacity style={styles.login} onPress={() => { this.props.navigation.navigate('LoginScreen') }}>
                     <Text
                         style={styles.TextInput}
                     > Continue to Login</Text>
-                    <MaterialCommunityIcons name="arrow-right-bold-circle" size={30} color="#FF95AD" style={styles.icon} onPress={() => { this.props.navigation.navigate('LoginScreen') }} />
-                </View>
+                    <MaterialCommunityIcons name="arrow-right-bold-circle" size={30} color="#FF95AD" style={styles.icon} />
+                </TouchableOpacity>
             </ImageBackground>
         );
     }
