@@ -34,7 +34,7 @@ export default class MyProfileScreen extends Component {
     onPressUpdateProfile() {
         const { companyData } = this.state;
         if (companyData != null) {
-            ToastAndroid.show("LogIn Expired!", ToastAndroid.SHORT);
+            ToastAndroid.show("Profile Updated", ToastAndroid.SHORT);
             this.props.navigation.navigate('UpdateProfile', { companyData })
         }
     }
