@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 
     },
     inputView: {
-        backgroundColor: "#fff",
+        backgroundColor: "#ffffff",
         borderRadius: wp('70%'),
         width: wp('85%'),
         marginLeft: hp('4%'),

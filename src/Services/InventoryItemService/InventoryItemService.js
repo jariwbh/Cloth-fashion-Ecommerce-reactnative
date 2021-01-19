@@ -34,7 +34,7 @@ const InventoryItemService = (id) => {
         body: JSON.stringify(body)
     };
 
-    return fetch(appConfig.baseUrl + 'inventoryitems/filter', requestOptions)
+    return fetch(appConfig.baseUrl + 'billitems/filter', requestOptions)
         .then(response => response.json()).catch(error => {
             console.error('There was an error!', error);
         });

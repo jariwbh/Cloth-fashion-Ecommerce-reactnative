@@ -12,12 +12,13 @@ class LoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: null,
+            username: 'CLOTH-702-10001',
             usererror: null,
-            password: null,
+            password: 'CLOTH-702-10001',
             passworderror: null,
             loading: false,
         };
+        this.secondTextInputRef = React.createRef();
         this.setEmail = this.setEmail.bind(this);
         this.setPassword = this.setPassword.bind(this);
         this.onPressSubmit = this.onPressSubmit.bind(this);
@@ -63,11 +64,13 @@ class LoginScreen extends Component {
             username: username,
             password: password
         }
+
         this.setState({ loading: true })
+
         try {
             await LoginService(body)
                 .then(response => {
-                    if (response.type === "Error") {
+                    if (response.error) {
                         this.setState({ loading: false })
                         ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG);
                         this.resetScreen()
@@ -93,10 +96,7 @@ class LoginScreen extends Component {
     render() {
         return (
             <ImageBackground source={require('../../../assets/images/2.png')} style={styles.backgroundImage}>
-                <ScrollView
-                    Vertical={true}
-                    showsVerticalScrollIndicator={false}
-                >
+                <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                     <View style={styles.loginTitle} >
                         <Text style={{ fontSize: hp('4%'), color: '#000000', }}>Login </Text>
                     </View>
@@ -107,6 +107,9 @@ class LoginScreen extends Component {
                             defaultValue={this.state.username}
                             placeholder="User Name"
                             type='clear'
+                            returnKeyType="next"
+                            blurOnSubmit={false}
+                            onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
                             placeholderTextColor="#AAAAAA"
                             returnKeyType="next"
                             onChangeText={(email) => this.setEmail(email)}
@@ -123,6 +126,7 @@ class LoginScreen extends Component {
                             placeholderTextColor="#AAAAAA"
                             secureTextEntry={true}
                             returnKeyType="done"
+                            ref={this.secondTextInputRef}
                             onSubmitEditing={() => this.onPressSubmit()}
                             onChangeText={(password) => this.setPassword(password)}
                         />

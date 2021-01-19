@@ -7,7 +7,7 @@ const BillingService = (data) => {
         headers: appConfig.headers,
         body: body
     };
-    return fetch(appConfig.baseUrl + 'billings', requestOptions)
+    return fetch(appConfig.baseUrl + 'bills', requestOptions)
         .then(response => response.json())
         .catch(error => {
             console.error('There was an error!', error);

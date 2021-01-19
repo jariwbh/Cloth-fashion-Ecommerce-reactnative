@@ -8,7 +8,8 @@ const CategoryService = () => {
             "searchvalue": "5e058897b0c5fb2b6c15cc69",
             "criteria": "eq",
             "datatype": "ObjectId"
-        }], "sort": { "createdAt": 1 }
+        }
+        ], "sort": { "createdAt": 1 }, "formname": "poscategory"
     }
 
     const requestOptions = {
@@ -17,7 +18,6 @@ const CategoryService = () => {
         body: JSON.stringify(body)
     };
 
-    console.log("category service requestionoption", requestOptions)
     return fetch(appConfig.baseUrl + 'formdatas/filter', requestOptions)
         .then(response => response.json()).catch(error => {
             console.error('There was an error!', error);

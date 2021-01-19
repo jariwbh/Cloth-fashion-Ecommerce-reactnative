@@ -17,7 +17,7 @@ class LoginHomeScreen extends Component {
         return (
             <ImageBackground source={require('../../../assets/images/1.png')} style={styles.backgroundImage}>
                 <View style={styles.Image} >
-                    <Text style={{ fontSize: hp('2%'), color: '#fff' }}> Welcome to </Text>
+                    <Text style={{ fontSize: hp('2.5%'), color: '#fff' }}> Welcome to </Text>
                     <Text style={{ fontSize: hp('4%'), color: '#fff' }}>NewLifeStyle </Text>
                 </View>
                 <TouchableOpacity style={styles.login} onPress={() => { this.props.navigation.navigate('LoginScreen') }}>
@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: wp('2%'),
         textTransform: 'uppercase',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontWeight: 'bold'
     },
     icon: {
         padding: wp('3%')

@@ -113,7 +113,7 @@ class MainScreen extends Component {
                                 <View style={{ marginTop: hp('-2%') }}>
                                     <HTML html={`<html> ${coupon} </html>`} />
                                 </View>
-                                : <Image source={{ uri: "https://res.cloudinary.com/dnogrvbs2/image/upload/v1608008335/Stylish_recommendation_h41aw7.png" }}
+                                : <Image source={{ uri: "https://res.cloudinary.com/dnogrvbs2/image/upload/v1611059017/Stylish_recommendation_inuyrb.png" }}
                                     style={{ margin: hp('1.5%'), height: hp('15%'), width: wp('95%'), borderRadius: 10 }} />
                             }
                         </View>

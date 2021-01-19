@@ -18,6 +18,8 @@ class RegisterScreen extends Component {
             mobilenumberError: null,
             loading: false,
         }
+        this.secondTextInputRef = React.createRef();
+        this.thirdTextInputRef = React.createRef();
         this.setFullName = this.setFullName.bind(this);
         this.setUserName = this.setUserName.bind(this);
         this.setMobileNumber = this.setMobileNumber.bind(this);
@@ -96,10 +98,8 @@ class RegisterScreen extends Component {
     render() {
         return (
             <ImageBackground source={require('../../../assets/images/2.png')} style={styles.backgroundImage}>
-                <ScrollView
-                    Vertical={true}
-                    showsVerticalScrollIndicator={false}
-                >
+                <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
+
                     <View style={styles.registerTitle} >
                         <Text style={{ fontSize: hp('4%'), color: '#000000' }}>Register </Text>
                     </View>
@@ -112,6 +112,8 @@ class RegisterScreen extends Component {
                             type='clear'
                             placeholderTextColor="#AAAAAA"
                             returnKeyType="next"
+                            blurOnSubmit={false}
+                            onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
                             onChangeText={(fullname) => this.setFullName(fullname)}
                         />
                     </View>
@@ -125,10 +127,12 @@ class RegisterScreen extends Component {
                             type='clear'
                             placeholderTextColor="#AAAAAA"
                             returnKeyType="next"
-                            autoCapitalize="none"
+                            blurOnSubmit={false}
                             autoCompleteType="email"
                             textContentType="emailAddress"
                             keyboardType="email-address"
+                            ref={this.secondTextInputRef}
+                            onSubmitEditing={() => { this.thirdTextInputRef.current.focus() }}
                             onChangeText={(username) => this.setUserName(username)}
                         />
                     </View>
@@ -139,9 +143,11 @@ class RegisterScreen extends Component {
                             style={styles.TextInput}
                             defaultValue={this.state.mobilenumber}
                             placeholder="Mobile Number"
+                            keyboardType="number-pad"
                             type='clear'
                             placeholderTextColor="#AAAAAA"
                             returnKeyType="done"
+                            ref={this.thirdTextInputRef}
                             onSubmitEditing={() => this.onPressSubmit()}
                             onChangeText={(mobilenumber) => this.setMobileNumber(mobilenumber)}
                         />

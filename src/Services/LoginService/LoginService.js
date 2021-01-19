@@ -7,7 +7,7 @@ const LoginService = (data) => {
         headers: appConfig.headers,
         body: body
     };
-    console.log("requestOptions", requestOptions);
+
     return fetch(appConfig.baseUrl + 'auth/memberlogin', requestOptions)
         .then(response => response.json()).catch(error => {
             console.error('There was an error!', error);
