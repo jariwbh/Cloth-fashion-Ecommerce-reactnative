@@ -7,20 +7,22 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { saveLocalWishList, removeLocalWishList } from '../../Helpers/LocalWishList';
 import { saveLocalAddtocardlist } from '../../Helpers/LocalAddTOcart';
+import HTML from 'react-native-render-html';
+import { SliderBox } from 'react-native-image-slider-box';
 
 class NewLifeStyleScreen extends Component {
     constructor(props) {
         super(props);
         this.itemObj = this.props.route.params.item
-        console.log('this.itemObj', this.itemObj)
+
         this.state = {
-            item_logo: this.itemObj.item_logo,
+            item_logo: this.itemObj.imagegallery,
             itemname: this.itemObj.itemname,
             price: this.itemObj.sale.rate,
             discount: this.itemObj.sale.discount,
             description: this.itemObj.sale.description,
-            sizeList: this.itemObj.property.size,
-            colorList: this.itemObj.property.color,
+            sizeList: this.itemObj.property && this.itemObj.property ? this.itemObj.property.size : null,
+            colorList: this.itemObj.property && this.itemObj.property ? this.itemObj.property.color : null,
             selectedColor: null,
             selectedSize: null,
             selectedWishList: this.itemObj.selected
@@ -75,15 +77,21 @@ class NewLifeStyleScreen extends Component {
     )
 
     addToCarthandlar() {
-        const { selectedColor, selectedSize } = this.state;
-        if (!selectedColor) {
-            alert('please select your color')
-            return;
+        const { selectedColor, selectedSize, colorList, sizeList } = this.state;
+        if (colorList != null) {
+            if (!selectedColor) {
+                alert('please select your color')
+                return;
+            }
         }
-        if (!selectedSize) {
-            alert('please select your size')
-            return;
+
+        if (sizeList != null) {
+            if (!selectedSize) {
+                alert('please select your size')
+                return;
+            }
         }
+
         this.itemObj.itemqty = 1
         this.itemObj.selectedColorCode = selectedColor
         this.itemObj.selectedSizeSize = selectedSize
@@ -94,13 +102,25 @@ class NewLifeStyleScreen extends Component {
 
     render() {
         const { item_logo, itemname, price, discount, description, sizeList, colorList, selectedSize, selectedWishList } = this.state;
+        let SliderBoxImages = [];
+        item_logo.map((item) => {
+            SliderBoxImages.push(item.attachment)
+        })
+
         return (
             <View style={styles.container}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: hp('1%') }}>
-                        <TouchableOpacity>
-                            <Image source={{ uri: item_logo }} resizeMode="stretch" style={{ alignSelf: 'auto', flex: 1, height: hp('35%'), width: wp('45%') }} />
-                        </TouchableOpacity>
+                        <SliderBox
+                            images={SliderBoxImages}
+                            sliderBoxHeight={400}
+                            inactiveDotColor="#90A4AE"
+                            paginationBoxVerticalPadding={0}
+                            circleLoop
+                            resizeMode={'stretch'}
+                            imageLoadingColor="#FF95AD"
+                            ImageComponentStyle={{ width: wp('100%') }}
+                        />
                     </View>
                     <View style={{ flexDirection: 'column', marginTop: hp('1%'), marginLeft: hp('5%'), justifyContent: 'flex-start', alignItems: 'flex-start', }}>
                         <Text style={{ fontSize: hp('2.5%'), color: '#AAAAAA' }}>Brand Name</Text>
@@ -110,39 +130,54 @@ class NewLifeStyleScreen extends Component {
                             {discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({discount} ₹ OFF)</Text>}
                         </View>
                     </View>
-                    <View style={styles.colorview}>
-                        <View>
-                            <Text style={{ padding: hp('2%'), fontSize: hp('2.5%') }}>Colors</Text>
+                    {colorList != null || sizeList != null ?
+                        <View style={styles.colorview}>
+                            {(colorList != null) || (colorList && colorList.length != 0) ?
+                                <>
+                                    <View>
+                                        <Text style={{ padding: hp('2%'), fontSize: hp('2.5%') }}>Colors</Text>
+                                    </View>
+                                    <View style={styles.checkboxview}>
+                                        <FlatList
+                                            numColumns={10}
+                                            data={colorList}
+                                            renderItem={this.renderColor}
+                                            keyExtractor={(item) => `${item.id}`}
+                                        />
+                                    </View>
+                                </>
+                                : <View></View>}
+
+                            {(sizeList != null) || (sizeList && sizeList.length != 0) ?
+                                <>
+                                    <View style={styles.size}>
+                                        <Text style={{ fontSize: hp('2.5%') }}>Size </Text>
+                                        <Text style={{ fontSize: hp('2%'), marginRight: hp('2%'), color: '#FF9DB9' }}>Size Chart </Text>
+                                    </View>
+                                    <ScrollView
+                                        horizontal={true}
+                                        showsHorizontalScrollIndicator={false}
+                                    >
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <FlatList
+                                                numColumns={10}
+                                                data={sizeList}
+                                                renderItem={this.renderSize}
+                                                keyExtractor={item => `${item.id}`}
+                                            />
+                                        </View>
+                                    </ScrollView>
+                                </>
+                                : <View></View>}
                         </View>
-                        <View style={styles.checkboxview}>
-                            <FlatList
-                                numColumns={10}
-                                data={colorList}
-                                renderItem={this.renderColor}
-                                keyExtractor={(item) => `${item.id}`}
-                            />
-                        </View>
-                        <View style={styles.size}>
-                            <Text style={{ fontSize: hp('2.5%') }}>Size </Text>
-                            <Text style={{ fontSize: hp('2%'), marginRight: hp('2%'), color: '#FF9DB9' }}>Size Chart </Text>
-                        </View>
-                        <ScrollView
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={false}
-                        >
-                            <View style={{ flexDirection: 'row' }}>
-                                <FlatList
-                                    numColumns={10}
-                                    data={sizeList}
-                                    renderItem={this.renderSize}
-                                    keyExtractor={item => `${item.id}`}
-                                />
-                            </View>
-                        </ScrollView>
-                    </View>
+                        :
+                        <View></View>
+                    }
                     <View style={{ marginTop: hp('1%'), marginLeft: hp('5%'), }}>
                         <Text style={{ fontSize: hp('2%'), marginBottom: hp('2%') }}>PRODUCT DETAILS</Text>
-                        <Text style={{ fontSize: hp('1.8%'), paddingBottom: hp('1%'), textTransform: 'capitalize' }}>{description}</Text>
+                        <View style={{ fontSize: hp('1.8%'), paddingBottom: hp('1%'), textTransform: 'capitalize' }}>
+                            <HTML html={`<html> ${description}</html>`} />
+                        </View>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginBottom: hp('7%') }}>
                         <TouchableOpacity style={styles.cart} onPress={() => this.addToCarthandlar()}>

@@ -6,14 +6,14 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import { InventoryItemService } from '../../Services/InventoryItemService/InventoryItemService'
 import { saveLocalWishList, getLocalWishList, removeLocalWishList } from '../../Helpers/LocalWishList';
 import Loader from '../../components/Loader/Loader';
+import HTML from 'react-native-render-html';
 
 class SearchBarScreen extends Component {
     constructor(props) {
         super(props);
         this.categoryId = this.props.route.params && this.props.route.params.item,
             this.state = {
-                productList: [],
-                selectedItem: null,
+                productList: []
             };
         this.searchproductList = [];
         this.willFocus = this.props.navigation.addListener('focus', e => {
@@ -75,7 +75,7 @@ class SearchBarScreen extends Component {
     renderInventoryItem = ({ item }) => (
         <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%'), }}>
             <TouchableOpacity onPress={() => { this.props.navigation.push('NewLifeStyleScreen', { item }) }} >
-                <Image source={{ uri: item.item_logo }} resizeMode="stretch"
+                <Image source={{ uri: item.imagegallery[0].attachment }} resizeMode="stretch"
                     style={{ alignSelf: 'auto', flex: 1, margin: hp('1.5%'), height: hp('30%'), width: wp('40%'), borderRadius: hp('2%'), borderColor: '#FFFFFF', }} />
             </TouchableOpacity>
             <View style={styles.heart}>
@@ -87,7 +87,9 @@ class SearchBarScreen extends Component {
                 <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize' }}>{item.itemname}</Text>
             </View>
             <View>
-                <Text style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>{item.sale.description}</Text>
+                <View style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>
+                    <HTML html={`<html> ${item.sale.description.length < 15 ? `${item.sale.description}` : `${item.sale.description.substring(0, 15)}...`} </html>`} />
+                </View>
             </View>
             <View style={{ flexDirection: 'row', }}>
                 <Text style={{ marginLeft: hp('2%'), fontSize: hp('2%') }}>₹ {item.sale.rate}</Text>
@@ -117,34 +119,39 @@ class SearchBarScreen extends Component {
 
         return (
             <View style={styles.container} >
-                <View style={{ flexDirection: 'row' }}>
-                    <View style={styles.serchbar}>
-                        <TextInput
-                            style={styles.TextInput}
-                            placeholder="Search Brand Or Products.."
-                            type='clear'
-                            placeholderTextColor="#737373"
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            onChangeText={(value) => this.searchFilterFunction(value)}
-                        />
-                        <FontAwesome name="search" size={24} color="#737373" style={{ padding: hp('2%') }} />
-                    </View>
-                </View>
-                <ScrollView
-                    Vertical={true}
-                    showsVerticalScrollIndicator={false}
-                >
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: hp('3%'), flex: 0.5, marginBottom: hp('10%') }}>
-                        <FlatList
-                            numColumns={2}
-                            data={productList}
-                            renderItem={this.renderInventoryItem}
-                            keyExtractor={item => `${item._id}`}
-                            ListEmptyComponent={EmptyListMessage}
-                        />
-                    </View>
-                </ScrollView>
+                {productList == null || productList.length == 0 ? <Loader /> :
+                    <>
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={styles.serchbar}>
+                                <TextInput
+                                    style={styles.TextInput}
+                                    placeholder="Search Brand Or Products.."
+                                    type='clear'
+                                    placeholderTextColor="#737373"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    returnKeyType='done'
+                                    onChangeText={(value) => this.searchFilterFunction(value)}
+                                />
+                                <FontAwesome name="search" size={24} color="#737373" style={{ padding: hp('2%') }} />
+                            </View>
+                        </View>
+                        <ScrollView
+                            Vertical={true}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: hp('3%'), flex: 0.5, marginBottom: hp('10%') }}>
+                                <FlatList
+                                    numColumns={2}
+                                    data={productList}
+                                    renderItem={this.renderInventoryItem}
+                                    keyExtractor={item => `${item._id}`}
+                                    ListEmptyComponent={EmptyListMessage}
+                                />
+                            </View>
+                        </ScrollView>
+                    </>
+                }
             </View>
         );
     }

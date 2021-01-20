@@ -7,6 +7,7 @@ import { InventoryItemService } from '../../Services/InventoryItemService/Invent
 import { CategoryService } from '../../Services/CategoryService/CategoryService';
 import { saveLocalWishList, getLocalWishList, removeLocalWishList } from '../../Helpers/LocalWishList';
 import Loader from '../../components/Loader/Loader';
+import HTML from 'react-native-render-html';
 
 class ProductListScreen extends Component {
     constructor(props) {
@@ -88,7 +89,7 @@ class ProductListScreen extends Component {
         <TouchableOpacity style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%') }}
             onPress={() => { this.props.navigation.push('NewLifeStyleScreen', { item }) }}>
             <TouchableOpacity onPress={() => { this.props.navigation.push('NewLifeStyleScreen', { item }) }} >
-                <Image source={{ uri: item.item_logo }} resizeMode="stretch"
+                <Image source={{ uri: item.imagegallery[0].attachment }} resizeMode="stretch"
                     style={{ alignSelf: 'auto', flex: 1, margin: hp('1.5%'), height: hp('30%'), width: wp('40%'), borderRadius: hp('2%'), borderColor: '#FFFFFF', }} />
             </TouchableOpacity>
             <View style={styles.heart}>
@@ -100,7 +101,9 @@ class ProductListScreen extends Component {
                 <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize' }}>{item.itemname}</Text>
             </View>
             <View>
-                <Text style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>{item.sale.description}</Text>
+                <View style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>
+                    <HTML html={`<html> ${item.sale.description.length < 15 ? `${item.sale.description}` : `${item.sale.description.substring(0, 15)}...`} </html>`} />
+                </View>
             </View>
             <View style={{ flexDirection: 'row', }}>
                 <Text style={{ marginLeft: hp('1%'), fontSize: hp('2%') }}>₹ {item.sale.rate}</Text>

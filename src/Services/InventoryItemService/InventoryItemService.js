@@ -7,7 +7,7 @@ const InventoryItemService = (id) => {
         body =
         {
             "search": [{
-                "searchfield": "offertype",
+                "searchfield": "category",
                 "searchvalue": id,
                 "criteria": "eq",
                 "datatype": "ObjectId"
@@ -23,8 +23,7 @@ const InventoryItemService = (id) => {
                 "searchvalue": "active",
                 "criteria": "eq",
                 "datatype": "text"
-            }, { "searchfield": "status", "searchvalue": "active", "criteria": "eq" }
-            ]
+            }]
         }
     }
 

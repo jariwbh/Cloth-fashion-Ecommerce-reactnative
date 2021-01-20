@@ -4,18 +4,27 @@ import { ScrollView } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { getLocalWishList, removeLocalWishList } from '../../Helpers/LocalWishList'
+import Loader from '../../components/Loader/Loader'
 
 class LikeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             productList: [],
+            loader: true
         };
+    }
+
+    wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
     }
 
     async getLocalWishListService() {
         const productList = await getLocalWishList()
         this.setState({ productList: productList })
+        this.wait(1000).then(() => this.setState({ loader: false }));
     }
 
     async removeLocalWishListService(item) {
@@ -28,9 +37,9 @@ class LikeScreen extends Component {
     }
 
     renderInventoryItem = ({ item }) => (
-        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%'), }}>
+        <View style={{ flexDirection: 'column', flex: 0.5, marginLeft: hp('1%'), marginRight: hp('1%') }}>
             <TouchableOpacity onPress={() => { this.props.navigation.navigate('NewLifeStyleScreen', { item }) }} >
-                <Image source={{ uri: item.item_logo }} resizeMode="stretch"
+                <Image source={{ uri: item.imagegallery[0].attachment }} resizeMode="stretch"
                     style={{ alignSelf: 'auto', margin: hp('1.5%'), height: hp('30%'), width: wp('40%'), borderRadius: hp('1.5%'), flex: 1, }} />
             </TouchableOpacity>
             <View style={styles.heart}>
@@ -46,25 +55,28 @@ class LikeScreen extends Component {
                     <Text style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>{item.sale.description}</Text>
                 </View>
             }
-            <View style={{ flexDirection: 'row', }}>
+            <View style={{ flexDirection: 'row' }}>
                 <Text style={{ marginLeft: hp('1%'), fontSize: hp('2%') }}>₹ {item.sale.rate}</Text>
-                {item.sale.discount && <Text style={{ fontSize: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>}
+                {item.sale.discount && <Text style={{ fontSize: hp('2%'), color: '#FF95AD' }}> ({item.sale.discount} ₹ OFF)</Text>}
             </View>
         </View>
     )
 
     render() {
-        const { productList } = this.state;
+        const { productList, loader } = this.state;
         return (
             <View style={styles.container}>
                 {(productList == null) || (productList && productList.length == 0) ?
-                    <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: '#747474', marginTop: hp('30%') }}>There are no items in your Whish List</Text>
+                    (loader == false ?
+                        <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: '#747474', marginTop: hp('30%') }}>There are no items in your Whish List</Text>
+                        : <Loader />
+                    )
                     :
                     <ScrollView
                         Vertical={true}
                         showsVerticalScrollIndicator={false}
                     >
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: hp('5%'), flex: 0.5, marginBottom: hp('10%') }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: hp('2%'), flex: 0.5, marginBottom: hp('10%') }}>
                             <FlatList
                                 numColumns={2}
                                 data={productList}

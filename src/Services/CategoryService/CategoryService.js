@@ -8,7 +8,12 @@ const CategoryService = () => {
             "searchvalue": "5e058897b0c5fb2b6c15cc69",
             "criteria": "eq",
             "datatype": "ObjectId"
-        }
+        },
+        {
+            "searchfield": "status",
+            "searchvalue": "active",
+            "criteria": "eq"
+        },
         ], "sort": { "createdAt": 1 }, "formname": "poscategory"
     }
 

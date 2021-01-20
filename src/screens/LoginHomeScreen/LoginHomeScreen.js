@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
-} from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 
 class LoginHomeScreen extends Component {
     constructor(props) {
@@ -32,8 +29,6 @@ class LoginHomeScreen extends Component {
 }
 
 export default LoginHomeScreen;
-
-
 
 const styles = StyleSheet.create({
     container: {

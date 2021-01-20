@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, BackHandler } from 'react-native';
-import { ScrollView, TextInput, TouchableOpacity, FlatList } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, Image, BackHandler, RefreshControl, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import { CouponsService } from '../../Services/CouponsService/CouponsService';
 import HTML from 'react-native-render-html';
@@ -14,7 +13,8 @@ class MainScreen extends Component {
         this.state = {
             coupon: null,
             categoryList: null,
-            productList: null
+            productList: null,
+            refreshing: false,
         };
 
         this._unsubscribeSiFocus = this.props.navigation.addListener('focus', e => {
@@ -25,6 +25,20 @@ class MainScreen extends Component {
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton,
             );
         });
+    }
+
+    wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    }
+
+    onRefresh = () => {
+        this.setState({ refreshing: true })
+        this.getCategory();
+        this.getCoupons();
+        this.getInventoryItemService();
+        this.wait(3000).then(() => this.setState({ refreshing: false }));
     }
 
     componentDidMount() {
@@ -75,7 +89,7 @@ class MainScreen extends Component {
     renderInventoryItem = ({ item }) => (
         <View style={{ flex: 1, marginLeft: wp('3%'), marginBottom: hp('1%') }}>
             <TouchableOpacity onPress={() => { this.props.navigation.navigate('ProductListScreen') }} >
-                <Image source={{ uri: item.item_logo }} resizeMode="stretch"
+                <Image source={{ uri: item.imagegallery[0].attachment }} resizeMode="stretch"
                     style={{ margin: hp('1.5%'), height: hp('25%'), alignSelf: 'auto', width: wp('40%'), borderRadius: hp('1.5%') }} />
             </TouchableOpacity>
             <View style={{ marginLeft: wp('2%') }}>
@@ -85,7 +99,8 @@ class MainScreen extends Component {
     )
 
     render() {
-        const { coupon, categoryList, productList } = this.state;
+        const { coupon, categoryList, productList, refreshing } = this.state;
+        this.wait(3000).then(() => this.setState({ refreshing: false }));
         return (
             <View style={styles.container}>
                 {(productList == null) || (productList && productList.length == 0) ?
@@ -93,7 +108,7 @@ class MainScreen extends Component {
                         <MyLoader />
                     </>
                     :
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                    <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />} showsVerticalScrollIndicator={false}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: hp('1%'), paddingBottom: hp('0.5%') }}>
                             <ScrollView
                                 horizontal={true}

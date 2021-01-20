@@ -18,7 +18,7 @@ export default function MenuBarIcon(props) {
     }, [cartnumber])
 
     getLocaladdtocard()
-    console.log('cart', cartnumber)
+
     return (
         <View style={{ flexDirection: "row", marginRight: 20, backgroundColor: '#FFFFFF' }}>
             <TouchableOpacity onPress={props.onPress}>

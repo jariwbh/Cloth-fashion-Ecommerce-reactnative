@@ -55,7 +55,7 @@ export default class MyProfileScreen extends Component {
                     :
                     <>
                         <View style={styles.header}></View>
-                        <Image style={styles.avatar} source={require('../../../assets/images/userimage.jpg')} />
+                        <Image style={styles.avatar} source={{ uri: companyData !== null ? (companyData.profilepic == null ? 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1610428971/userimage_qif8wv.jpg' : companyData.profilepic) : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1610428971/userimage_qif8wv.jpg' }} />
                         <View style={styles.body}>
                             <View style={styles.bodyContent}>
                                 <Text style={styles.name}>{companyData && companyData.fullname}</Text>

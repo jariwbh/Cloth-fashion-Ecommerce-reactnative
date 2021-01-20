@@ -106,7 +106,7 @@ class AddToCartScreen extends Component {
         <View style={styles.imageview}>
             <View style={{ flexDirection: 'column-reverse' }}>
                 <View>
-                    <Image source={{ uri: item.item_logo }}
+                    <Image source={{ uri: item.imagegallery[0].attachment }}
                         resizeMode="stretch" style={{
                             alignSelf: 'auto', width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%')
                         }} />
@@ -124,21 +124,27 @@ class AddToCartScreen extends Component {
                     {item.sale.discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>}
                 </View>
                 <View style={{ flexDirection: 'row', }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                        <Text style={{ fontSize: hp('2.5%'), marginTop: hp('1%') }}>Colors</Text>
-                        <View style={{
-                            width: wp('3%'), height: hp('2%'), borderColor: '#000000',
-                            borderWidth: hp('0.1 %'), marginLeft: hp('1%'), marginTop: hp('2%'),
-                            alignItems: 'center', justifyContent: 'center', backgroundColor: item.selectedColorCode
-                        }}>
+                    {item.selectedColorCode != null ?
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                            <Text style={{ fontSize: hp('2.5%'), marginTop: hp('1%') }}>Colors</Text>
+                            <View style={{
+                                width: wp('3%'), height: hp('2%'), borderColor: '#000000',
+                                borderWidth: hp('0.1 %'), marginLeft: hp('1%'), marginTop: hp('2%'),
+                                alignItems: 'center', justifyContent: 'center', backgroundColor: item.selectedColorCode
+                            }}>
+                            </View>
                         </View>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                        <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1.5%'), marginTop: hp('1%') }}>Size :</Text>
-                        <View style={styles.sizebox}  >
-                            <Text style={{ fontSize: hp('2%') }} > {item.selectedSizeSize}</Text>
+                        : <View></View>
+                    }
+                    {item.selectedSizeSize != null ?
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                            <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1.5%'), marginTop: hp('1%') }}>Size :</Text>
+                            <View style={styles.sizebox}  >
+                                <Text style={{ fontSize: hp('2%') }} > {item.selectedSizeSize}</Text>
+                            </View>
                         </View>
-                    </View>
+                        : <View></View>
+                    }
                 </View>
                 <View style={{ flexDirection: 'row', }}>
                     <Text style={{ fontSize: hp('2.5%'), marginTop: hp('1.5%') }}>Qty</Text>
@@ -175,7 +181,6 @@ class AddToCartScreen extends Component {
                 cost: element.sale.rate,
                 totalcost: element.sale.rate * element.itemqty,
                 discount: element.sale.discount * element.itemqty
-
             }
             obj['tax'] = [];
             if (element.sale.taxes && element.sale.taxes.length != 0) {
@@ -191,15 +196,15 @@ class AddToCartScreen extends Component {
         billdetails = {
             customerid: this.state.userData._id,
             onModel: "Member",
+            billdate: moment().format('L'),
             items: itemdata,
-            billingdate: moment().format('L')
+            amount: this.state.totalAmount,
+            totalamount: this.state.finalAmount,
+            duedate: moment().format('L'),
+            status: 'Unpaid'
         }
 
         BillingService(billdetails).then(response => {
-            if (response.type === "Error") {
-                return;
-            }
-
             if (response != null || response != 'undefind') {
                 removeLocalAllAddtocardlist()
                 alert('Thank you, Your Order has been Book successfully')
@@ -216,7 +221,6 @@ class AddToCartScreen extends Component {
                 {(cartlist == null) || (cartlist && cartlist.length == 0) ?
                     <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: '#747474', marginTop: hp('30%') }}>There are no items in your cart</Text>
                     :
-
                     <ScrollView>
                         <FlatList
                             data={cartlist}

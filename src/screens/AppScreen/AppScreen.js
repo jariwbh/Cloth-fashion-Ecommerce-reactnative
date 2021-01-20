@@ -23,10 +23,10 @@ export class AppScreen extends Component {
     }
 
     renderCategory = ({ item }) => (
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('ProductListScreen', { item })} >
-            <View style={{ marginTop: hp('-2%'), alignItems: 'center' }}>
-                <Image source={{ uri: item.property.icon_logo }} resizeMode="stretch" style={{ height: hp('30%'), width: wp('35%') }} />
-                <Text style={{ marginTop: "-15%", alignItems: 'center' }}>{item.property.title}</Text>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('ProductListScreen', { item })}>
+            <View style={{ marginTop: hp('2%'), alignItems: 'center', justifyContent: 'center' }}>
+                <Image source={{ uri: item.property.icon_logo }} resizeMode="stretch" style={{ height: hp('18%'), width: wp('33%') }} />
+                <Text style={{ marginTop: "-2%", alignItems: 'center', fontSize: hp('2.5%') }}>{item.property.title}</Text>
             </View>
         </TouchableOpacity>
     )
@@ -38,12 +38,14 @@ export class AppScreen extends Component {
                 {(categoryList == null) || (categoryList && categoryList.length == 0) ?
                     <Loader />
                     :
-                    <FlatList
-                        data={categoryList}
-                        numColumns={3}
-                        renderItem={this.renderCategory}
-                        keyExtractor={item => `${item._id}`}
-                    />
+                    <View >
+                        <FlatList
+                            data={categoryList}
+                            numColumns={3}
+                            renderItem={this.renderCategory}
+                            keyExtractor={item => `${item._id}`}
+                        />
+                    </View>
                 }
             </View>
         )
