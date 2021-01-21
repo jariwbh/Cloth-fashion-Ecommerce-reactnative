@@ -1,8 +1,6 @@
 import * as React from 'react';
 import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import DrawerContainer from '../screens/DrawerContainer/DrawerContainer'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MainScreen from '../screens/MainScreen/MainScreen'
 import ProductListScreen from '../screens/ProductListScreen/ProductListScreen'
@@ -21,64 +19,8 @@ import { MaterialCommunityIcons } from 'react-native-vector-icons'
 import SearchBarScreen from '../screens/SearchBarScreen/SearchBarScreen'
 import SearchIcon from '../components/Menu/SearchIcon';
 import { View, TouchableOpacity } from 'react-native';
-import Feather from "react-native-vector-icons/Feather";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import YourOrderScreen from '../screens/YourOrderScreen/YourOrderScreen';
-
-
-const NavigationDrawerStructure = (props) => {
-    const toggleDrawer = () => {
-        props.navigationProps.toggleDrawer();
-    };
-    return (
-        <View style={{ flexDirection: 'row' }}>
-            <TouchableOpacity onPress={() => toggleDrawer()}>
-                <Feather name="menu" size={35} color="#262626" style={{ marginLeft: hp('2%') }} />
-            </TouchableOpacity>
-        </View>
-    );
-}
-
-const Drawer = createDrawerNavigator();
-function NavigationsDrawer(props) {
-    return (
-        <Drawer.Navigator initialRouteName="HomeScreen" headerMode="screen"
-            drawerContentOptions={{ activeTintColor: '#000000', itemStyle: { marginVertical: 5 } }}
-            drawerContent={(props) => <DrawerContainer {...props} />}>
-
-            <Drawer.Screen name="HomeScreen" options={{
-                drawerLabel: 'Home', drawerIcon: ({ focused, size }) => (
-                    <Ionicons
-                        name="md-home"
-                        size={size}
-                        color={focused ? '#F6C455' : '#ccc'}
-                    />
-                )
-            }} component={MainStackScreen} />
-
-            <Drawer.Screen name="YourOrderScreen" options={{
-                drawerLabel: 'Your Order', drawerIcon: ({ focused, size }) => (
-                    <AntDesign
-                        name="profile"
-                        size={size}
-                        color={focused ? '#F6C455' : '#ccc'}
-                    />
-                )
-            }} component={YourOrderScreen} />
-
-            <Drawer.Screen name="MyProfileScreen" options={{
-                drawerLabel: 'My Profile', drawerIcon: ({ focused, size }) => (
-                    <FontAwesome5
-                        name="user"
-                        size={size}
-                        color={focused ? '#F6C455' : '#ccc'}
-                    />
-                )
-            }} component={MyProfileScreen} />
-        </Drawer.Navigator>
-    )
-}
 
 const MainStack = createStackNavigator();
 function MainStackScreen({ navigation }) {
@@ -183,6 +125,36 @@ function LikeStackScreen({ navigation }) {
     );
 }
 
+const YourOrderStack = createStackNavigator();
+function YourOrderStackScreen({ navigation }) {
+    return (
+        <YourOrderStack.Navigator initialRouteName="YourOrderScreen" headerMode='screen' >
+            <YourOrderStack.Screen name="YourOrderScreen" options={{
+                title: 'Order History', headerStyle: {
+                    backgroundColor: '#FFFFFF',
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                }, headerLeft: () =>
+                    <MenuIcon />, headerRight: () =>
+                        <View style={{ flexDirection: 'row' }}>
+                            <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
+                        </View>
+            }} component={YourOrderScreen} />
+        </YourOrderStack.Navigator>
+    );
+}
+
+const MyProfileStack = createStackNavigator();
+function MyProfileStackScreen({ navigation }) {
+    return (
+        <MyProfileStack.Navigator initialRouteName="MyProfileScreen" headerMode='none' >
+            <MyProfileStack.Screen name="MyProfileScreen"
+                component={MyProfileScreen} />
+        </MyProfileStack.Navigator>
+    );
+}
+
 const Tab = createBottomTabNavigator();
 export default function TabNavigations() {
     return (
@@ -196,7 +168,6 @@ export default function TabNavigations() {
                                     name={focused ? 'home' : 'home-outline'}
                                     size={30}
                                     color={color}
-
                                 />
                             );
                         } else if (route.name === 'Likes') {
@@ -215,10 +186,10 @@ export default function TabNavigations() {
                                     color={color}
                                 />
                             );
-                        } else if (route.name === 'AboutScreen') {
+                        } else if (route.name === 'YourOrder') {
                             return (
-                                <AntDesign
-                                    name={focused ? 'questioncircle' : 'questioncircleo'}
+                                <SimpleLineIcons
+                                    name={focused ? 'list' : 'list'}
                                     size={23}
                                     color={color}
                                 />
@@ -250,10 +221,10 @@ export default function TabNavigations() {
                 }}
             >
                 <Tab.Screen name="App" component={AppStackScreen} />
-                <Tab.Screen name="AboutScreen" component={AboutScreen} />
-                <Tab.Screen name="Main" component={NavigationsDrawer} />
                 <Tab.Screen name="Likes" options={{ unmountOnBlur: true }} component={LikeStackScreen} />
-                <Tab.Screen name="Profile" component={MyProfileScreen} />
+                <Tab.Screen name="Main" component={MainStackScreen} />
+                <Tab.Screen name="YourOrder" component={YourOrderStackScreen} />
+                <Tab.Screen name="Profile" component={MyProfileStackScreen} />
             </Tab.Navigator>
         </>
     );

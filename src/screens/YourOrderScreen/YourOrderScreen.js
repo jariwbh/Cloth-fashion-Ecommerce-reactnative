@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, RefreshControl } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, RefreshControl, SectionList, ScrollView } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import { ScrollView } from 'react-native-gesture-handler';
-import { getLocaladdtocardlist, removeLocalAddtocardlist, removeLocalAllAddtocardlist } from '../../Helpers/LocalAddTOcart';
 import AsyncStorage from '@react-native-community/async-storage';
 import { BillingFilterService } from '../../Services/BillingService/BillingService';
 import Loading from '../../components/Loader/Loader'
@@ -24,8 +22,7 @@ class YourOrderScreen extends Component {
 
     BillingFilterService(id) {
         BillingFilterService(id).then(data => {
-            console.log('data', data)
-            //this.setState({ cartlist: data })
+            this.setState({ cartlist: data })
             this.wait(1000).then(() => this.setState({ loader: false }));
         })
     }
@@ -60,68 +57,42 @@ class YourOrderScreen extends Component {
         await this.getdata();
     }
 
-    renderAddtoCardList = ({ item }) => (
-        <View style={styles.imageview}>
-            <View style={{ flexDirection: 'column-reverse' }}>
-                <View>
-                    <Image source={{ uri: item.imagegallery[0].attachment }}
-                        resizeMode="stretch" style={{
-                            alignSelf: 'auto', width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%')
-                        }} />
-                </View>
-                <View style={styles.heart}>
-                    <TouchableOpacity onPress={() => this.removeLocalAddtocardlist(item)}>
-                        <AntDesign name="delete" size={24} color="red" />
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style={{ flex: 1, marginTop: hp('3%') }}>
-                <Text style={{ fontSize: hp('2.5%'), }}>{item.itemname}</Text>
-                <View style={{ flexDirection: 'row', }}>
-                    <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.sale.rate}</Text>
-                    {item.sale.discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>}
-                </View>
-                <View style={{ flexDirection: 'row', }}>
-                    {item.selectedColorCode != null ?
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Text style={{ fontSize: hp('2.5%'), marginTop: hp('1%') }}>Colors</Text>
-                            <View style={{
-                                width: wp('3%'), height: hp('2%'), borderColor: '#000000',
-                                borderWidth: hp('0.1 %'), marginLeft: hp('1%'), marginTop: hp('2%'),
-                                alignItems: 'center', justifyContent: 'center', backgroundColor: item.selectedColorCode
-                            }}>
-                            </View>
-                        </View>
-                        : <View></View>
-                    }
-                    {item.selectedSizeSize != null ?
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                            <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('1.5%'), marginTop: hp('1%') }}>Size :</Text>
-                            <View style={styles.sizebox}  >
-                                <Text style={{ fontSize: hp('2%') }} > {item.selectedSizeSize}</Text>
-                            </View>
-                        </View>
-                        : <View></View>
-                    }
-                </View>
-                <View style={{ flexDirection: 'row', }}>
-                    <Text style={{ fontSize: hp('2.5%'), marginTop: hp('1.5%') }}>Qty</Text>
-                    <TouchableOpacity style={styles.qnt} onPress={() => this.onPressIncrementItem(item)}>
-                        <Text> + </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ marginTop: hp('2%'), marginLeft: hp('1%'), }}>
-                        <Text style={{ fontSize: hp('2%') }}> {item.itemqty} </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity disabled={item.itemqty > 1 ? false : true} style={styles.qnt} onPress={() => this.onPressDecreaseItem(item)}>
-                        <Text> - </Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
-    )
+    // renderCardList = ({ item }) => (
+    //     <View style={styles.imageview}>
+    //         {item.items.map(item => {
+    //             item.map(itemobj => {
+    //                 <View style={{ flexDirection: 'column-reverse' }}>
+    //                     <View>
+    //                         <Image source={{ uri: itemobj.item.imagegallery[0].attachment }}
+    //                             resizeMode="stretch" style={{
+    //                                 alignSelf: 'auto', width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%')
+    //                             }} />
+    //                     </View>
+    //                 </View>
+    //             })
+    //         }
+    //         )}
+
+    //         <View style={{ flex: 1, marginTop: hp('3%') }}>
+    //             <Text style={{ fontSize: hp('2.5%'), }}>{item.amount}</Text>
+    //             <View style={{ flexDirection: 'row', }}>
+    //                     <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.sale.rate}</Text>
+    //                     {obj.item.sale.discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>
+    //                         ({obj.item.sale.discount} ₹ OFF)</Text>}
+    //                 </View>
+    //             <View style={{ flexDirection: 'row', }}>
+    //                 <Text style={{ fontSize: hp('2.5%'), marginTop: hp('1.5%') }}>Qty</Text>
+    //                 <TouchableOpacity style={{ marginTop: hp('2%'), marginLeft: hp('1%'), }}>
+    //                     <Text style={{ fontSize: hp('2%') }}> {item.quantity} </Text>
+    //                 </TouchableOpacity>
+    //             </View>
+    //         </View>
+    //     </View>
+    // )
 
     render() {
         const { cartlist, loader } = this.state;
+        //        console.log('cartlist', cartlist)
 
         return (
             <View style={styles.container}>
@@ -131,15 +102,39 @@ class YourOrderScreen extends Component {
                         : <Loading />
                     )
                     :
-                    <ScrollView>
-                        <FlatList
-                            data={cartlist}
-                            renderItem={this.renderAddtoCardList}
-                            keyExtractor={item => `${item._id}`}
-                        />
-                    </ScrollView>
-                }
+                    <FlatList
+                        data={cartlist}
+                        renderItem={({ item }) => (
+                            <View>
 
+                                <View>
+                                    {item.items.map((v, i) => (
+                                        <View>
+
+                                            <Text>itemname: {v.item.itemname}</Text>
+
+                                            <Image source={{ uri: v.item.imagegallery[0].attachment }}
+                                                resizeMode="stretch" style={{
+                                                    alignSelf: 'auto', width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%')
+                                                }} />
+
+                                        </View>
+                                    ))}
+                                </View>
+                                <View style={{ flex: 1, marginTop: hp('3%') }}>
+                                    <Text style={{ fontSize: hp('2.5%'), }}>{item.amount}</Text>
+                                    <View style={{ flexDirection: 'row', }}>
+                                        <Text style={{ fontSize: hp('2.5%'), marginTop: hp('1.5%') }}>Qty</Text>
+                                        <TouchableOpacity style={{ marginTop: hp('2%'), marginLeft: hp('1%'), }}>
+                                            <Text style={{ fontSize: hp('2%') }}> {item.quantity} </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        )}
+                        keyExtractor={item => `${item._id}`}
+                    />
+                }
             </View>
         );
     }
@@ -183,7 +178,6 @@ const styles = StyleSheet.create({
     imageview: {
         flex: 1,
         flexDirection: 'row',
-
     },
     sizebox: {
         flexDirection: 'row',

@@ -54,7 +54,6 @@ export default class MyProfileScreen extends Component {
                     <Loader />
                     :
                     <>
-                        <View style={styles.header}></View>
                         <Image style={styles.avatar} source={{ uri: companyData !== null ? (companyData.profilepic == null ? 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1610428971/userimage_qif8wv.jpg' : companyData.profilepic) : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1610428971/userimage_qif8wv.jpg' }} />
                         <View style={styles.body}>
                             <View style={styles.bodyContent}>
@@ -79,7 +78,6 @@ export default class MyProfileScreen extends Component {
         )
     }
 }
-
 
 const styles = StyleSheet.create({
     container: {
