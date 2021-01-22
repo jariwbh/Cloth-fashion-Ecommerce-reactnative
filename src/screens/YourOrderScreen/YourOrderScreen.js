@@ -70,25 +70,28 @@ class YourOrderScreen extends Component {
                         <FlatList
                             data={cartlist}
                             renderItem={({ item }) => (
-                                <View style={{ flexDirection: 'row' }}>
+                                <TouchableOpacity style={styles.serchbar} onPress={() => { this.props.navigation.navigate('YourOrderDetails') }}>
+                                    <View style={{ marginTop: hp('1%'), marginLeft: hp('5.3%') }}>
+                                        <Text style={{ fontSize: hp('2%') }}>Order Number : {item.prefix + item.billnumber}</Text>
+                                    </View>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', margin: hp('1%') }}>
+                                        <Text style={{ fontSize: hp('2%') }}>Order Date : {moment(item.billdate).format('LL')}  </Text>
+                                        <Text style={{ fontSize: hp('2.5%') }}>₹ {item.totalamount}</Text>
+                                    </View>
                                     <View>
                                         {item.items.map((v, i) => (
-                                            <View>
-                                                <Text>{v.item.itemname}</Text>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', }}>
+
                                                 <Image source={{ uri: v.item.imagegallery[0].attachment }}
                                                     resizeMode="stretch" style={{
-                                                        alignSelf: 'auto', width: wp('15%'), height: hp('10%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%')
+                                                        alignSelf: 'auto', width: wp('10%'), height: hp('10%'),
                                                     }} />
 
+                                                <Text style={{ fontSize: hp('2.5%') }}>{v.item.itemname}</Text>
                                             </View>
                                         ))}
                                     </View>
-                                    <View style={{ flex: 1, marginTop: hp('3%') }}>
-                                        <Text>Order ID #{item.prefix + item.billnumber}</Text>
-                                        <Text>Order Date - {item.billdate}</Text>
-                                        <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.totalamount}</Text>
-                                    </View>
-                                </View>
+                                </TouchableOpacity>
                             )}
                             keyExtractor={item => `${item._id}`}
                         />
@@ -106,15 +109,14 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFFFFF',
     },
-    heart: {
-        flex: 1,
-        width: wp('10%'),
-        height: hp('5.5%'),
-        borderRadius: hp('15%'),
-        marginLeft: hp('16%'),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center',
+    serchbar: {
+        flexDirection: 'column',
+        borderRadius: hp('2%'),
+        backgroundColor: "#fff",
+        width: wp('90%'),
+        height: hp('30%'),
+        marginLeft: hp('3%'),
+        marginTop: hp('2%'),
         borderColor: '#000000',
         shadowOpacity: 0.5,
         shadowRadius: 3,
@@ -122,64 +124,6 @@ const styles = StyleSheet.create({
             height: 0,
             width: 0,
         },
-        elevation: 3,
-        position: 'absolute',
-    },
-    carttext: {
-        backgroundColor: "#ffff",
-        borderRadius: wp('2%'),
-        width: wp('22%'),
-        height: hp('6%'),
-        marginLeft: hp('2%'),
-        alignItems: "center",
-        justifyContent: 'center',
-    },
-    imageview: {
-        flex: 1,
-        flexDirection: 'row',
-    },
-    sizebox: {
-        flexDirection: 'row',
-        borderColor: '#000000',
-        marginLeft: hp('1%'),
-        marginTop: hp('1.5%'),
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    qnt: {
-        width: wp('10%'),
-        height: hp('5%'),
-        borderRadius: hp('1%'),
-        borderColor: '#000000',
-        backgroundColor: '#fff',
-        borderWidth: hp('0.1 %'),
-        marginLeft: hp('1%'),
-        marginTop: hp('1 %'),
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    coupon: {
-        flex: 0.1,
-        height: hp('7%'),
-        borderRadius: hp('1%'),
-        borderColor: '#000000',
-        borderWidth: hp('0.1 %'),
-        marginLeft: hp('5%'),
-        marginRight: hp('5%'),
-        marginTop: hp('1 %'),
-        backgroundColor: '#fff',
-
-    },
-    order: {
-        width: wp('30%'),
-        height: hp('5%'),
-        borderRadius: hp('1%'),
-        borderColor: '#000000',
-        backgroundColor: '#FF95AD',
-        marginRight: hp('2%'),
-        marginTop: hp('1 %'),
-        alignItems: 'center',
-        justifyContent: 'center'
+        elevation: 2,
     },
 })
