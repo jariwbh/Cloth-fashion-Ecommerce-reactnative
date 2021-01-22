@@ -57,7 +57,7 @@ class YourOrderScreen extends Component {
     }
 
     render() {
-        const { cartlist, loader } = this.state;
+        const { cartlist, loader, refreshing } = this.state;
         return (
             <View style={styles.container}>
                 {(cartlist == null) || (cartlist && cartlist.length == 0) ?
@@ -66,31 +66,33 @@ class YourOrderScreen extends Component {
                         : <Loading />
                     )
                     :
-                    <FlatList
-                        data={cartlist}
-                        renderItem={({ item }) => (
-                            <View style={{ flexDirection: 'row' }}>
-                                <View>
-                                    {item.items.map((v, i) => (
-                                        <View>
-                                            <Text>{v.item.itemname}</Text>
-                                            <Image source={{ uri: v.item.imagegallery[0].attachment }}
-                                                resizeMode="stretch" style={{
-                                                    alignSelf: 'auto', width: wp('15%'), height: hp('10%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%')
-                                                }} />
+                    <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />} showsVerticalScrollIndicator={false}>
+                        <FlatList
+                            data={cartlist}
+                            renderItem={({ item }) => (
+                                <View style={{ flexDirection: 'row' }}>
+                                    <View>
+                                        {item.items.map((v, i) => (
+                                            <View>
+                                                <Text>{v.item.itemname}</Text>
+                                                <Image source={{ uri: v.item.imagegallery[0].attachment }}
+                                                    resizeMode="stretch" style={{
+                                                        alignSelf: 'auto', width: wp('15%'), height: hp('10%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%')
+                                                    }} />
 
-                                        </View>
-                                    ))}
+                                            </View>
+                                        ))}
+                                    </View>
+                                    <View style={{ flex: 1, marginTop: hp('3%') }}>
+                                        <Text>Order ID #{item.prefix + item.billnumber}</Text>
+                                        <Text>Order Date - {item.billdate}</Text>
+                                        <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.totalamount}</Text>
+                                    </View>
                                 </View>
-                                <View style={{ flex: 1, marginTop: hp('3%') }}>
-                                    <Text>Order ID #{item.prefix + item.billnumber}</Text>
-                                    <Text>Order Date - {item.billdate}</Text>
-                                    <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.totalamount}</Text>
-                                </View>
-                            </View>
-                        )}
-                        keyExtractor={item => `${item._id}`}
-                    />
+                            )}
+                            keyExtractor={item => `${item._id}`}
+                        />
+                    </ScrollView>
                 }
             </View>
         );

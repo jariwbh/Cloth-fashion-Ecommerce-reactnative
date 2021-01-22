@@ -200,7 +200,6 @@ class AddToCartScreen extends Component {
             items: itemdata,
             amount: this.state.totalAmount,
             totalamount: this.state.finalAmount,
-            duedate: moment().format('L'),
             status: 'Unpaid'
         }
 
@@ -227,7 +226,7 @@ class AddToCartScreen extends Component {
                             renderItem={this.renderAddtoCardList}
                             keyExtractor={item => `${item._id}`}
                         />
-                        <View style={{ marginLeft: hp('3%') }}>
+                        <View style={{ marginLeft: hp('3%'), marginTop: hp('5%') }}>
                             <Text style={{ fontSize: hp('2.5%') }}>Bill Details</Text>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: hp('1%') }}>
                                 <Text style={{ fontSize: hp('2.5%') }}>Item Total</Text>
