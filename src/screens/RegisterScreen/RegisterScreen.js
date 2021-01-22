@@ -178,7 +178,9 @@ const styles = StyleSheet.create({
     },
     backgroundImage: {
         flex: 1,
-        resizeMode: 'cover'
+        resizeMode: 'cover',
+        height: hp('100%'),
+        width: wp('100%')
     },
     registerTitle: {
         marginTop: hp('40%'),

@@ -70,26 +70,21 @@ class YourOrderScreen extends Component {
                         <FlatList
                             data={cartlist}
                             renderItem={({ item }) => (
-                                <TouchableOpacity style={styles.serchbar} onPress={() => { this.props.navigation.navigate('YourOrderDetails') }}>
+                                <TouchableOpacity style={styles.cardView} onPress={() => { this.props.navigation.navigate('YourOrderDetails') }}>
                                     <View style={{ marginTop: hp('1%'), marginLeft: hp('5.3%') }}>
                                         <Text style={{ fontSize: hp('2%') }}>Order Number : {item.prefix + item.billnumber}</Text>
                                     </View>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', margin: hp('1%') }}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', margin: hp('1%') }}>
                                         <Text style={{ fontSize: hp('2%') }}>Order Date : {moment(item.billdate).format('LL')}  </Text>
                                         <Text style={{ fontSize: hp('2.5%') }}>₹ {item.totalamount}</Text>
                                     </View>
-                                    <View>
-                                        {item.items.map((v, i) => (
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', }}>
-
-                                                <Image source={{ uri: v.item.imagegallery[0].attachment }}
-                                                    resizeMode="stretch" style={{
-                                                        alignSelf: 'auto', width: wp('10%'), height: hp('10%'),
-                                                    }} />
-
-                                                <Text style={{ fontSize: hp('2.5%') }}>{v.item.itemname}</Text>
-                                            </View>
-                                        ))}
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                        <TouchableOpacity style={styles.viewDeatilBtn} onPress={() => { }}>
+                                            <Text style={styles.viewDeatilText}>View Details</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.needHelpBtn} onPress={() => { }}>
+                                            <Text style={styles.needHelpText}>Need help</Text>
+                                        </TouchableOpacity>
                                     </View>
                                 </TouchableOpacity>
                             )}
@@ -109,12 +104,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFFFFF',
     },
-    serchbar: {
+    cardView: {
         flexDirection: 'column',
         borderRadius: hp('2%'),
         backgroundColor: "#fff",
         width: wp('90%'),
-        height: hp('30%'),
+        height: hp('20%'),
         marginLeft: hp('3%'),
         marginTop: hp('2%'),
         borderColor: '#000000',
@@ -125,5 +120,41 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 2,
+    },
+    viewDeatilBtn: {
+        width: wp('30%'),
+        backgroundColor: "#FF95AD",
+        borderRadius: wp('1%'),
+        height: hp('5%'),
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: hp('1%'),
+    },
+    needHelpBtn: {
+        width: wp('30%'),
+        backgroundColor: "#FFFFFF",
+        borderRadius: wp('1%'),
+        height: hp('5%'),
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: hp('1%'),
+        borderColor: '#000000',
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        shadowOffset: {
+            height: 0,
+            width: 0,
+        },
+        elevation: 2,
+    },
+    viewDeatilText: {
+        color: "white",
+        fontWeight: 'bold',
+        fontSize: hp('2%'),
+    },
+    needHelpText: {
+        color: "#FF95AD",
+        fontWeight: 'bold',
+        fontSize: hp('2%'),
     },
 })

@@ -48,7 +48,7 @@ class UpdateProfile extends Component {
         }
         if (!re.test(email)) {
 
-            return this.setState({ usernameError: 'Ooops! We need a valid email address', mobilenumber: null });
+            return this.setState({ usernameError: 'Ooops! We need a valid email address', username: null });
         }
         return this.setState({ username: email, usernameError: null })
     }
@@ -56,10 +56,11 @@ class UpdateProfile extends Component {
     setMobileNumber(mobilenumber) {
         const reg = /^[0]?[789]\d{9}$/;
         if (!mobilenumber || mobilenumber.length <= 0) {
-            return this.setState({ mobilenumberError: 'Mobile Number cannot be empty' });
+            return this.setState({ mobilenumberError: 'Mobile Number cannot be empty', mobilenumber: null });
         }
+
         if (!reg.test(mobilenumber)) {
-            return this.setState({ mobilenumberError: 'Ooops! We need a valid Mobile Number' });
+            return this.setState({ mobilenumberError: 'Ooops! We need a valid Mobile Number', mobilenumber: null });
         }
         return this.setState({ mobilenumber: mobilenumber, mobilenumberError: null })
     }
@@ -114,10 +115,7 @@ class UpdateProfile extends Component {
                             <View style={styles.bodyContent}>
                                 <Text style={styles.name}>{profileName && profileName}</Text>
                             </View>
-                            <ScrollView
-                                Vertical={true}
-                                showsVerticalScrollIndicator={false}
-                            >
+                            <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                                 <View style={{
                                     flex: 1, flexDirection: 'column', alignItems: 'center'
                                 }}>

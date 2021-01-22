@@ -170,7 +170,9 @@ const styles = StyleSheet.create({
     },
     backgroundImage: {
         flex: 1,
-        resizeMode: 'cover'
+        resizeMode: 'cover',
+        height: hp('100%'),
+        width: wp('100%')
     },
     loginTitle: {
         marginTop: hp('50%'),
@@ -192,7 +194,6 @@ const styles = StyleSheet.create({
         fontSize: hp('2.5%'),
         flex: 1,
         padding: wp('4%'),
-
     },
     loginBtn: {
         width: wp('80%'),
@@ -203,7 +204,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: hp('1%'),
         marginLeft: wp('10.5%')
-
     },
     loginText: {
         color: "white",

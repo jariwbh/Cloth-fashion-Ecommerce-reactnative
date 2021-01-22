@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { getLocaladdtocardlist, removeLocalAddtocardlist, removeLocalAllAddtocardlist } from '../../Helpers/LocalAddTOcart';
 import AsyncStorage from '@react-native-community/async-storage';
 import { BillingService } from '../../Services/BillingService/BillingService';
+import Loader from '../../components/Loader/Loader'
 
 class AddToCartScreen extends Component {
     constructor(props) {
@@ -20,12 +21,20 @@ class AddToCartScreen extends Component {
             totalTax: 0,
             taxAmount: 0,
             totalQty: 0,
+            loader: true
         };
+    }
+
+    wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
     }
 
     async getLocaladdtocardlist() {
         let localAddtocardlists = await getLocaladdtocardlist();
         this.setState({ cartlist: localAddtocardlists })
+        this.wait(1000).then(() => this.setState({ loader: false }));
     }
 
     getdata = async () => {
@@ -213,12 +222,15 @@ class AddToCartScreen extends Component {
     }
 
     render() {
-        const { cartlist, totalAmount, totalDiscount, finalAmount, totalTax } = this.state;
+        const { cartlist, totalAmount, totalDiscount, finalAmount, totalTax, loader } = this.state;
 
         return (
             <View style={styles.container}>
                 {(cartlist == null) || (cartlist && cartlist.length == 0) ?
-                    <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: '#747474', marginTop: hp('30%') }}>There are no items in your cart</Text>
+                    (loader == false ?
+                        <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: '#747474', marginTop: hp('30%') }}>There are no items in your cart</Text>
+                        : <Loader />
+                    )
                     :
                     <ScrollView>
                         <FlatList
