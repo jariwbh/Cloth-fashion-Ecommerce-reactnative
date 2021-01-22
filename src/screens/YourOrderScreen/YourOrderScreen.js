@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, RefreshControl, SectionList, ScrollView } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
-import AntDesign from 'react-native-vector-icons/AntDesign'
 import AsyncStorage from '@react-native-community/async-storage';
 import { BillingFilterService } from '../../Services/BillingService/BillingService';
 import Loading from '../../components/Loader/Loader'
@@ -57,43 +56,8 @@ class YourOrderScreen extends Component {
         await this.getdata();
     }
 
-    // renderCardList = ({ item }) => (
-    //     <View style={styles.imageview}>
-    //         {item.items.map(item => {
-    //             item.map(itemobj => {
-    //                 <View style={{ flexDirection: 'column-reverse' }}>
-    //                     <View>
-    //                         <Image source={{ uri: itemobj.item.imagegallery[0].attachment }}
-    //                             resizeMode="stretch" style={{
-    //                                 alignSelf: 'auto', width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%')
-    //                             }} />
-    //                     </View>
-    //                 </View>
-    //             })
-    //         }
-    //         )}
-
-    //         <View style={{ flex: 1, marginTop: hp('3%') }}>
-    //             <Text style={{ fontSize: hp('2.5%'), }}>{item.amount}</Text>
-    //             <View style={{ flexDirection: 'row', }}>
-    //                     <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.sale.rate}</Text>
-    //                     {obj.item.sale.discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>
-    //                         ({obj.item.sale.discount} ₹ OFF)</Text>}
-    //                 </View>
-    //             <View style={{ flexDirection: 'row', }}>
-    //                 <Text style={{ fontSize: hp('2.5%'), marginTop: hp('1.5%') }}>Qty</Text>
-    //                 <TouchableOpacity style={{ marginTop: hp('2%'), marginLeft: hp('1%'), }}>
-    //                     <Text style={{ fontSize: hp('2%') }}> {item.quantity} </Text>
-    //                 </TouchableOpacity>
-    //             </View>
-    //         </View>
-    //     </View>
-    // )
-
     render() {
         const { cartlist, loader } = this.state;
-        //        console.log('cartlist', cartlist)
-
         return (
             <View style={styles.container}>
                 {(cartlist == null) || (cartlist && cartlist.length == 0) ?
@@ -105,30 +69,23 @@ class YourOrderScreen extends Component {
                     <FlatList
                         data={cartlist}
                         renderItem={({ item }) => (
-                            <View>
-
+                            <View style={{ flexDirection: 'row' }}>
                                 <View>
                                     {item.items.map((v, i) => (
                                         <View>
-
-                                            <Text>itemname: {v.item.itemname}</Text>
-
+                                            <Text>{v.item.itemname}</Text>
                                             <Image source={{ uri: v.item.imagegallery[0].attachment }}
                                                 resizeMode="stretch" style={{
-                                                    alignSelf: 'auto', width: wp('35%'), height: hp('25%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%')
+                                                    alignSelf: 'auto', width: wp('15%'), height: hp('10%'), borderRadius: hp('1.5%'), flex: 1, margin: hp('2%')
                                                 }} />
 
                                         </View>
                                     ))}
                                 </View>
                                 <View style={{ flex: 1, marginTop: hp('3%') }}>
-                                    <Text style={{ fontSize: hp('2.5%'), }}>{item.amount}</Text>
-                                    <View style={{ flexDirection: 'row', }}>
-                                        <Text style={{ fontSize: hp('2.5%'), marginTop: hp('1.5%') }}>Qty</Text>
-                                        <TouchableOpacity style={{ marginTop: hp('2%'), marginLeft: hp('1%'), }}>
-                                            <Text style={{ fontSize: hp('2%') }}> {item.quantity} </Text>
-                                        </TouchableOpacity>
-                                    </View>
+                                    <Text>Order ID #{item.prefix + item.billnumber}</Text>
+                                    <Text>Order Date - {item.billdate}</Text>
+                                    <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.totalamount}</Text>
                                 </View>
                             </View>
                         )}

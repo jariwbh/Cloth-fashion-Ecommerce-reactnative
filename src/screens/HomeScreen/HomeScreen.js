@@ -26,9 +26,9 @@ class HomeScreen extends Component {
 
     renderCategory = ({ item }) => (
         <TouchableOpacity onPress={() => this.props.navigation.replace('TabNavigations')} >
-            <View style={{ marginTop: hp('-2%'), alignItems: 'center' }}>
-                <Image source={{ uri: item.property.icon_logo }} style={{ height: 100, width: 100 }} />
-                <Text style={{ marginTop: "-15%", alignItems: 'center' }}>{item.property.title}</Text>
+            <View style={{ marginTop: hp('-2%'), marginLeft: hp('2%'), alignItems: 'center' }}>
+                <Image source={{ uri: item.property.icon_logo }} style={{ height: 80, width: 80 }} />
+                <Text style={{ marginTop: "-2%", alignItems: 'center' }}>{item.property.title}</Text>
             </View>
         </TouchableOpacity>
     )
@@ -77,13 +77,12 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover',
         position: 'relative'
-
     },
     inputView: {
         backgroundColor: "#ffffff",
@@ -94,7 +93,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: 'center',
         flex: 1,
-
     },
     TextInput: {
         fontSize: hp('3%'),
@@ -114,7 +112,7 @@ const styles = StyleSheet.create({
         height: hp("6%"),
         alignItems: "center",
         justifyContent: 'center',
-        marginTop: hp('-3%'),
+        marginTop: hp('-5%'),
         marginLeft: wp('5%'),
     },
     textgo: {
