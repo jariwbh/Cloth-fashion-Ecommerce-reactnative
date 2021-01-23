@@ -8,6 +8,7 @@ import { getLocaladdtocardlist, removeLocalAddtocardlist, removeLocalAllAddtocar
 import AsyncStorage from '@react-native-community/async-storage';
 import { BillingService } from '../../Services/BillingService/BillingService';
 import Loader from '../../components/Loader/Loader'
+import MyLoader from '../../components/Loader/MyLoader';
 
 class AddToCartScreen extends Component {
     constructor(props) {
@@ -21,7 +22,8 @@ class AddToCartScreen extends Component {
             totalTax: 0,
             taxAmount: 0,
             totalQty: 0,
-            loader: true
+            loader: true,
+            loading: false,
         };
     }
 
@@ -182,6 +184,7 @@ class AddToCartScreen extends Component {
 
         let billdetails;
         let itemdata = [];
+        let itemobj = [];
 
         renderData.forEach(element => {
             let obj = {
@@ -189,7 +192,7 @@ class AddToCartScreen extends Component {
                 quantity: element.itemqty,
                 cost: element.sale.rate,
                 totalcost: element.sale.rate * element.itemqty,
-                discount: element.sale.discount * element.itemqty
+                discount: element.sale.discount * element.itemqty,
             }
             obj['tax'] = [];
             if (element.sale.taxes && element.sale.taxes.length != 0) {
@@ -202,6 +205,15 @@ class AddToCartScreen extends Component {
             itemdata.push(obj);
         });
 
+        renderData.forEach(element => {
+            let itm = {
+                itemid: element._id,
+                ColorCode: element.selectedColorCode,
+                SizeCode: element.selectedSizeSize
+            }
+            itemobj.push(itm);
+        });
+
         billdetails = {
             customerid: this.state.userData._id,
             onModel: "Member",
@@ -209,20 +221,27 @@ class AddToCartScreen extends Component {
             items: itemdata,
             amount: this.state.totalAmount,
             totalamount: this.state.finalAmount,
-            status: 'Unpaid'
+            status: 'Unpaid',
+            property: { item: itemobj }
         }
-
-        BillingService(billdetails).then(response => {
-            if (response != null || response != 'undefind') {
-                removeLocalAllAddtocardlist()
-                alert('Thank you, Your Order has been Book successfully')
-                this.props.navigation.navigate('ProductListScreen')
-            }
-        })
+        this.setState({ loading: true })
+        try {
+            BillingService(billdetails).then(response => {
+                if (response != null || response != 'undefind') {
+                    removeLocalAllAddtocardlist()
+                    alert('Thank you, Your Order has been Book successfully')
+                    this.props.navigation.navigate('ProductListScreen')
+                }
+            })
+        }
+        catch (error) {
+            this.setState({ loading: false })
+            ToastAndroid.show("Order not Booked!", ToastAndroid.LONG)
+        }
     }
 
     render() {
-        const { cartlist, totalAmount, totalDiscount, finalAmount, totalTax, loader } = this.state;
+        const { cartlist, totalAmount, totalDiscount, finalAmount, totalTax, loader, loading } = this.state;
 
         return (
             <View style={styles.container}>
@@ -262,7 +281,7 @@ class AddToCartScreen extends Component {
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: hp('1%'), marginBottom: hp('10%') }}>
                             <View>
                                 <TouchableOpacity style={styles.order} onPress={() => this.onPressSubmit()}>
-                                    <Text style={{ fontSize: hp('2%'), color: '#FFF' }}>BOOK ORDER</Text>
+                                    {loading == ture ? <MyLoader /> : <Text style={{ fontSize: hp('2%'), color: '#FFF' }}>BOOK ORDER</Text>}
                                 </TouchableOpacity>
                             </View>
                         </View>

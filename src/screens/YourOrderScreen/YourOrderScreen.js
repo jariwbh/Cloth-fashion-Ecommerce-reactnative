@@ -62,7 +62,9 @@ class YourOrderScreen extends Component {
             <View style={styles.container}>
                 {(cartlist == null) || (cartlist && cartlist.length == 0) ?
                     (loader == false ?
-                        <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: '#747474', marginTop: hp('30%') }}>There are no items in your cart</Text>
+                        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />} showsVerticalScrollIndicator={false}>
+                            <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: '#747474', marginTop: hp('30%') }}>There are no items in your cart</Text>
+                        </ScrollView>
                         : <Loading />
                     )
                     :
@@ -79,10 +81,10 @@ class YourOrderScreen extends Component {
                                         <Text style={{ fontSize: hp('2.5%') }}>₹ {item.totalamount}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                                        <TouchableOpacity style={styles.viewDeatilBtn} onPress={() => { }}>
+                                        <TouchableOpacity style={styles.viewDeatilBtn} onPress={() => { this.props.navigation.navigate('OrderDetailScreen', { item }) }}>
                                             <Text style={styles.viewDeatilText}>View Details</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.needHelpBtn} onPress={() => { }}>
+                                        <TouchableOpacity style={styles.needHelpBtn} onPress={() => { this.props.navigation.navigate('AboutScreen') }}>
                                             <Text style={styles.needHelpText}>Need help</Text>
                                         </TouchableOpacity>
                                     </View>

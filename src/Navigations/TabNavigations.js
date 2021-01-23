@@ -21,6 +21,7 @@ import SearchIcon from '../components/Menu/SearchIcon';
 import { View, TouchableOpacity } from 'react-native';
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import YourOrderScreen from '../screens/YourOrderScreen/YourOrderScreen';
+import OrderDetailScreen from '../screens/OrderDetailScreen/OrderDetailScreen';
 
 const MainStack = createStackNavigator();
 function MainStackScreen({ navigation }) {
@@ -34,7 +35,7 @@ function MainStackScreen({ navigation }) {
                     borderBottomWidth: 0,
 
                 }, headerLeft: () =>
-                    <MenuIcon />, headerRight: () =>
+                    <MenuIcon onPress={() => navigation.navigate("MainScreen")} />, headerRight: () =>
                         <View style={{ flexDirection: 'row' }}>
                             <SearchIcon onPress={() => navigation.navigate("SearchBarScreen")} />
                             <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
@@ -47,7 +48,7 @@ function MainStackScreen({ navigation }) {
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
-                    <MenuIcon />, headerRight: () =>
+                    <MenuIcon onPress={() => navigation.navigate("MainScreen")} />, headerRight: () =>
                         <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
             }} component={ProductListScreen} />
             <MainStack.Screen name="NewLifeStyleScreen" options={{
@@ -97,7 +98,7 @@ function AppStackScreen({ navigation }) {
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
-                    <MenuIcon />, headerRight: () =>
+                    <MenuIcon onPress={() => navigation.navigate("MainScreen")} />, headerRight: () =>
                         <View style={{ flexDirection: 'row' }}>
                             <SearchIcon onPress={() => navigation.navigate("SearchBarScreen")} />
                             <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
@@ -118,7 +119,7 @@ function LikeStackScreen({ navigation }) {
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
-                    <MenuIcon />, headerRight: () =>
+                    <MenuIcon onPress={() => navigation.navigate("MainScreen")} />, headerRight: () =>
                         <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
             }} component={LikeScreen} />
         </LikeStack.Navigator>
@@ -136,11 +137,35 @@ function YourOrderStackScreen({ navigation }) {
                     shadowOpacity: 0,
                     borderBottomWidth: 0,
                 }, headerLeft: () =>
-                    <MenuIcon />, headerRight: () =>
+                    <MenuIcon onPress={() => navigation.navigate("MainScreen")} />, headerRight: () =>
                         <View style={{ flexDirection: 'row' }}>
                             <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
                         </View>
             }} component={YourOrderScreen} />
+            <YourOrderStack.Screen name="OrderDetailScreen" options={{
+                title: 'Order Status', headerStyle: {
+                    backgroundColor: '#FFFFFF',
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                }, headerLeft: () =>
+                    <MenuBack onPress={() => navigation.navigate("YourOrderScreen")} />, headerRight: () =>
+                        <View style={{ flexDirection: 'row' }}>
+                            <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
+                        </View>
+            }} component={OrderDetailScreen} />
+            <YourOrderStack.Screen name="AboutScreen" options={{
+                title: 'Need Help', headerStyle: {
+                    backgroundColor: '#FFFFFF',
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                }, headerLeft: () =>
+                    <MenuBack onPress={() => navigation.navigate("YourOrderScreen")} />, headerRight: () =>
+                        <View style={{ flexDirection: 'row' }}>
+                            <MenuBarIcon onPress={() => navigation.navigate("AddToCartScreen")} />
+                        </View>
+            }} component={AboutScreen} />
         </YourOrderStack.Navigator>
     );
 }

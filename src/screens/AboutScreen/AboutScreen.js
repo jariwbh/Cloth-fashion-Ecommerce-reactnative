@@ -38,8 +38,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF'
     },
     about: {
-
-        marginTop: hp('10%'),
+        marginTop: hp('5%'),
         justifyContent: 'center',
         alignItems: 'center'
     },
