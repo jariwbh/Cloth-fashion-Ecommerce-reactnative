@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, RefreshControl } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ScrollView } from 'react-native-gesture-handler';
@@ -281,13 +281,12 @@ class AddToCartScreen extends Component {
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: hp('1%'), marginBottom: hp('10%') }}>
                             <View>
                                 <TouchableOpacity style={styles.order} onPress={() => this.onPressSubmit()}>
-                                    {loading == ture ? <MyLoader /> : <Text style={{ fontSize: hp('2%'), color: '#FFF' }}>BOOK ORDER</Text>}
+                                    {loading == true ? <MyLoader /> : <Text style={{ fontSize: hp('2%'), color: '#FFF' }}>BOOK ORDER</Text>}
                                 </TouchableOpacity>
                             </View>
                         </View>
                     </ScrollView>
                 }
-
             </View>
         );
     }

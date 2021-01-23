@@ -72,7 +72,7 @@ class YourOrderScreen extends Component {
                         <FlatList
                             data={cartlist}
                             renderItem={({ item }) => (
-                                <TouchableOpacity style={styles.cardView} onPress={() => { this.props.navigation.navigate('YourOrderDetails') }}>
+                                <TouchableOpacity style={styles.cardView}>
                                     <View style={{ marginTop: hp('1%'), marginLeft: hp('5.3%') }}>
                                         <Text style={{ fontSize: hp('2%') }}>Order Number : {item.prefix + item.billnumber}</Text>
                                     </View>
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
         height: hp('20%'),
         marginLeft: hp('3%'),
         marginTop: hp('2%'),
+        marginBottom: hp('1%'),
         borderColor: '#000000',
         shadowOpacity: 0.5,
         shadowRadius: 3,

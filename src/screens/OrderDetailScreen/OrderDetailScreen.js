@@ -8,7 +8,6 @@ import Loader from '../../components/Loader/Loader'
 export default class YourOrderDetails extends Component {
     constructor(props) {
         super(props);
-        console.log('this.props.route.params.item', this.props.route.params.item)
         this.orderDetail = this.props.route.params.item
         this.state = {
             orderDetail: this.orderDetail,
@@ -24,6 +23,21 @@ export default class YourOrderDetails extends Component {
         });
     }
 
+    async orderMapping() {
+
+        if (this.orderDetail && this.orderDetail.items && this.orderDetail.items.length > 0) {
+            this.orderDetail.items.forEach(elementItems => {
+                var propertyObj = this.orderDetail.property.item.find(p => p.itemid == elementItems.item._id)
+                if (propertyObj) {
+                    elementItems.ColorCode = propertyObj.ColorCode;
+                    elementItems.SizeCode = propertyObj.SizeCode;
+                }
+            });
+        }
+        return;
+    }
+
+
     getdata = async () => {
         var getUser = await AsyncStorage.getItem('@authuser')
         var user = JSON.parse(getUser)
@@ -35,8 +49,10 @@ export default class YourOrderDetails extends Component {
         }
     }
 
-    componentDidMount() {
-        this.getdata()
+    async componentDidMount() {
+        await this.orderMapping()
+        await this.getdata()
+
         this.wait(1000).then(() => this.setState({ loader: false }));
     }
 
@@ -65,12 +81,11 @@ export default class YourOrderDetails extends Component {
                                     <View style={{ flexDirection: 'column' }}>
                                         <Text style={{ fontSize: hp('2.5%') }}>{v.item.itemname}</Text>
                                         <Text style={{ fontSize: hp('2.5%') }}>quantity : {v.quantity}</Text>
-                                        <Text style={{ fontSize: hp('2%'), textTransform: 'capitalize' }}>color : red</Text>
-                                        <Text style={{ fontSize: hp('2%'), textTransform: 'capitalize' }}>size : xl</Text>
+                                        <Text style={{ fontSize: hp('2%'), textTransform: 'capitalize' }}>color : {v.ColorCode}</Text>
+                                        <Text style={{ fontSize: hp('2%'), textTransform: 'capitalize' }}>size : {v.SizeCode}</Text>
                                     </View>
                                 </View>
                             ))}
-
                         </View>
                         <Text style={{ fontSize: hp('2%'), textTransform: 'capitalize' }}>Delivery Address</Text>
                         <Text style={{ fontSize: hp('2%'), textTransform: 'capitalize' }}>{deliveryAddress}</Text>
