@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ToastAndroid, } from 'react-native';
-import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
@@ -110,6 +110,11 @@ class UpdateProfile extends Component {
                     <Loading />
                     :
                     <>
+                        <View >
+                            <TouchableOpacity style={styles.backIcon} onPress={() => this.props.navigation.navigate('MyProfileScreen')} >
+                                <MaterialIcons name="arrow-back" size={24} color="#FF95AD" />
+                            </TouchableOpacity>
+                        </View>
                         <Image style={styles.avatar} source={{ uri: userProfile && userProfile !== null ? userProfile : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1610428971/userimage_qif8wv.jpg' }} />
                         <View style={styles.body}>
                             <View style={styles.bodyContent}>
@@ -191,14 +196,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FFFFFF'
-
     },
     avatar: {
         width: hp('15%'),
         height: hp('15%'),
         borderRadius: wp('20%'),
         alignSelf: 'center',
-        marginTop: hp('5%'),
+        marginTop: hp('2%'),
         marginBottom: hp('3%')
     },
     bodyContent: {
@@ -249,5 +253,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: hp('3%'),
     },
+    backIcon: {
+        width: wp("7%"),
+        height: wp("7%"),
+        borderRadius: hp('6%'),
+        marginTop: hp('5%'),
+        marginLeft: hp('3%'),
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 })
 

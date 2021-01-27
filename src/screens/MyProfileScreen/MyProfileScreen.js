@@ -4,7 +4,7 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../components/Loader/Loader';
 
@@ -54,6 +54,11 @@ export default class MyProfileScreen extends Component {
                     <Loader />
                     :
                     <>
+                        <View >
+                            <TouchableOpacity style={styles.backIcon} onPress={() => this.props.navigation.navigate('MainScreen')} >
+                                <MaterialIcons name="arrow-back" size={24} color="#FF95AD" />
+                            </TouchableOpacity>
+                        </View>
                         <Image style={styles.avatar} source={{ uri: companyData !== null ? (companyData.profilepic == null ? 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1610428971/userimage_qif8wv.jpg' : companyData.profilepic) : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1610428971/userimage_qif8wv.jpg' }} />
                         <View style={styles.body}>
                             <View style={styles.bodyContent}>
@@ -90,7 +95,7 @@ const styles = StyleSheet.create({
         height: hp('20%'),
         borderRadius: wp('20%'),
         alignSelf: 'center',
-        marginTop: wp('20%')
+        marginTop: wp('10%')
     },
     body: {
         marginTop: hp('3%'),
@@ -129,6 +134,15 @@ const styles = StyleSheet.create({
         fontSize: hp('3%'),
         color: '#000000'
     },
+    backIcon: {
+        width: wp("7%"),
+        height: wp("7%"),
+        borderRadius: hp('6%'),
+        marginTop: hp('5%'),
+        marginLeft: hp('3%'),
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 })
 
 
