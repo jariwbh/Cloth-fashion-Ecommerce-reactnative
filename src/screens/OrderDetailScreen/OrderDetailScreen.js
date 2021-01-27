@@ -51,6 +51,7 @@ export default class YourOrderDetails extends Component {
     }
     render() {
         const { orderDetail, fullname, deliveryAddress, loader } = this.state;
+        console.log('deliveryAddress', deliveryAddress)
         return (
             <>
                 {loader == true ? <Loader /> :
@@ -131,7 +132,7 @@ export default class YourOrderDetails extends Component {
                                     <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize', fontWeight: 'bold' }}>Delivery Address</Text>
                                 </View>
                                 <View style={{ marginLeft: hp('4%'), marginRight: hp('3%'), marginTop: hp('1%'), }}>
-                                    <Text style={{ fontSize: hp('2%'), textTransform: 'capitalize' }}>{deliveryAddress}</Text>
+                                    <Text style={{ fontSize: hp('2%'), textTransform: 'capitalize' }}>{deliveryAddress == null || deliveryAddress == undefined ? 'No details Avaliable' : deliveryAddress}</Text>
                                 </View>
                             </View>
                         </ScrollView>
