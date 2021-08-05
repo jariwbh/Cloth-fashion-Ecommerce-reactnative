@@ -19,7 +19,7 @@ class NewLifeStyleScreen extends Component {
             item_logo: this.itemObj.imagegallery,
             itemname: this.itemObj.itemname,
             price: this.itemObj.sale.rate,
-            discount: this.itemObj.sale.discount,
+            discount: this.itemObj.sale && this.itemObj.sale.discount ? this.itemObj.sale.discount : null,
             description: this.itemObj.sale.description,
             sizeList: this.itemObj.property && this.itemObj.property ? this.itemObj.property.size : null,
             colorList: this.itemObj.property && this.itemObj.property ? this.itemObj.property.color : null,
@@ -69,7 +69,7 @@ class NewLifeStyleScreen extends Component {
 
     renderColor = ({ item, index }) => (
         <TouchableOpacity onPress={() => this.onPressToSelectcolor(item, index)} >
-            { item.selected ?
+            {item.selected ?
                 <MaterialCommunityIcons size={30} name="checkbox-marked" color={item.colorcode} style={{ paddingLeft: hp('2%') }} />
                 : <MaterialCommunityIcons size={30} name="checkbox-blank" color={item.colorcode} style={{ paddingLeft: hp('2%') }} />
             }

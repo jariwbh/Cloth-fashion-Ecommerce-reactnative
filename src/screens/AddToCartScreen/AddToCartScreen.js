@@ -66,7 +66,7 @@ class AddToCartScreen extends Component {
         let totalTax = 0
 
         totalAmount = renderData.map(item => (item.sale.rate ? item.sale.rate : 0) * (item.itemqty)).reduce((prev, next) => prev + next);
-        totalDiscount = renderData.map(item => (item.sale.discount ? item.sale.discount : 0) * (item.itemqty)).reduce((prev, next) => prev + next);
+        totalDiscount = renderData.map(item => (item.sale && item.sale.discount ? item.sale.discount : 0) * (item.itemqty)).reduce((prev, next) => prev + next);
         totalQty = totalQty + renderData.map(item => (item.itemqty)).reduce((prev, next) => prev + next);
 
         for (let elemt of renderData) {
@@ -134,7 +134,10 @@ class AddToCartScreen extends Component {
                 <Text style={{ fontSize: hp('2.5%'), }}>{item.itemname}</Text>
                 <View style={{ flexDirection: 'row', }}>
                     <Text style={{ fontSize: hp('2.5%'), }}>₹ {item.sale.rate}</Text>
-                    {item.sale.discount && <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>}
+                    {item.sale && item.sale.discount ?
+                        <Text style={{ fontSize: hp('2.5%'), marginLeft: hp('2%'), color: '#FF95AD' }}>({item.sale.discount} ₹ OFF)</Text>
+                        : <></>
+                    }
                 </View>
                 <View style={{ flexDirection: 'row', }}>
                     {item.selectedColorCode != null ?

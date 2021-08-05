@@ -55,7 +55,9 @@ class LikeScreen extends Component {
                 </View> */}
             <View style={{ flexDirection: 'row' }}>
                 <Text style={{ marginLeft: hp('1%'), fontSize: hp('2%') }}>₹ {item.sale.rate}</Text>
-                {item.sale.discount && <Text style={{ fontSize: hp('2%'), color: '#FF95AD' }}> ({item.sale.discount} ₹ OFF)</Text>}
+                {item.sale && item.sale.discount ? <Text style={{ fontSize: hp('2%'), color: '#FF95AD' }}> ({item.sale.discount} ₹ OFF)</Text>
+                    : <></>
+                }
             </View>
         </View>
     )
