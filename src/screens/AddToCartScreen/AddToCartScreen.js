@@ -83,7 +83,6 @@ class AddToCartScreen extends Component {
     onPressIncrementItem(item) {
         let totalTax = 0;
         let renderData = [...this.state.cartlist];
-        console.log(`cartlist`, this.state.cartlist);
         for (let data of renderData) {
             if (data._id == item._id) {
                 data.itemqty = data.itemqty + 1
@@ -234,7 +233,7 @@ class AddToCartScreen extends Component {
             "paidamount": 0,
             "type": "POS"
         }
-        console.log('billdetails', billdetails)
+        //  console.log('billdetails', billdetails)
         this.setState({ loading: true })
         try {
             BillingService(billdetails).then(response => {

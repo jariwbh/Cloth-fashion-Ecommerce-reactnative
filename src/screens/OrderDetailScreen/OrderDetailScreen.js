@@ -51,7 +51,6 @@ export default class YourOrderDetails extends Component {
     }
     render() {
         const { orderDetail, fullname, deliveryAddress, loader } = this.state;
-        console.log('deliveryAddress', deliveryAddress)
         return (
             <>
                 {loader == true ? <Loader /> :
