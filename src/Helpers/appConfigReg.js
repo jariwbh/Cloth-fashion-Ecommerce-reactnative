@@ -2,7 +2,7 @@ const appConfigReg = {
     baseUrl: "http://app.membroz.com/api/",
     headers: {
         'Content-Type': 'application/json',
-        'authkey': "5fd3058ac74c3d5ba270f1f6"
+        'authkey': "610a262abfd7602ce4ec1332"
     }
 }
 

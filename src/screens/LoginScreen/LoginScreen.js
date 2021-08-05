@@ -12,9 +12,9 @@ class LoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: null,
+            username: 'CLOTH10005',
             usererror: null,
-            password: null,
+            password: 'CLOTH10005',
             passworderror: null,
             loading: false,
         };
@@ -70,7 +70,6 @@ class LoginScreen extends Component {
         try {
             await LoginService(body)
                 .then(response => {
-                    console.log('response', response)
                     if (response.error) {
                         this.setState({ loading: false })
                         ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG);

@@ -15,11 +15,11 @@ class UpdateProfile extends Component {
         this.companyData = this.props.route.params.companyData;
         this.state = {
             _id: this.companyData._id,
-            fullname: this.companyData.property.fullname,
+            fullname: this.companyData.fullname,
             fullnameError: null,
-            username: this.companyData.property.email,
+            username: this.companyData.property.primaryemail,
             usernameError: null,
-            mobilenumber: this.companyData.property.mobile_number,
+            mobilenumber: this.companyData.property.mobile,
             mobilenumberError: null,
             userProfile: this.companyData != null && (this.companyData.profilepic == null ? null : this.companyData.profilepic),
             profileName: this.companyData.fullname,
@@ -80,8 +80,8 @@ class UpdateProfile extends Component {
             username: userMemberName,
             property: {
                 fullname: fullname,
-                email: username,
-                mobile_number: mobilenumber,
+                primaryemail: username,
+                mobile: mobilenumber,
             }
         }
 

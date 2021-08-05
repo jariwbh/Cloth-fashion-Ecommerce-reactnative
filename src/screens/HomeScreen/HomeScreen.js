@@ -27,7 +27,7 @@ class HomeScreen extends Component {
     renderCategory = ({ item }) => (
         <TouchableOpacity onPress={() => this.props.navigation.replace('TabNavigations')} >
             <View style={{ marginTop: hp('-2%'), marginLeft: hp('2%'), alignItems: 'center' }}>
-                <Image source={{ uri: item.property.icon_logo }} style={{ height: 80, width: 80 }} />
+                <Image source={{ uri: item.property.image[0].attachment }} style={{ height: 80, width: 80 }} />
                 <Text style={{ marginTop: "-2%", alignItems: 'center' }}>{item.property.title}</Text>
             </View>
         </TouchableOpacity>

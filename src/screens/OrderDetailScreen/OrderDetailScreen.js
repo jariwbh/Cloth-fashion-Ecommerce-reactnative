@@ -97,7 +97,7 @@ export default class YourOrderDetails extends Component {
                                     </View>
                                     <View style={{ marginTop: hp('1%'), justifyContent: 'space-between', flexDirection: 'row' }}>
                                         <Text style={{ fontSize: hp('2%'), marginLeft: hp('5%') }}>Payment Mode : </Text>
-                                        <Text style={{ fontSize: hp('2%'), marginRight: hp('5%') }}>{orderDetail.status == "active" ? "Unpaid" : "Paid"}</Text>
+                                        <Text style={{ fontSize: hp('2%'), marginRight: hp('5%'), marginBottom: hp('2%') }}>{orderDetail.status == "Unpaid" ? "Unpaid" : "Paid"}</Text>
                                     </View>
                                 </View>
                             </View>

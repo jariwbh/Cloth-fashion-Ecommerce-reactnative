@@ -80,7 +80,7 @@ class MainScreen extends Component {
     renderCategory = ({ item }) => (
         <View>
             <TouchableOpacity onPress={() => { this.props.navigation.navigate('ProductListScreen', { item }) }} style={{ alignItems: 'center' }}>
-                <Image source={{ uri: item.property.icon_logo }} style={{ height: hp('10%'), width: wp('20%') }} />
+                <Image source={{ uri: item.property.image && item.property.image[0].attachment }} style={{ height: hp('10%'), width: wp('20%') }} />
                 <Text style={{ marginTop: hp('-1%') }}>{item.property.title}</Text>
             </TouchableOpacity>
         </View>

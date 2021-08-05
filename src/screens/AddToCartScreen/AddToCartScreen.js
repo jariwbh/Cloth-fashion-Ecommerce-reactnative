@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { BillingService } from '../../Services/BillingService/BillingService';
 import Loader from '../../components/Loader/Loader'
 import MyLoader from '../../components/Loader/MyLoader';
+import { ToastAndroid } from 'react-native';
 
 class AddToCartScreen extends Component {
     constructor(props) {
@@ -82,6 +83,7 @@ class AddToCartScreen extends Component {
     onPressIncrementItem(item) {
         let totalTax = 0;
         let renderData = [...this.state.cartlist];
+        console.log(`cartlist`, this.state.cartlist);
         for (let data of renderData) {
             if (data._id == item._id) {
                 data.itemqty = data.itemqty + 1
@@ -190,18 +192,20 @@ class AddToCartScreen extends Component {
             let obj = {
                 item: element._id,
                 quantity: element.itemqty,
-                cost: element.sale.rate,
-                totalcost: element.sale.rate * element.itemqty,
-                discount: element.sale.discount * element.itemqty,
+                //cost: element.sale.rate,
+                //totalcost: element.sale.rate * element.itemqty,
+                //discount: element.sale.discount * element.itemqty,
+                sale: element.sale,
             }
-            obj['tax'] = [];
+            {/* obj['tax'] = [];
             if (element.sale.taxes && element.sale.taxes.length != 0) {
                 let amount = (element.sale.rate * element.itemqty) - (element.sale.discount * element.itemqty);
                 element.sale.taxes.forEach(el => {
                     let tobj = { taxname: el.taxname, taxper: el.amount, taxamount: (amount * el.amount) / 100 };
                     obj['tax'].push(tobj);
                 });
-            }
+            } */}
+
             itemdata.push(obj);
         });
 
@@ -215,22 +219,30 @@ class AddToCartScreen extends Component {
         });
 
         billdetails = {
-            customerid: this.state.userData._id,
-            onModel: "Member",
-            billdate: moment().format('L'),
-            items: itemdata,
-            amount: this.state.totalAmount,
-            totalamount: this.state.finalAmount,
-            status: 'Unpaid',
-            property: { item: itemobj }
+            "customerid": this.state.userData._id,
+            "onModel": "Member",
+            "billdate": moment().format('L'),
+            "items": itemdata,
+            //    "amount": this.state.totalAmount,
+            // "totalamount": this.state.finalAmount,
+            "property": { item: itemobj },
+            //   "taxamount": this.state.totalTax,
+            "taxes": [],
+            "paidamount": 0,
+            "type": "POS"
         }
+        console.log('billdetails', billdetails)
         this.setState({ loading: true })
         try {
             BillingService(billdetails).then(response => {
-                if (response != null || response != 'undefind') {
+                // console.log('response', response);
+                if (response != null && response != 'undefind' && response.error == null) {
                     removeLocalAllAddtocardlist()
                     alert('Thank you, Your Order has been Book successfully')
                     this.props.navigation.navigate('ProductListScreen')
+                } else {
+                    this.setState({ loading: false })
+                    ToastAndroid.show("Order not Booked!", ToastAndroid.LONG)
                 }
             })
         }
