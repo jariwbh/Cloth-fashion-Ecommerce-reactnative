@@ -276,7 +276,7 @@ class AddToCartScreen extends Component {
                                 <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ {Number(totalAmount).toFixed(2)}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <Text style={{ fontSize: hp('2.5%') }}>Texes and Charges</Text>
+                                <Text style={{ fontSize: hp('2.5%') }}>Tax and Charges</Text>
                                 <Text style={{ fontSize: hp('2.5%'), marginRight: hp('1.5%') }}>₹ {Number(totalTax).toFixed(2)}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
