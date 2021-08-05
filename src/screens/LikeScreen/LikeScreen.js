@@ -50,11 +50,9 @@ class LikeScreen extends Component {
             <View style={{ flexDirection: 'row', marginLeft: hp('1%'), justifyContent: 'space-between', marginRight: hp('1%'), }}>
                 <Text style={{ fontSize: hp('2.5%'), textTransform: 'capitalize' }}>{item.itemname}</Text>
             </View>
-            {item.sale.description &&
-                <View>
+            {/* <View>
                     <Text style={{ fontSize: hp('2%'), marginLeft: hp('1%'), color: "#737373", textTransform: 'capitalize' }}>{item.sale.description}</Text>
-                </View>
-            }
+                </View> */}
             <View style={{ flexDirection: 'row' }}>
                 <Text style={{ marginLeft: hp('1%'), fontSize: hp('2%') }}>₹ {item.sale.rate}</Text>
                 {item.sale.discount && <Text style={{ fontSize: hp('2%'), color: '#FF95AD' }}> ({item.sale.discount} ₹ OFF)</Text>}
