@@ -12,9 +12,9 @@ class LoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: null,
+            username: null, //CLOTH10005
             usererror: null,
-            password: null,
+            password: null, //CLOTH10005
             passworderror: null,
             loading: false,
         };
